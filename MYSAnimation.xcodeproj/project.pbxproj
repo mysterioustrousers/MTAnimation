@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C22CC0D4172A009700EB3CB3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
 		C2AF91441729F564001D44D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C2AF91461729F564001D44D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
 		C2AF91481729F564001D44D5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91471729F564001D44D5 /* CoreGraphics.framework */; };
@@ -24,6 +25,9 @@
 		C2AF916D1729F564001D44D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
 		C2AF91751729F564001D44D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91731729F564001D44D5 /* InfoPlist.strings */; };
 		C2AF91781729F564001D44D5 /* MYSAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91771729F564001D44D5 /* MYSAnimationTests.m */; };
+		C2AF91861729F584001D44D5 /* UIView+MYSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91831729F584001D44D5 /* UIView+MYSAnimation.m */; };
+		C2AF91871729F584001D44D5 /* MYSTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MYSTimingFunctions.c */; };
+		C2AF91891729F5A1001D44D5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91881729F5A1001D44D5 /* logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C2AF91401729F564001D44D5 /* MYSAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYSAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2AF91431729F564001D44D5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C2AF91451729F564001D44D5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -60,6 +65,11 @@
 		C2AF91741729F564001D44D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C2AF91761729F564001D44D5 /* MYSAnimationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MYSAnimationTests.h; sourceTree = "<group>"; };
 		C2AF91771729F564001D44D5 /* MYSAnimationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MYSAnimationTests.m; sourceTree = "<group>"; };
+		C2AF91821729F584001D44D5 /* UIView+MYSAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MYSAnimation.h"; sourceTree = "<group>"; };
+		C2AF91831729F584001D44D5 /* UIView+MYSAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MYSAnimation.m"; sourceTree = "<group>"; };
+		C2AF91841729F584001D44D5 /* MYSTimingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYSTimingFunctions.h; sourceTree = "<group>"; };
+		C2AF91851729F584001D44D5 /* MYSTimingFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MYSTimingFunctions.c; sourceTree = "<group>"; };
+		C2AF91881729F5A1001D44D5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C22CC0D4172A009700EB3CB3 /* QuartzCore.framework in Frameworks */,
 				C2AF91441729F564001D44D5 /* UIKit.framework in Frameworks */,
 				C2AF91461729F564001D44D5 /* Foundation.framework in Frameworks */,
 				C2AF91481729F564001D44D5 /* CoreGraphics.framework in Frameworks */,
@@ -108,6 +119,7 @@
 		C2AF91421729F564001D44D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */,
 				C2AF91431729F564001D44D5 /* UIKit.framework */,
 				C2AF91451729F564001D44D5 /* Foundation.framework */,
 				C2AF91471729F564001D44D5 /* CoreGraphics.framework */,
@@ -119,12 +131,13 @@
 		C2AF91491729F564001D44D5 /* MYSAnimation */ = {
 			isa = PBXGroup;
 			children = (
-				C2AF91521729F564001D44D5 /* MYSAppDelegate.h */,
-				C2AF91531729F564001D44D5 /* MYSAppDelegate.m */,
 				C2AF915B1729F564001D44D5 /* MainStoryboard_iPhone.storyboard */,
 				C2AF915E1729F564001D44D5 /* MainStoryboard_iPad.storyboard */,
+				C2AF91521729F564001D44D5 /* MYSAppDelegate.h */,
+				C2AF91531729F564001D44D5 /* MYSAppDelegate.m */,
 				C2AF91611729F564001D44D5 /* MYSViewController.h */,
 				C2AF91621729F564001D44D5 /* MYSViewController.m */,
+				C2AF91811729F574001D44D5 /* MYSAnimation */,
 				C2AF914A1729F564001D44D5 /* Supporting Files */,
 			);
 			path = MYSAnimation;
@@ -133,6 +146,7 @@
 		C2AF914A1729F564001D44D5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C2AF91881729F5A1001D44D5 /* logo.png */,
 				C2AF914B1729F564001D44D5 /* MYSAnimation-Info.plist */,
 				C2AF914C1729F564001D44D5 /* InfoPlist.strings */,
 				C2AF914F1729F564001D44D5 /* main.m */,
@@ -161,6 +175,17 @@
 				C2AF91731729F564001D44D5 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C2AF91811729F574001D44D5 /* MYSAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				C2AF91821729F584001D44D5 /* UIView+MYSAnimation.h */,
+				C2AF91831729F584001D44D5 /* UIView+MYSAnimation.m */,
+				C2AF91841729F584001D44D5 /* MYSTimingFunctions.h */,
+				C2AF91851729F584001D44D5 /* MYSTimingFunctions.c */,
+			);
+			name = MYSAnimation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +266,7 @@
 				C2AF915A1729F564001D44D5 /* Default-568h@2x.png in Resources */,
 				C2AF915D1729F564001D44D5 /* MainStoryboard_iPhone.storyboard in Resources */,
 				C2AF91601729F564001D44D5 /* MainStoryboard_iPad.storyboard in Resources */,
+				C2AF91891729F5A1001D44D5 /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +304,8 @@
 				C2AF91501729F564001D44D5 /* main.m in Sources */,
 				C2AF91541729F564001D44D5 /* MYSAppDelegate.m in Sources */,
 				C2AF91631729F564001D44D5 /* MYSViewController.m in Sources */,
+				C2AF91861729F584001D44D5 /* UIView+MYSAnimation.m in Sources */,
+				C2AF91871729F584001D44D5 /* MYSTimingFunctions.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +390,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -387,6 +416,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -399,6 +429,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MYSAnimation/MYSAnimation-Prefix.pch";
 				INFOPLIST_FILE = "MYSAnimation/MYSAnimation-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -410,6 +441,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MYSAnimation/MYSAnimation-Prefix.pch";
 				INFOPLIST_FILE = "MYSAnimation/MYSAnimation-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -468,6 +500,7 @@
 				C2AF917D1729F564001D44D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C2AF917E1729F564001D44D5 /* Build configuration list for PBXNativeTarget "MYSAnimationTests" */ = {
 			isa = XCConfigurationList;
@@ -476,6 +509,7 @@
 				C2AF91801729F564001D44D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
