@@ -16,17 +16,12 @@
 static const NSInteger fps      = 60;
 static const NSInteger second   = 1000;
 
-static const char rotationXKey;
-static const char rotationYKey;
-static const char rotationZKey;
+static const char transform3DKey;
 static const char startBoundsKey;
 static const char startCenterKey;
 static const char startTransformKey;
+static const char startTransform3DKey;
 static const char startAlphaKey;
-static const char start3DTransform;
-static const char startRotationXKey;
-static const char startRotationYKey;
-static const char startRotationZKey;
 static const char startBackgroundColorKey;
 static const char completionBlockKey;
 
@@ -37,11 +32,8 @@ static const char completionBlockKey;
 @property (assign, nonatomic) CGRect                        startBounds;
 @property (assign, nonatomic) CGPoint                       startCenter;
 @property (assign, nonatomic) CGAffineTransform             startTransform;
+@property (assign, nonatomic) CATransform3D                 startTransform3D;
 @property (assign, nonatomic) CGFloat                       startAlpha;
-@property (assign, nonatomic) CATransform3D                 start3DTransform;
-@property (assign, nonatomic) CGFloat                       startRotationX;
-@property (assign, nonatomic) CGFloat                       startRotationY;
-@property (assign, nonatomic) CGFloat                       startRotationZ;
 @property (strong, nonatomic) MYSAnimationCompletionBlock   completionBlock;
 @end
 
@@ -156,9 +148,22 @@ static const char completionBlockKey;
                                                                                    from:CATransform3DMakeAffineTransform(view.startTransform)
                                                                                      to:CATransform3DMakeAffineTransform(view.transform)
                                                                            exaggeration:exaggeration];
-            [view addAnimation:keyframeAnimation forKey:@"transform"];
+            [view addAnimation:keyframeAnimation forKey:@"affineTransform"];
         }
 
+        if (!CATransform3DEqualToTransform(view.startTransform3D, view.mys_transform3D)) {
+            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
+            keyframeAnimation.keyPath               = @"transform";
+            keyframeAnimation.duration              = duration;
+            keyframeAnimation.calculationMode       = kCAAnimationLinear;
+            keyframeAnimation.delegate              = completionReceiver;
+            keyframeAnimation.values                = [self transformValuesWithDuration:duration
+                                                                               function:timingFunction
+                                                                                   from:view.startTransform3D
+                                                                                     to:view.mys_transform3D
+                                                                           exaggeration:exaggeration];
+            [view addAnimation:keyframeAnimation forKey:@"transform"];
+        }
 
         if (view.startAlpha != view.alpha) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
@@ -173,50 +178,6 @@ static const char completionBlockKey;
                                                                        exaggeration:exaggeration];
             [view addAnimation:keyframeAnimation forKey:@"opacity"];
         }
-
-        if (view.startRotationX != view.mys_rotationX) {
-            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
-            keyframeAnimation.keyPath               = @"transform.rotation.x";
-            keyframeAnimation.duration              = duration;
-            keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = completionReceiver;
-            keyframeAnimation.values                = [self floatValuesWithDuration:duration
-                                                                           function:timingFunction
-                                                                               from:view.startRotationX
-                                                                                 to:view.mys_rotationX
-                                                                       exaggeration:exaggeration];
-            [view addAnimation:keyframeAnimation forKey:@"transform.rotation.x"];
-        }
-
-        if (view.startRotationY != view.mys_rotationY) {
-            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
-            keyframeAnimation.keyPath               = @"transform.rotation.y";
-            keyframeAnimation.duration              = duration;
-            keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = completionReceiver;
-            keyframeAnimation.values                = [self floatValuesWithDuration:duration
-                                                                           function:timingFunction
-                                                                               from:view.startRotationY
-                                                                                 to:view.mys_rotationY
-                                                                       exaggeration:exaggeration];
-            [view addAnimation:keyframeAnimation forKey:@"transform.rotation.y"];
-        }
-
-        if (view.startRotationZ != view.mys_rotationZ) {
-            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
-            keyframeAnimation.keyPath               = @"transform.rotation.z";
-            keyframeAnimation.duration              = duration;
-            keyframeAnimation.rotationMode          = kCAAnimationRotateAuto;
-            keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = completionReceiver;
-            keyframeAnimation.values                = [self floatValuesWithDuration:duration
-                                                                           function:timingFunction
-                                                                               from:view.startRotationZ
-                                                                                 to:view.mys_rotationZ
-                                                                       exaggeration:exaggeration];
-            [view addAnimation:keyframeAnimation forKey:@"transform.rotation.z"];
-        }
-
     }
 }
 
@@ -243,11 +204,8 @@ static const char completionBlockKey;
     self.startBounds            = self.bounds;
     self.startCenter            = self.center;
     self.startTransform         = self.transform;
+    self.startTransform3D       = self.layer.transform;
     self.startAlpha             = self.alpha;
-    self.start3DTransform       = self.layer.transform;
-    self.startRotationX         = self.mys_rotationX;
-    self.startRotationY         = self.mys_rotationY;
-    self.startRotationZ         = self.mys_rotationZ;
 }
 
 + (NSArray *)rectValuesWithDuration:(NSTimeInterval)duration
@@ -392,8 +350,8 @@ static const char completionBlockKey;
         [self.layer addAnimation:animation forKey:key];
         self.layer.position             = newCenter;
     }
-    else if ([key isEqualToString:@"transform"]) {
-        CGAffineTransform newTransform  = self.transform;
+    else if ([key isEqualToString:@"affineTransform"]) {
+        CGAffineTransform newTransform  = self.layer.affineTransform;
         self.transform                  = self.startTransform;
         [self.layer addAnimation:animation forKey:key];
         self.layer.transform            = CATransform3DMakeAffineTransform(newTransform);
@@ -404,23 +362,11 @@ static const char completionBlockKey;
         [self.layer addAnimation:animation forKey:key];
         self.layer.opacity              = newAlpha;
     }
-    else if ([key isEqualToString:@"transform.rotation.x"]) {
-        CGFloat newRotation             = self.mys_rotationX;
-        self.mys_rotationX              = self.startRotationX;
+    else if ([key isEqualToString:@"transform"]) {
+        CATransform3D newRotation       = self.mys_transform3D;
+        self.mys_transform3D            = self.startTransform3D;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.transform            = CATransform3DMakeRotation(newRotation, 1, 0, 0);
-    }
-    else if ([key isEqualToString:@"transform.rotation.y"]) {
-        CGFloat newRotation             = self.mys_rotationY;
-        self.mys_rotationY              = self.startRotationY;
-        [self.layer addAnimation:animation forKey:key];
-        self.layer.transform            = CATransform3DMakeRotation(newRotation, 0, 1, 0);
-    }
-    else if ([key isEqualToString:@"transform.rotation.z"]) {
-        CGFloat newRotation             = self.mys_rotationZ;
-        self.mys_rotationZ              = self.startRotationZ;
-        [self.layer addAnimation:animation forKey:key];
-        self.layer.transform            = CATransform3DMakeRotation(newRotation, 0, 0, 1);
+        self.layer.transform            = newRotation;
     }
 }
 
@@ -452,52 +398,20 @@ static const char completionBlockKey;
 
 #pragma mark - Added Properties
 
-- (void)setMys_rotationX:(CGFloat)rotationX
+- (void)setMys_transform3D:(CATransform3D)mys_transform3D
 {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    self.layer.transform = CATransform3DMakeRotation(rotationX, 1, 0, 0);
+    self.layer.transform = mys_transform3D;
     [CATransaction commit];
 
-    objc_setAssociatedObject(self, &rotationXKey, @(rotationX), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &transform3DKey, [NSValue valueWithCATransform3D:mys_transform3D], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CGFloat)mys_rotationX
+- (CATransform3D)mys_transform3D
 {
-    NSNumber *value = objc_getAssociatedObject(self, &rotationXKey);
-    return value ? [value floatValue] : 0;
-}
-
-- (void)setMys_rotationY:(CGFloat)rotationY
-{
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    self.layer.transform = CATransform3DMakeRotation(rotationY, 0, 1, 0);
-    [CATransaction commit];
-
-    objc_setAssociatedObject(self, &rotationYKey, @(rotationY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGFloat)mys_rotationY
-{
-    NSNumber *value = objc_getAssociatedObject(self, &rotationYKey);
-    return value ? [value floatValue] : 0;
-}
-
-- (void)setMys_rotationZ:(CGFloat)rotationZ
-{
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    self.layer.transform = CATransform3DMakeRotation(rotationZ, 0, 0, 1);
-    [CATransaction commit];
-
-    objc_setAssociatedObject(self, &rotationZKey, @(rotationZ), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGFloat)mys_rotationZ
-{
-    NSNumber *value = objc_getAssociatedObject(self, &rotationYKey);
-    return value ? [value floatValue] : 0;
+    NSValue *value = objc_getAssociatedObject(self, &transform3DKey);
+    return value ? [value CATransform3DValue] : CATransform3DIdentity;
 }
 
 
@@ -562,50 +476,16 @@ static const char completionBlockKey;
     return objc_getAssociatedObject(self, &completionBlockKey);
 }
 
-- (void)setStart3DTransform:(CATransform3D)start3DTransform
+- (void)setStartTransform3D:(CATransform3D)startTransform3D
 {
-    objc_setAssociatedObject(self, &start3DTransform, [NSValue valueWithCATransform3D:start3DTransform], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &startTransform3DKey, [NSValue valueWithCATransform3D:startTransform3D], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CATransform3D)start3DTransform
+- (CATransform3D)startTransform3D
 {
-    NSValue *value = objc_getAssociatedObject(self, &startTransformKey);
+    NSValue *value = objc_getAssociatedObject(self, &startTransform3DKey);
     return value ? [value CATransform3DValue] : CATransform3DIdentity;
 }
-
-- (void)setStartRotationX:(CGFloat)startRotationX
-{
-    objc_setAssociatedObject(self, &startRotationXKey, @(startRotationX), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGFloat)startRotationX
-{
-    NSNumber *value = objc_getAssociatedObject(self, &startRotationXKey);
-    return value ? [value floatValue] : 0;
-}
-
-- (void)setStartRotationY:(CGFloat)startRotationY
-{
-    objc_setAssociatedObject(self, &startRotationYKey, @(startRotationY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGFloat)startRotationY
-{
-    NSNumber *value = objc_getAssociatedObject(self, &startRotationYKey);
-    return value ? [value floatValue] : 0;
-}
-
-- (void)setStartRotationZ:(CGFloat)startRotationZ
-{
-    objc_setAssociatedObject(self, &startRotationZKey, @(startRotationZ), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGFloat)startRotationZ
-{
-    NSNumber *value = objc_getAssociatedObject(self, &startRotationYKey);
-    return value ? [value floatValue] : 0;
-}
-
 
 
 @end

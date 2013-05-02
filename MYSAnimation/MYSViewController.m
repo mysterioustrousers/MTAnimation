@@ -35,11 +35,19 @@
     _timingFuction  = kMYSEaseInQuad;
     _duration       = 1;
     _exaggeration   = 1.7;
-    _endY           = 0;
-    _endX           = 0;
+    _endY           = 50;
+    _endX           = 50;
     _endScale       = 1;
     _endRotation    = 0;
     _endAlpha       = 1;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                            animated:YES
+                      scrollPosition:UITableViewScrollPositionTop];
 }
 
 
@@ -146,12 +154,13 @@
               timingFunction:_timingFuction
                 exaggeration:_exaggeration
                   animations:^{
-//                     CGRect r                       = _logoImageView.frame;
-//                     r.origin.x                     += _endX;
-//                     r.origin.y                     += _endY;
-//                     _logoImageView.frame           = [self scaledRect:r];
-//                     _logoImageView.alpha           = _endAlpha;
-                      _logoImageView.mys_rotationZ  = mys_degreesToRadians(_endRotation);
+                     CGRect r                           = _logoImageView.frame;
+                     r.origin.x                         += _endX;
+                     r.origin.y                         += _endY;
+                     _logoImageView.frame               = [self scaledRect:r];
+                     _logoImageView.alpha               = _endAlpha;
+                      CGFloat radians                   = mys_degreesToRadians(_endRotation);
+                      _logoImageView.mys_transform3D    = CATransform3DMakeRotation(radians, 0, 1, 0);
                   } completion:^{
                   }];
 }

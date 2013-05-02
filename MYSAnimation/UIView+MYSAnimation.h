@@ -31,9 +31,7 @@ typedef NS_ENUM(NSInteger, MYSAnimationExaggeration) {
 
 @interface UIView (MYSAnimation)
 
-@property (assign, nonatomic) CGFloat mys_rotationX;
-@property (assign, nonatomic) CGFloat mys_rotationY;
-@property (assign, nonatomic) CGFloat mys_rotationZ;
+@property (assign, nonatomic) CATransform3D mys_transform3D;
 
 + (void)mys_animateViews:(NSArray *)views
                 duration:(NSTimeInterval)duration
