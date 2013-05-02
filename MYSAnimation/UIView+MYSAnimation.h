@@ -8,6 +8,10 @@
 
 #import "MYSTimingFunctions.h"
 
+
+static inline double mys_degreesToRadians(double degrees) { return degrees * M_PI / 180; }
+
+
 /**
  Completion blocks take no arguments and return void.
  */
@@ -27,30 +31,34 @@ typedef NS_ENUM(NSInteger, MYSAnimationExaggeration) {
 
 @interface UIView (MYSAnimation)
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MYSTimingFunction)timingFunction
-             animations:(void (^)(void))animations;
+@property (assign, nonatomic) CGFloat mys_rotationX;
+@property (assign, nonatomic) CGFloat mys_rotationY;
+@property (assign, nonatomic) CGFloat mys_rotationZ;
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MYSTimingFunction)timingFunction
-             animations:(void (^)(void))animations
-             completion:(MYSAnimationCompletionBlock)completion;
++ (void)mys_animateViews:(NSArray *)views
+                duration:(NSTimeInterval)duration
+          timingFunction:(MYSTimingFunction)timingFunction
+              animations:(void (^)(void))animations;
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-                options:(UIViewAnimationOptions)options
-         timingFunction:(MYSTimingFunction)timingFunction
-             animations:(void (^)(void))animations
-             completion:(MYSAnimationCompletionBlock)completion;
++ (void)mys_animateViews:(NSArray *)views
+                duration:(NSTimeInterval)duration
+          timingFunction:(MYSTimingFunction)timingFunction
+              animations:(void (^)(void))animations
+              completion:(MYSAnimationCompletionBlock)completion;
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-                options:(UIViewAnimationOptions)options
-         timingFunction:(MYSTimingFunction)timingFunction
-           exaggeration:(CGFloat)exaggeration
-             animations:(void (^)(void))animations
-             completion:(MYSAnimationCompletionBlock)completion;
++ (void)mys_animateViews:(NSArray *)views
+                duration:(NSTimeInterval)duration
+                 options:(UIViewAnimationOptions)options
+          timingFunction:(MYSTimingFunction)timingFunction
+              animations:(void (^)(void))animations
+              completion:(MYSAnimationCompletionBlock)completion;
+
++ (void)mys_animateViews:(NSArray *)views
+                duration:(NSTimeInterval)duration
+                 options:(UIViewAnimationOptions)options
+          timingFunction:(MYSTimingFunction)timingFunction
+            exaggeration:(CGFloat)exaggeration
+              animations:(void (^)(void))animations
+              completion:(MYSAnimationCompletionBlock)completion;
 
 @end

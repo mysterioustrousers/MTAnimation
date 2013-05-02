@@ -16,11 +16,17 @@
 static const NSInteger fps      = 60;
 static const NSInteger second   = 1000;
 
-static const char startFrameKey;
+static const char rotationXKey;
+static const char rotationYKey;
+static const char rotationZKey;
 static const char startBoundsKey;
 static const char startCenterKey;
 static const char startTransformKey;
 static const char startAlphaKey;
+static const char start3DTransform;
+static const char startRotationXKey;
+static const char startRotationYKey;
+static const char startRotationZKey;
 static const char startBackgroundColorKey;
 static const char completionBlockKey;
 
@@ -28,12 +34,14 @@ static const char completionBlockKey;
 
 
 @interface UIView () 
-@property (assign, nonatomic) CGRect                        startFrame;
 @property (assign, nonatomic) CGRect                        startBounds;
 @property (assign, nonatomic) CGPoint                       startCenter;
 @property (assign, nonatomic) CGAffineTransform             startTransform;
 @property (assign, nonatomic) CGFloat                       startAlpha;
-@property (strong, nonatomic) UIColor                       *startBackgroundColor;
+@property (assign, nonatomic) CATransform3D                 start3DTransform;
+@property (assign, nonatomic) CGFloat                       startRotationX;
+@property (assign, nonatomic) CGFloat                       startRotationY;
+@property (assign, nonatomic) CGFloat                       startRotationZ;
 @property (strong, nonatomic) MYSAnimationCompletionBlock   completionBlock;
 @end
 
@@ -42,56 +50,55 @@ static const char completionBlockKey;
 
 @implementation UIView (MYSAnimation)
 
-
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MYSTimingFunction)timingFunction
-             animations:(void (^)(void))animations
++ (void)mys_animateViews:(NSArray *)views
+                duration:(NSTimeInterval)duration
+          timingFunction:(MYSTimingFunction)timingFunction
+              animations:(void (^)(void))animations
 {
-    [self mt_animateViews:views
-                 duration:duration
-           timingFunction:timingFunction
-               animations:animations
-               completion:nil];
+    [self mys_animateViews:views
+                  duration:duration
+            timingFunction:timingFunction
+                animations:animations
+                completion:nil];
 }
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MYSTimingFunction)timingFunction
-             animations:(void (^)(void))animations
-             completion:(MYSAnimationCompletionBlock)completion
++ (void)mys_animateViews:(NSArray *)views
+                duration:(NSTimeInterval)duration
+          timingFunction:(MYSTimingFunction)timingFunction
+              animations:(void (^)(void))animations
+              completion:(MYSAnimationCompletionBlock)completion
 {
-    [self mt_animateViews:views
-                 duration:duration
-                  options:0
-           timingFunction:timingFunction
-               animations:animations
-               completion:completion];
+    [self mys_animateViews:views
+                  duration:duration
+                   options:0
+            timingFunction:timingFunction
+                animations:animations
+                completion:completion];
 }
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-                options:(UIViewAnimationOptions)options
-         timingFunction:(MYSTimingFunction)timingFunction
-             animations:(void (^)(void))animations
-             completion:(MYSAnimationCompletionBlock)completion
++ (void)mys_animateViews:(NSArray *)views
+                duration:(NSTimeInterval)duration
+                 options:(UIViewAnimationOptions)options
+          timingFunction:(MYSTimingFunction)timingFunction
+              animations:(void (^)(void))animations
+              completion:(MYSAnimationCompletionBlock)completion
 {
-    [self mt_animateViews:views
-                 duration:duration
-                  options:options
-           timingFunction:timingFunction
-             exaggeration:MYSAnimationExaggerationDefault
-               animations:animations
-               completion:completion];
+    [self mys_animateViews:views
+                  duration:duration
+                   options:options
+            timingFunction:timingFunction
+              exaggeration:MYSAnimationExaggerationDefault
+                animations:animations
+                completion:completion];
 }
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-                options:(UIViewAnimationOptions)options
-         timingFunction:(MYSTimingFunction)timingFunction
-           exaggeration:(CGFloat)exaggeration
-             animations:(void (^)(void))animations
-             completion:(MYSAnimationCompletionBlock)completion
++ (void)mys_animateViews:(NSArray *)views
+                duration:(NSTimeInterval)duration
+                 options:(UIViewAnimationOptions)options
+          timingFunction:(MYSTimingFunction)timingFunction
+            exaggeration:(CGFloat)exaggeration
+              animations:(void (^)(void))animations
+              completion:(MYSAnimationCompletionBlock)completion
 {
     assert([views count] > 0);
     assert(duration > 0);
@@ -137,7 +144,7 @@ static const char completionBlockKey;
             [view addAnimation:keyframeAnimation forKey:@"position"];
         }
 
-
+        // TODO: does not interpolate rotation correctly
         if (!CGAffineTransformEqualToTransform(view.startTransform, view.transform)) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"transform";
@@ -146,8 +153,8 @@ static const char completionBlockKey;
             keyframeAnimation.delegate              = completionReceiver;
             keyframeAnimation.values                = [self transformValuesWithDuration:duration
                                                                                function:timingFunction
-                                                                                   from:view.startTransform
-                                                                                     to:view.transform
+                                                                                   from:CATransform3DMakeAffineTransform(view.startTransform)
+                                                                                     to:CATransform3DMakeAffineTransform(view.transform)
                                                                            exaggeration:exaggeration];
             [view addAnimation:keyframeAnimation forKey:@"transform"];
         }
@@ -155,7 +162,7 @@ static const char completionBlockKey;
 
         if (view.startAlpha != view.alpha) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
-            keyframeAnimation.keyPath               = @"alpha";
+            keyframeAnimation.keyPath               = @"opacity";
             keyframeAnimation.duration              = duration;
             keyframeAnimation.calculationMode       = kCAAnimationLinear;
             keyframeAnimation.delegate              = completionReceiver;
@@ -164,23 +171,53 @@ static const char completionBlockKey;
                                                                                from:view.startAlpha
                                                                                  to:view.alpha
                                                                        exaggeration:exaggeration];
-            [view addAnimation:keyframeAnimation forKey:@"alpha"];
+            [view addAnimation:keyframeAnimation forKey:@"opacity"];
         }
 
-        
-//        if (![view.startBackgroundColor isEqual:view.backgroundColor]) {
-//            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
-//            keyframeAnimation.duration              = duration;
-//            keyframeAnimation.calculationMode       = kCAAnimationLinear;
-//            keyframeAnimation.delegate              = completionReceiver;
-//            keyframeAnimation.values                = [self colorValuesWithDuration:duration
-//                                                                           function:timingFunction
-//                                                                               from:view.startBackgroundColor
-//                                                                                 to:view.backgroundColor];
-//            [view addAnimation:keyframeAnimation forKey:@"backgroundColor"];
-//        }
-    }
+        if (view.startRotationX != view.mys_rotationX) {
+            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
+            keyframeAnimation.keyPath               = @"transform.rotation.x";
+            keyframeAnimation.duration              = duration;
+            keyframeAnimation.calculationMode       = kCAAnimationLinear;
+            keyframeAnimation.delegate              = completionReceiver;
+            keyframeAnimation.values                = [self floatValuesWithDuration:duration
+                                                                           function:timingFunction
+                                                                               from:view.startRotationX
+                                                                                 to:view.mys_rotationX
+                                                                       exaggeration:exaggeration];
+            [view addAnimation:keyframeAnimation forKey:@"transform.rotation.x"];
+        }
 
+        if (view.startRotationY != view.mys_rotationY) {
+            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
+            keyframeAnimation.keyPath               = @"transform.rotation.y";
+            keyframeAnimation.duration              = duration;
+            keyframeAnimation.calculationMode       = kCAAnimationLinear;
+            keyframeAnimation.delegate              = completionReceiver;
+            keyframeAnimation.values                = [self floatValuesWithDuration:duration
+                                                                           function:timingFunction
+                                                                               from:view.startRotationY
+                                                                                 to:view.mys_rotationY
+                                                                       exaggeration:exaggeration];
+            [view addAnimation:keyframeAnimation forKey:@"transform.rotation.y"];
+        }
+
+        if (view.startRotationZ != view.mys_rotationZ) {
+            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
+            keyframeAnimation.keyPath               = @"transform.rotation.z";
+            keyframeAnimation.duration              = duration;
+            keyframeAnimation.rotationMode          = kCAAnimationRotateAuto;
+            keyframeAnimation.calculationMode       = kCAAnimationLinear;
+            keyframeAnimation.delegate              = completionReceiver;
+            keyframeAnimation.values                = [self floatValuesWithDuration:duration
+                                                                           function:timingFunction
+                                                                               from:view.startRotationZ
+                                                                                 to:view.mys_rotationZ
+                                                                       exaggeration:exaggeration];
+            [view addAnimation:keyframeAnimation forKey:@"transform.rotation.z"];
+        }
+
+    }
 }
 
 
@@ -203,12 +240,14 @@ static const char completionBlockKey;
 
 - (void)takeStartSnapshot
 {
-    self.startFrame             = self.frame;
     self.startBounds            = self.bounds;
     self.startCenter            = self.center;
     self.startTransform         = self.transform;
     self.startAlpha             = self.alpha;
-    self.startBackgroundColor   = self.backgroundColor;
+    self.start3DTransform       = self.layer.transform;
+    self.startRotationX         = self.mys_rotationX;
+    self.startRotationY         = self.mys_rotationY;
+    self.startRotationZ         = self.mys_rotationZ;
 }
 
 + (NSArray *)rectValuesWithDuration:(NSTimeInterval)duration
@@ -270,8 +309,8 @@ static const char completionBlockKey;
 
 + (NSArray *)transformValuesWithDuration:(NSTimeInterval)duration
                                 function:(MYSTimingFunction)timingFuction
-                                    from:(CGAffineTransform)fromTransform
-                                      to:(CGAffineTransform)toTransform
+                                    from:(CATransform3D)fromTransform
+                                      to:(CATransform3D)toTransform
                             exaggeration:(CGFloat)exaggeration
 {
     duration                *= second;
@@ -284,15 +323,27 @@ static const char completionBlockKey;
     for (NSInteger i = 0; i < steps; i++) {
         CGFloat v           = timingFuction(duration * progress, 0, 1, duration, exaggeration);
 
-        CGAffineTransform transform = CGAffineTransformIdentity;
-        transform.a         = fromTransform.a     + (v * (toTransform.a      - fromTransform.a));
-        transform.b         = fromTransform.b     + (v * (toTransform.b      - fromTransform.b));
-        transform.c         = fromTransform.c     + (v * (toTransform.c      - fromTransform.c));
-        transform.d         = fromTransform.d     + (v * (toTransform.d      - fromTransform.d));
-        transform.tx        = fromTransform.tx    + (v * (toTransform.tx     - fromTransform.tx));
-        transform.ty        = fromTransform.ty    + (v * (toTransform.ty     - fromTransform.ty));
 
-        [values addObject:[NSValue valueWithCGAffineTransform:transform]];
+
+        CATransform3D transform = CATransform3DIdentity;
+        transform.m11           = fromTransform.m11 + (v * (toTransform.m11 - fromTransform.m11 ));
+        transform.m12           = fromTransform.m12 + (v * (toTransform.m12 - fromTransform.m12 ));
+        transform.m13           = fromTransform.m13 + (v * (toTransform.m13 - fromTransform.m13 ));
+        transform.m14           = fromTransform.m14 + (v * (toTransform.m14 - fromTransform.m14 ));
+        transform.m21           = fromTransform.m21 + (v * (toTransform.m21 - fromTransform.m21 ));
+        transform.m22           = fromTransform.m22 + (v * (toTransform.m22 - fromTransform.m22 ));
+        transform.m23           = fromTransform.m23 + (v * (toTransform.m23 - fromTransform.m23 ));
+        transform.m24           = fromTransform.m24 + (v * (toTransform.m24 - fromTransform.m24 ));
+        transform.m31           = fromTransform.m31 + (v * (toTransform.m31 - fromTransform.m31 ));
+        transform.m32           = fromTransform.m32 + (v * (toTransform.m32 - fromTransform.m32 ));
+        transform.m33           = fromTransform.m33 + (v * (toTransform.m33 - fromTransform.m33 ));
+        transform.m34           = fromTransform.m34 + (v * (toTransform.m34 - fromTransform.m34 ));
+        transform.m41           = fromTransform.m41 + (v * (toTransform.m41 - fromTransform.m41 ));
+        transform.m42           = fromTransform.m42 + (v * (toTransform.m42 - fromTransform.m42 ));
+        transform.m43           = fromTransform.m43 + (v * (toTransform.m43 - fromTransform.m43 ));
+        transform.m44           = fromTransform.m44 + (v * (toTransform.m44 - fromTransform.m44 ));
+
+        [values addObject:[NSValue valueWithCATransform3D:transform]];
 
         progress += increment;
     }
@@ -327,49 +378,6 @@ static const char completionBlockKey;
     return values;
 }
 
-+ (NSArray *)colorValuesWithDuration:(NSTimeInterval)duration
-                            function:(MYSTimingFunction)timingFuction
-                                from:(UIColor *)fromColor
-                                  to:(UIColor *)toColor
-                        exaggeration:(CGFloat)exaggeration
-{
-    duration                *= second;
-    exaggeration            = [self exaggerationEnumToFloat:exaggeration];
-    NSInteger steps         = (NSInteger)ceil(fps * duration) + 2;
-	NSMutableArray *values  = [NSMutableArray arrayWithCapacity:steps];
-    CGFloat increment       = 1.0 / (steps - 1);
-    CGFloat progress        = 0.0;
-
-    for (NSInteger i = 0; i < steps; i++) {
-        CGFloat v           = timingFuction(duration * progress, 0, 1, duration, exaggeration);
-
-        CGFloat fromRed     = 0;
-        CGFloat fromGreen   = 0;
-        CGFloat fromBlue    = 0;
-        CGFloat fromAlpha   = 0;
-        [toColor getRed:&fromRed green:&fromGreen blue:&fromBlue alpha:&fromAlpha];
-
-        CGFloat toRed       = 0;
-        CGFloat toGreen     = 0;
-        CGFloat toBlue      = 0;
-        CGFloat toAlpha     = 0;
-        [toColor getRed:&toRed green:&toGreen blue:&toBlue alpha:&toAlpha];
-
-
-        CGFloat red         = fromRed   + (v * (toRed   - fromRed));
-        CGFloat green       = fromGreen + (v * (toGreen - fromGreen));
-        CGFloat blue        = fromBlue  + (v * (toBlue  - fromBlue));
-        CGFloat alpha       = fromAlpha + (v * (toAlpha - fromAlpha));
-        UIColor *color      = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
-
-        [values addObject:color];
-
-        progress += increment;
-    }
-    
-    return values;
-}
-
 - (void)addAnimation:(CAKeyframeAnimation *)animation forKey:(NSString *)key
 {
     if ([key isEqualToString:@"bounds"]) {
@@ -388,19 +396,31 @@ static const char completionBlockKey;
         CGAffineTransform newTransform  = self.transform;
         self.transform                  = self.startTransform;
         [self.layer addAnimation:animation forKey:key];
-        self.transform                  = newTransform;
+        self.layer.transform            = CATransform3DMakeAffineTransform(newTransform);
     }
-    else if ([key isEqualToString:@"alpha"]) {
+    else if ([key isEqualToString:@"opacity"]) {
         CGFloat newAlpha                = self.alpha;
         self.alpha                      = self.startAlpha;
         [self.layer addAnimation:animation forKey:key];
         self.layer.opacity              = newAlpha;
     }
-    else if ([key isEqualToString:@"backgroundColor"]) {
-        UIColor *newBackgroundColor     = self.backgroundColor;
-        self.backgroundColor            = self.startBackgroundColor;
+    else if ([key isEqualToString:@"transform.rotation.x"]) {
+        CGFloat newRotation             = self.mys_rotationX;
+        self.mys_rotationX              = self.startRotationX;
         [self.layer addAnimation:animation forKey:key];
-        self.backgroundColor            = newBackgroundColor;
+        self.layer.transform            = CATransform3DMakeRotation(newRotation, 1, 0, 0);
+    }
+    else if ([key isEqualToString:@"transform.rotation.y"]) {
+        CGFloat newRotation             = self.mys_rotationY;
+        self.mys_rotationY              = self.startRotationY;
+        [self.layer addAnimation:animation forKey:key];
+        self.layer.transform            = CATransform3DMakeRotation(newRotation, 0, 1, 0);
+    }
+    else if ([key isEqualToString:@"transform.rotation.z"]) {
+        CGFloat newRotation             = self.mys_rotationZ;
+        self.mys_rotationZ              = self.startRotationZ;
+        [self.layer addAnimation:animation forKey:key];
+        self.layer.transform            = CATransform3DMakeRotation(newRotation, 0, 0, 1);
     }
 }
 
@@ -432,20 +452,65 @@ static const char completionBlockKey;
 
 #pragma mark - Added Properties
 
-- (void)setStartFrame:(CGRect)startFrame
+- (void)setMys_rotationX:(CGFloat)rotationX
 {
-    objc_setAssociatedObject(self, &startFrameKey, [NSValue valueWithCGRect:startFrame], OBJC_ASSOCIATION_ASSIGN);
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.layer.transform = CATransform3DMakeRotation(rotationX, 1, 0, 0);
+    [CATransaction commit];
+
+    objc_setAssociatedObject(self, &rotationXKey, @(rotationX), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CGRect)startFrame
+- (CGFloat)mys_rotationX
 {
-    NSValue *value = objc_getAssociatedObject(self, &startFrameKey);
-    return value ? [value CGRectValue] : CGRectZero;
+    NSNumber *value = objc_getAssociatedObject(self, &rotationXKey);
+    return value ? [value floatValue] : 0;
 }
+
+- (void)setMys_rotationY:(CGFloat)rotationY
+{
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.layer.transform = CATransform3DMakeRotation(rotationY, 0, 1, 0);
+    [CATransaction commit];
+
+    objc_setAssociatedObject(self, &rotationYKey, @(rotationY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)mys_rotationY
+{
+    NSNumber *value = objc_getAssociatedObject(self, &rotationYKey);
+    return value ? [value floatValue] : 0;
+}
+
+- (void)setMys_rotationZ:(CGFloat)rotationZ
+{
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.layer.transform = CATransform3DMakeRotation(rotationZ, 0, 0, 1);
+    [CATransaction commit];
+
+    objc_setAssociatedObject(self, &rotationZKey, @(rotationZ), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)mys_rotationZ
+{
+    NSNumber *value = objc_getAssociatedObject(self, &rotationYKey);
+    return value ? [value floatValue] : 0;
+}
+
+
+
+
+
+
+
+#pragma mark (private)
 
 - (void)setStartBounds:(CGRect)startBounds
 {
-    objc_setAssociatedObject(self, &startBoundsKey, [NSValue valueWithCGRect:startBounds], OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &startBoundsKey, [NSValue valueWithCGRect:startBounds], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGRect)startBounds
@@ -456,7 +521,7 @@ static const char completionBlockKey;
 
 - (void)setStartCenter:(CGPoint)startCenter
 {
-    objc_setAssociatedObject(self, &startCenterKey, [NSValue valueWithCGPoint:startCenter], OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &startCenterKey, [NSValue valueWithCGPoint:startCenter], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGPoint)startCenter
@@ -467,7 +532,7 @@ static const char completionBlockKey;
 
 - (void)setStartTransform:(CGAffineTransform)startTransform
 {
-    objc_setAssociatedObject(self, &startTransformKey, [NSValue valueWithCGAffineTransform:startTransform], OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &startTransformKey, [NSValue valueWithCGAffineTransform:startTransform], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGAffineTransform)startTransform
@@ -478,23 +543,13 @@ static const char completionBlockKey;
 
 - (void)setStartAlpha:(CGFloat)startAlpha
 {
-    objc_setAssociatedObject(self, &startAlphaKey, @(startAlpha), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &startAlphaKey, @(startAlpha), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)startAlpha
 {
     NSNumber *value = objc_getAssociatedObject(self, &startAlphaKey);
     return value ? [value floatValue] : 1;
-}
-
-- (void)setStartBackgroundColor:(UIColor *)startBackgroundColor
-{
-    objc_setAssociatedObject(self, &startBackgroundColorKey, startBackgroundColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (UIColor *)startBackgroundColor
-{
-    return objc_getAssociatedObject(self, &startBackgroundColorKey);
 }
 
 - (void)setCompletionBlock:(MYSAnimationCompletionBlock)completionBlock
@@ -507,6 +562,49 @@ static const char completionBlockKey;
     return objc_getAssociatedObject(self, &completionBlockKey);
 }
 
+- (void)setStart3DTransform:(CATransform3D)start3DTransform
+{
+    objc_setAssociatedObject(self, &start3DTransform, [NSValue valueWithCATransform3D:start3DTransform], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CATransform3D)start3DTransform
+{
+    NSValue *value = objc_getAssociatedObject(self, &startTransformKey);
+    return value ? [value CATransform3DValue] : CATransform3DIdentity;
+}
+
+- (void)setStartRotationX:(CGFloat)startRotationX
+{
+    objc_setAssociatedObject(self, &startRotationXKey, @(startRotationX), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)startRotationX
+{
+    NSNumber *value = objc_getAssociatedObject(self, &startRotationXKey);
+    return value ? [value floatValue] : 0;
+}
+
+- (void)setStartRotationY:(CGFloat)startRotationY
+{
+    objc_setAssociatedObject(self, &startRotationYKey, @(startRotationY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)startRotationY
+{
+    NSNumber *value = objc_getAssociatedObject(self, &startRotationYKey);
+    return value ? [value floatValue] : 0;
+}
+
+- (void)setStartRotationZ:(CGFloat)startRotationZ
+{
+    objc_setAssociatedObject(self, &startRotationZKey, @(startRotationZ), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)startRotationZ
+{
+    NSNumber *value = objc_getAssociatedObject(self, &startRotationYKey);
+    return value ? [value floatValue] : 0;
+}
 
 
 

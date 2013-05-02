@@ -145,20 +145,6 @@
     <resources>
         <image name="logo.png" width="542" height="575"/>
     </resources>
-    <classes>
-        <class className="MYSViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MYSViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="durationChanged:"/>
-                <relationship kind="action" name="endScaleChanged:"/>
-                <relationship kind="action" name="endXChanged:"/>
-                <relationship kind="action" name="endYChanged:"/>
-                <relationship kind="action" name="exaggerationChanged:"/>
-                <relationship kind="outlet" name="logoImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -10,7 +10,6 @@
 #import "UIView+MYSAnimation.h"
 
 
-
 @interface MYSViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak,   nonatomic) IBOutlet UITableView  *tableView;
 @property (weak,   nonatomic) IBOutlet UIImageView  *logoImageView;
@@ -36,9 +35,11 @@
     _timingFuction  = kMYSEaseInQuad;
     _duration       = 1;
     _exaggeration   = 1.7;
-    _endY           = 500;
-    _endX           = 139;
+    _endY           = 0;
+    _endX           = 0;
     _endScale       = 1;
+    _endRotation    = 0;
+    _endAlpha       = 1;
 }
 
 
@@ -135,22 +136,24 @@
 
 - (void)animate
 {
-    _logoImageView.frame = _startFrame;
+    _logoImageView.transform    = CGAffineTransformIdentity;
+    _logoImageView.frame        = _startFrame;
+    _logoImageView.alpha        = 1;
 
-    [UIView mt_animateViews:@[_logoImageView]
-                   duration:_duration
-                    options:0
-             timingFunction:_timingFuction
-               exaggeration:_exaggeration
-                 animations:^{
-                     CGRect r                   = _logoImageView.frame;
-                     r.origin.x                 = _endX;
-                     r.origin.y                 = _endY;
-                     _logoImageView.frame       = [self scaledRect:r];
-                     _logoImageView.alpha       = _endAlpha;
-//                     _logoImageView.transform   = CGAffineTransformMakeRotation(_endRotation);
-                 } completion:^{
-                 }];
+    [UIView mys_animateViews:@[_logoImageView]
+                    duration:_duration
+                     options:0
+              timingFunction:_timingFuction
+                exaggeration:_exaggeration
+                  animations:^{
+//                     CGRect r                       = _logoImageView.frame;
+//                     r.origin.x                     += _endX;
+//                     r.origin.y                     += _endY;
+//                     _logoImageView.frame           = [self scaledRect:r];
+//                     _logoImageView.alpha           = _endAlpha;
+                      _logoImageView.mys_rotationZ  = mys_degreesToRadians(_endRotation);
+                  } completion:^{
+                  }];
 }
 
 - (NSArray *)functionMap
