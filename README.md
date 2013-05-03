@@ -12,6 +12,10 @@ In your Podfile, add this line:
 
     pod "MTAnimation"
 
+Then add the import:
+
+    #import <UIView+MTAnimation.h>
+
 ## Example App
 
 Clone the repo (or download [the zip](https://github.com/mysterioustrousers/MTAnimation/archive/master.zip)) and run the iPad demo app to play around.

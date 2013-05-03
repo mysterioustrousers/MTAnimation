@@ -220,11 +220,11 @@ static const char completionBlockKey;
                                  to:(CGRect)toRect
                        exaggeration:(CGFloat)exaggeration
 {
-    duration                *= second;
     NSInteger steps         = (NSInteger)ceil(fps * duration) + 2;
 	NSMutableArray *values  = [NSMutableArray arrayWithCapacity:steps];
     CGFloat increment       = 1.0 / (steps - 1);
     CGFloat progress        = 0.0;
+    duration                *= second;
 
     for (NSInteger i = 0; i < steps; i++) {
         CGFloat v           = timingFuction(duration * progress, 0, 1, duration, exaggeration);
@@ -249,12 +249,12 @@ static const char completionBlockKey;
                                   to:(CGPoint)toPoint
                         exaggeration:(CGFloat)exaggeration
 {
-    duration                *= second;
     exaggeration            = [self exaggerationEnumToFloat:exaggeration];
     NSInteger steps         = (NSInteger)ceil(fps * duration) + 2;
 	NSMutableArray *values  = [NSMutableArray arrayWithCapacity:steps];
     CGFloat increment       = 1.0 / (steps - 1);
     CGFloat progress        = 0.0;
+    duration                *= second;
 
     for (NSInteger i = 0; i < steps; i++) {
         CGFloat v           = timingFuction(duration * progress, 0, 1, duration, exaggeration);
@@ -277,12 +277,12 @@ static const char completionBlockKey;
                                       to:(CATransform3D)toTransform
                             exaggeration:(CGFloat)exaggeration
 {
-    duration                *= second;
     exaggeration            = [self exaggerationEnumToFloat:exaggeration];
     NSInteger steps         = (NSInteger)ceil(fps * duration) + 2;
 	NSMutableArray *values  = [NSMutableArray arrayWithCapacity:steps];
     CGFloat increment       = 1.0 / (steps - 1);
     CGFloat progress        = 0.0;
+    duration                *= second;
 
     for (NSInteger i = 0; i < steps; i++) {
         CGFloat v           = timingFuction(duration * progress, 0, 1, duration, exaggeration);
@@ -305,12 +305,12 @@ static const char completionBlockKey;
                                   to:(CGFloat)toFloat
                         exaggeration:(CGFloat)exaggeration
 {
-    duration                *= second;
     exaggeration            = [self exaggerationEnumToFloat:exaggeration];
     NSInteger steps         = (NSInteger)ceil(fps * duration) + 2;
 	NSMutableArray *values  = [NSMutableArray arrayWithCapacity:steps];
     CGFloat increment       = 1.0 / (steps - 1);
     CGFloat progress        = 0.0;
+    duration                *= second;
 
     for (NSInteger i = 0; i < steps; i++) {
         CGFloat v           = timingFuction(duration * progress, 0, 1, duration, exaggeration);
