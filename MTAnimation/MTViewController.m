@@ -163,7 +163,7 @@
                      _logoImageView.frame               = [self scaledRect:r];
                      _logoImageView.alpha               = _endAlpha;
                      CGFloat radians                    = mt_degreesToRadians(_endRotation);
-                     _logoImageView.layer.transform        = CATransform3DMakeRotation(radians, 0, 1, 0);
+                     _logoImageView.layer.transform        = CATransform3DMakeRotation(radians, 0, 0, 1);
                  } completion:nil];
 
 
