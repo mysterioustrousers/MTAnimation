@@ -1,32 +1,32 @@
 //
-//  MYSAnimationTests.m
-//  MYSAnimationTests
+//  MTAnimationTests.m
+//  MTAnimationTests
 //
 //  Created by Adam Kirk on 4/25/13.
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
-#import "MYSAnimationTests.h"
+#import "MTAnimationTests.h"
 
-@implementation MYSAnimationTests
+@implementation MTAnimationTests
 
 - (void)setUp
 {
     [super setUp];
-    
+
     // Set-up code here.
 }
 
 - (void)tearDown
 {
     // Tear-down code here.
-    
+
     [super tearDown];
 }
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in MYSAnimationTests");
+    STFail(@"Unit tests are not implemented yet in MTAnimationTests");
 }
 
 @end

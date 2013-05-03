@@ -1,5 +1,5 @@
 //
-//  MYSTimingFunctions.c
+//  MTTimingFunctions.c
 //  NSBKeyframeAnimation
 //
 //  Created by Nacho Soto on 8/6/12.
@@ -9,100 +9,102 @@
 #include <math.h>
 #include <stdlib.h>
 
-#import "MYSTimingFunctions.h"
+#import "MTTimingFunctions.h"
 
 // source: http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js
 
-double MYSTimingFunctionEaseInQuad(double t, double b, double c, double d, double s)
+// TODO: Apply exaggeration to everything. (currently only applied to some).
+
+double MTTimingFunctionEaseInQuad(double t, double b, double c, double d, double s)
 {
     return c*(t/=d)*t + b;
 }
 
-double MYSTimingFunctionEaseOutQuad(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutQuad(double t, double b, double c, double d, double s)
 {
     return -c *(t/=d)*(t-2) + b;
 }
 
-double MYSTimingFunctionEaseInOutQuad(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutQuad(double t, double b, double c, double d, double s)
 {
     if ((t/=d/2) < 1) return c/2*t*t + b;
     return -c/2 * ((--t)*(t-2) - 1) + b;
 }
 
-double MYSTimingFunctionEaseInCubic(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInCubic(double t, double b, double c, double d, double s)
 {
     return c*(t/=d)*t*t + b;
 }
 
-double MYSTimingFunctionEaseOutCubic(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutCubic(double t, double b, double c, double d, double s)
 {
     return c*((t=t/d-1)*t*t + 1) + b;
 }
 
-double MYSTimingFunctionEaseInOutCubic(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutCubic(double t, double b, double c, double d, double s)
 {
     if ((t/=d/2) < 1) return c/2*t*t*t + b;
     return c/2*((t-=2)*t*t + 2) + b;
 }
 
-double MYSTimingFunctionEaseInQuart(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInQuart(double t, double b, double c, double d, double s)
 {
     return c*(t/=d)*t*t*t + b;
 }
 
-double MYSTimingFunctionEaseOutQuart(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutQuart(double t, double b, double c, double d, double s)
 {
     return -c * ((t=t/d-1)*t*t*t - 1) + b;
 }
 
-double MYSTimingFunctionEaseInOutQuart(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutQuart(double t, double b, double c, double d, double s)
 {
     if ((t/=d/2) < 1) return c/2*t*t*t*t + b;
     return -c/2 * ((t-=2)*t*t*t - 2) + b;
 }
 
-double MYSTimingFunctionEaseInQuint(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInQuint(double t, double b, double c, double d, double s)
 {
     return c*(t/=d)*t*t*t*t + b;
 }
 
-double MYSTimingFunctionEaseOutQuint(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutQuint(double t, double b, double c, double d, double s)
 {
     return c*((t=t/d-1)*t*t*t*t + 1) + b;
 }
 
-double MYSTimingFunctionEaseInOutQuint(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutQuint(double t, double b, double c, double d, double s)
 {
     if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
     return c/2*((t-=2)*t*t*t*t + 2) + b;
 }
 
-double MYSTimingFunctionEaseInSine(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInSine(double t, double b, double c, double d, double s)
 {
     return -c * cos(t/d * (M_PI_2)) + c + b;
 }
 
-double MYSTimingFunctionEaseOutSine(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutSine(double t, double b, double c, double d, double s)
 {
     return c * sin(t/d * (M_PI_2)) + b;
 }
 
-double MYSTimingFunctionEaseInOutSine(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutSine(double t, double b, double c, double d, double s)
 {
     return -c/2 * (cos(M_PI*t/d) - 1) + b;
 }
 
-double MYSTimingFunctionEaseInExpo(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInExpo(double t, double b, double c, double d, double s)
 {
     return (t==0) ? b : c * pow(2, 10 * (t/d - 1)) + b;
 }
 
-double MYSTimingFunctionEaseOutExpo(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutExpo(double t, double b, double c, double d, double s)
 {
     return (t==d) ? b+c : c * (-pow(2, -10 * t/d) + 1) + b;
 }
 
-double MYSTimingFunctionEaseInOutExpo(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutExpo(double t, double b, double c, double d, double s)
 {
     if (t==0) return b;
     if (t==d) return b+c;
@@ -110,33 +112,33 @@ double MYSTimingFunctionEaseInOutExpo(double t, double b, double c, double d, do
     return c/2 * (-pow(2, -10 * --t) + 2) + b;
 }
 
-double MYSTimingFunctionEaseInCirc(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInCirc(double t, double b, double c, double d, double s)
 {
     return -c * (sqrt(1 - (t/=d)*t) - 1) + b;
 }
 
-double MYSTimingFunctionEaseOutCirc(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutCirc(double t, double b, double c, double d, double s)
 {
     return c * sqrt(1 - (t=t/d-1)*t) + b;
 }
 
-double MYSTimingFunctionEaseInOutCirc(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutCirc(double t, double b, double c, double d, double s)
 {
     if ((t/=d/2) < 1) return -c/2 * (sqrt(1 - t*t) - 1) + b;
     return c/2 * (sqrt(1 - (t-=2)*t) + 1) + b;
 }
 
-double MYSTimingFunctionEaseInElastic(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInElastic(double t, double b, double c, double d, double s)
 {
     double p=0; double a=c;
-    
+
     if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
     if (a < abs(c)) { a=c; s=p/4; }
     else s = p/(2*M_PI) * asin (c/a);
     return -(a*pow(2,10*(t-=1)) * sin( (t*d-s)*(2*M_PI)/p )) + b;
 }
 
-double MYSTimingFunctionEaseOutElastic(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutElastic(double t, double b, double c, double d, double s)
 {
     double p=0, a=c;
     if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
@@ -145,7 +147,7 @@ double MYSTimingFunctionEaseOutElastic(double t, double b, double c, double d, d
     return a*pow(2,-10*t) * sin( (t*d-s)*(2*M_PI)/p ) + c + b;
 }
 
-double MYSTimingFunctionEaseInOutElastic(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutElastic(double t, double b, double c, double d, double s)
 {
     double p=0, a=c;
     if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
@@ -155,28 +157,28 @@ double MYSTimingFunctionEaseInOutElastic(double t, double b, double c, double d,
     return a*pow(2,-10*(t-=1)) * sin( (t*d-s)*(2*M_PI)/p )*.5 + c + b;
 }
 
-double MYSTimingFunctionEaseInBack(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInBack(double t, double b, double c, double d, double s)
 {
     return c*(t/=d)*t*((s+1)*t - s) + b;
 }
 
-double MYSTimingFunctionEaseOutBack(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutBack(double t, double b, double c, double d, double s)
 {
     return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
 }
 
-double MYSTimingFunctionEaseInOutBack(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutBack(double t, double b, double c, double d, double s)
 {
     if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
     return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
 }
 
-double MYSTimingFunctionEaseInBounce(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInBounce(double t, double b, double c, double d, double s)
 {
-    return c - MYSTimingFunctionEaseOutBounce(d-t, 0, c, d, s) + b;
+    return c - MTTimingFunctionEaseOutBounce(d-t, 0, c, d, s) + b;
 }
 
-double MYSTimingFunctionEaseOutBounce(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseOutBounce(double t, double b, double c, double d, double s)
 {
     if ((t/=d) < (1/2.75)) {
         return c*(7.5625*t*t) + b;
@@ -189,10 +191,10 @@ double MYSTimingFunctionEaseOutBounce(double t, double b, double c, double d, do
     }
 }
 
-double MYSTimingFunctionEaseInOutBounce(double t, double b, double c, double d, double s)
+double MTTimingFunctionEaseInOutBounce(double t, double b, double c, double d, double s)
 {
     if (t < d/2)
-        return MYSTimingFunctionEaseInBounce (t*2, 0, c, d, s) * .5 + b;
+        return MTTimingFunctionEaseInBounce (t*2, 0, c, d, s) * .5 + b;
     else
-        return MYSTimingFunctionEaseOutBounce(t*2-d, 0, c, d, s) * .5 + c*.5 + b;
+        return MTTimingFunctionEaseOutBounce(t*2-d, 0, c, d, s) * .5 + c*.5 + b;
 }

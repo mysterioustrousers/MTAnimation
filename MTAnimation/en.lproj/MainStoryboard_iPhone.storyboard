@@ -7,7 +7,7 @@
         <!--View Controller-->
         <scene sceneID="UYr-NT-ZPL">
             <objects>
-                <viewController id="w6V-Ft-UD3" customClass="MYSViewController" sceneMemberID="viewController">
+                <viewController id="w6V-Ft-UD3" customClass="MTViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IUt-1V-e5E">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -8,26 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		C22CC0D4172A009700EB3CB3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
+		C2A2AC6E17342F0500085235 /* logo-flip.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A2AC6D17342F0500085235 /* logo-flip.png */; };
 		C2AF91441729F564001D44D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C2AF91461729F564001D44D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
 		C2AF91481729F564001D44D5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91471729F564001D44D5 /* CoreGraphics.framework */; };
 		C2AF914E1729F564001D44D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2AF914C1729F564001D44D5 /* InfoPlist.strings */; };
 		C2AF91501729F564001D44D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF914F1729F564001D44D5 /* main.m */; };
-		C2AF91541729F564001D44D5 /* MYSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91531729F564001D44D5 /* MYSAppDelegate.m */; };
+		C2AF91541729F564001D44D5 /* MTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91531729F564001D44D5 /* MTAppDelegate.m */; };
 		C2AF91561729F564001D44D5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91551729F564001D44D5 /* Default.png */; };
 		C2AF91581729F564001D44D5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91571729F564001D44D5 /* Default@2x.png */; };
 		C2AF915A1729F564001D44D5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91591729F564001D44D5 /* Default-568h@2x.png */; };
 		C2AF915D1729F564001D44D5 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2AF915B1729F564001D44D5 /* MainStoryboard_iPhone.storyboard */; };
 		C2AF91601729F564001D44D5 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2AF915E1729F564001D44D5 /* MainStoryboard_iPad.storyboard */; };
-		C2AF91631729F564001D44D5 /* MYSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91621729F564001D44D5 /* MYSViewController.m */; };
+		C2AF91631729F564001D44D5 /* MTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91621729F564001D44D5 /* MTViewController.m */; };
 		C2AF916B1729F564001D44D5 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF916A1729F564001D44D5 /* SenTestingKit.framework */; };
 		C2AF916C1729F564001D44D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C2AF916D1729F564001D44D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
 		C2AF91751729F564001D44D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91731729F564001D44D5 /* InfoPlist.strings */; };
-		C2AF91781729F564001D44D5 /* MYSAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91771729F564001D44D5 /* MYSAnimationTests.m */; };
-		C2AF91861729F584001D44D5 /* UIView+MYSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91831729F584001D44D5 /* UIView+MYSAnimation.m */; };
-		C2AF91871729F584001D44D5 /* MYSTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MYSTimingFunctions.c */; };
+		C2AF91781729F564001D44D5 /* MTAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91771729F564001D44D5 /* MTAnimationTests.m */; };
+		C2AF91861729F584001D44D5 /* UIView+MTAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91831729F584001D44D5 /* UIView+MTAnimation.m */; };
+		C2AF91871729F584001D44D5 /* MTTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MTTimingFunctions.c */; };
 		C2AF91891729F5A1001D44D5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91881729F5A1001D44D5 /* logo.png */; };
+		C2B71A9817341C9B00E508B8 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,40 +38,44 @@
 			containerPortal = C2AF91381729F564001D44D5 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = C2AF913F1729F564001D44D5;
-			remoteInfo = MYSAnimation;
+			remoteInfo = MTAnimation;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		C2AF91401729F564001D44D5 /* MYSAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYSAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2A2AC6C1734243900085235 /* MTAnimationTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAnimationTypes.h; sourceTree = "<group>"; };
+		C2A2AC6D17342F0500085235 /* logo-flip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-flip.png"; sourceTree = "<group>"; };
+		C2AF91401729F564001D44D5 /* MTAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2AF91431729F564001D44D5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C2AF91451729F564001D44D5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C2AF91471729F564001D44D5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		C2AF914B1729F564001D44D5 /* MYSAnimation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MYSAnimation-Info.plist"; sourceTree = "<group>"; };
+		C2AF914B1729F564001D44D5 /* MTAnimation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MTAnimation-Info.plist"; sourceTree = "<group>"; };
 		C2AF914D1729F564001D44D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C2AF914F1729F564001D44D5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C2AF91511729F564001D44D5 /* MYSAnimation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MYSAnimation-Prefix.pch"; sourceTree = "<group>"; };
-		C2AF91521729F564001D44D5 /* MYSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MYSAppDelegate.h; sourceTree = "<group>"; };
-		C2AF91531729F564001D44D5 /* MYSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MYSAppDelegate.m; sourceTree = "<group>"; };
+		C2AF91511729F564001D44D5 /* MTAnimation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MTAnimation-Prefix.pch"; sourceTree = "<group>"; };
+		C2AF91521729F564001D44D5 /* MTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAppDelegate.h; sourceTree = "<group>"; };
+		C2AF91531729F564001D44D5 /* MTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTAppDelegate.m; sourceTree = "<group>"; };
 		C2AF91551729F564001D44D5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		C2AF91571729F564001D44D5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		C2AF91591729F564001D44D5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		C2AF915C1729F564001D44D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		C2AF915F1729F564001D44D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		C2AF91611729F564001D44D5 /* MYSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MYSViewController.h; sourceTree = "<group>"; };
-		C2AF91621729F564001D44D5 /* MYSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MYSViewController.m; sourceTree = "<group>"; };
-		C2AF91691729F564001D44D5 /* MYSAnimationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MYSAnimationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2AF91611729F564001D44D5 /* MTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTViewController.h; sourceTree = "<group>"; };
+		C2AF91621729F564001D44D5 /* MTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTViewController.m; sourceTree = "<group>"; };
+		C2AF91691729F564001D44D5 /* MTAnimationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MTAnimationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2AF916A1729F564001D44D5 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		C2AF91721729F564001D44D5 /* MYSAnimationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MYSAnimationTests-Info.plist"; sourceTree = "<group>"; };
+		C2AF91721729F564001D44D5 /* MTAnimationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MTAnimationTests-Info.plist"; sourceTree = "<group>"; };
 		C2AF91741729F564001D44D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C2AF91761729F564001D44D5 /* MYSAnimationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MYSAnimationTests.h; sourceTree = "<group>"; };
-		C2AF91771729F564001D44D5 /* MYSAnimationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MYSAnimationTests.m; sourceTree = "<group>"; };
-		C2AF91821729F584001D44D5 /* UIView+MYSAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MYSAnimation.h"; sourceTree = "<group>"; };
-		C2AF91831729F584001D44D5 /* UIView+MYSAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MYSAnimation.m"; sourceTree = "<group>"; };
-		C2AF91841729F584001D44D5 /* MYSTimingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYSTimingFunctions.h; sourceTree = "<group>"; };
-		C2AF91851729F584001D44D5 /* MYSTimingFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MYSTimingFunctions.c; sourceTree = "<group>"; };
+		C2AF91761729F564001D44D5 /* MTAnimationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAnimationTests.h; sourceTree = "<group>"; };
+		C2AF91771729F564001D44D5 /* MTAnimationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTAnimationTests.m; sourceTree = "<group>"; };
+		C2AF91821729F584001D44D5 /* UIView+MTAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MTAnimation.h"; sourceTree = "<group>"; };
+		C2AF91831729F584001D44D5 /* UIView+MTAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MTAnimation.m"; sourceTree = "<group>"; };
+		C2AF91841729F584001D44D5 /* MTTimingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTimingFunctions.h; sourceTree = "<group>"; };
+		C2AF91851729F584001D44D5 /* MTTimingFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MTTimingFunctions.c; sourceTree = "<group>"; };
 		C2AF91881729F5A1001D44D5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MTMatrixInterpolation.c; sourceTree = "<group>"; };
+		C2B71A9917341CB100E508B8 /* MTMatrixInterpolation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTMatrixInterpolation.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +106,8 @@
 		C2AF91371729F564001D44D5 = {
 			isa = PBXGroup;
 			children = (
-				C2AF91491729F564001D44D5 /* MYSAnimation */,
-				C2AF91701729F564001D44D5 /* MYSAnimationTests */,
+				C2AF91491729F564001D44D5 /* MTAnimation */,
+				C2AF91701729F564001D44D5 /* MTAnimationTests */,
 				C2AF91421729F564001D44D5 /* Frameworks */,
 				C2AF91411729F564001D44D5 /* Products */,
 			);
@@ -110,8 +116,8 @@
 		C2AF91411729F564001D44D5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C2AF91401729F564001D44D5 /* MYSAnimation.app */,
-				C2AF91691729F564001D44D5 /* MYSAnimationTests.octest */,
+				C2AF91401729F564001D44D5 /* MTAnimation.app */,
+				C2AF91691729F564001D44D5 /* MTAnimationTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,29 +134,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C2AF91491729F564001D44D5 /* MYSAnimation */ = {
+		C2AF91491729F564001D44D5 /* MTAnimation */ = {
 			isa = PBXGroup;
 			children = (
 				C2AF915B1729F564001D44D5 /* MainStoryboard_iPhone.storyboard */,
 				C2AF915E1729F564001D44D5 /* MainStoryboard_iPad.storyboard */,
-				C2AF91521729F564001D44D5 /* MYSAppDelegate.h */,
-				C2AF91531729F564001D44D5 /* MYSAppDelegate.m */,
-				C2AF91611729F564001D44D5 /* MYSViewController.h */,
-				C2AF91621729F564001D44D5 /* MYSViewController.m */,
-				C2AF91811729F574001D44D5 /* MYSAnimation */,
+				C2AF91521729F564001D44D5 /* MTAppDelegate.h */,
+				C2AF91531729F564001D44D5 /* MTAppDelegate.m */,
+				C2AF91611729F564001D44D5 /* MTViewController.h */,
+				C2AF91621729F564001D44D5 /* MTViewController.m */,
+				C2AF91811729F574001D44D5 /* MTAnimation */,
 				C2AF914A1729F564001D44D5 /* Supporting Files */,
 			);
-			path = MYSAnimation;
+			path = MTAnimation;
 			sourceTree = "<group>";
 		};
 		C2AF914A1729F564001D44D5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				C2AF91881729F5A1001D44D5 /* logo.png */,
-				C2AF914B1729F564001D44D5 /* MYSAnimation-Info.plist */,
+				C2A2AC6D17342F0500085235 /* logo-flip.png */,
+				C2AF914B1729F564001D44D5 /* MTAnimation-Info.plist */,
 				C2AF914C1729F564001D44D5 /* InfoPlist.strings */,
 				C2AF914F1729F564001D44D5 /* main.m */,
-				C2AF91511729F564001D44D5 /* MYSAnimation-Prefix.pch */,
+				C2AF91511729F564001D44D5 /* MTAnimation-Prefix.pch */,
 				C2AF91551729F564001D44D5 /* Default.png */,
 				C2AF91571729F564001D44D5 /* Default@2x.png */,
 				C2AF91591729F564001D44D5 /* Default-568h@2x.png */,
@@ -158,42 +165,45 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C2AF91701729F564001D44D5 /* MYSAnimationTests */ = {
+		C2AF91701729F564001D44D5 /* MTAnimationTests */ = {
 			isa = PBXGroup;
 			children = (
-				C2AF91761729F564001D44D5 /* MYSAnimationTests.h */,
-				C2AF91771729F564001D44D5 /* MYSAnimationTests.m */,
+				C2AF91761729F564001D44D5 /* MTAnimationTests.h */,
+				C2AF91771729F564001D44D5 /* MTAnimationTests.m */,
 				C2AF91711729F564001D44D5 /* Supporting Files */,
 			);
-			path = MYSAnimationTests;
+			path = MTAnimationTests;
 			sourceTree = "<group>";
 		};
 		C2AF91711729F564001D44D5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C2AF91721729F564001D44D5 /* MYSAnimationTests-Info.plist */,
+				C2AF91721729F564001D44D5 /* MTAnimationTests-Info.plist */,
 				C2AF91731729F564001D44D5 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C2AF91811729F574001D44D5 /* MYSAnimation */ = {
+		C2AF91811729F574001D44D5 /* MTAnimation */ = {
 			isa = PBXGroup;
 			children = (
-				C2AF91821729F584001D44D5 /* UIView+MYSAnimation.h */,
-				C2AF91831729F584001D44D5 /* UIView+MYSAnimation.m */,
-				C2AF91841729F584001D44D5 /* MYSTimingFunctions.h */,
-				C2AF91851729F584001D44D5 /* MYSTimingFunctions.c */,
+				C2AF91821729F584001D44D5 /* UIView+MTAnimation.h */,
+				C2AF91831729F584001D44D5 /* UIView+MTAnimation.m */,
+				C2AF91841729F584001D44D5 /* MTTimingFunctions.h */,
+				C2AF91851729F584001D44D5 /* MTTimingFunctions.c */,
+				C2B71A9917341CB100E508B8 /* MTMatrixInterpolation.h */,
+				C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */,
+				C2A2AC6C1734243900085235 /* MTAnimationTypes.h */,
 			);
-			name = MYSAnimation;
+			name = MTAnimation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C2AF913F1729F564001D44D5 /* MYSAnimation */ = {
+		C2AF913F1729F564001D44D5 /* MTAnimation */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C2AF917B1729F564001D44D5 /* Build configuration list for PBXNativeTarget "MYSAnimation" */;
+			buildConfigurationList = C2AF917B1729F564001D44D5 /* Build configuration list for PBXNativeTarget "MTAnimation" */;
 			buildPhases = (
 				C2AF913C1729F564001D44D5 /* Sources */,
 				C2AF913D1729F564001D44D5 /* Frameworks */,
@@ -203,14 +213,14 @@
 			);
 			dependencies = (
 			);
-			name = MYSAnimation;
-			productName = MYSAnimation;
-			productReference = C2AF91401729F564001D44D5 /* MYSAnimation.app */;
+			name = MTAnimation;
+			productName = MTAnimation;
+			productReference = C2AF91401729F564001D44D5 /* MTAnimation.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C2AF91681729F564001D44D5 /* MYSAnimationTests */ = {
+		C2AF91681729F564001D44D5 /* MTAnimationTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C2AF917E1729F564001D44D5 /* Build configuration list for PBXNativeTarget "MYSAnimationTests" */;
+			buildConfigurationList = C2AF917E1729F564001D44D5 /* Build configuration list for PBXNativeTarget "MTAnimationTests" */;
 			buildPhases = (
 				C2AF91641729F564001D44D5 /* Sources */,
 				C2AF91651729F564001D44D5 /* Frameworks */,
@@ -222,9 +232,9 @@
 			dependencies = (
 				C2AF916F1729F564001D44D5 /* PBXTargetDependency */,
 			);
-			name = MYSAnimationTests;
-			productName = MYSAnimationTests;
-			productReference = C2AF91691729F564001D44D5 /* MYSAnimationTests.octest */;
+			name = MTAnimationTests;
+			productName = MTAnimationTests;
+			productReference = C2AF91691729F564001D44D5 /* MTAnimationTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -233,11 +243,11 @@
 		C2AF91381729F564001D44D5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = MYS;
+				CLASSPREFIX = MT;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Mysterious Trousers";
 			};
-			buildConfigurationList = C2AF913B1729F564001D44D5 /* Build configuration list for PBXProject "MYSAnimation" */;
+			buildConfigurationList = C2AF913B1729F564001D44D5 /* Build configuration list for PBXProject "MTAnimation" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -249,8 +259,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C2AF913F1729F564001D44D5 /* MYSAnimation */,
-				C2AF91681729F564001D44D5 /* MYSAnimationTests */,
+				C2AF913F1729F564001D44D5 /* MTAnimation */,
+				C2AF91681729F564001D44D5 /* MTAnimationTests */,
 			);
 		};
 /* End PBXProject section */
@@ -267,6 +277,7 @@
 				C2AF915D1729F564001D44D5 /* MainStoryboard_iPhone.storyboard in Resources */,
 				C2AF91601729F564001D44D5 /* MainStoryboard_iPad.storyboard in Resources */,
 				C2AF91891729F5A1001D44D5 /* logo.png in Resources */,
+				C2A2AC6E17342F0500085235 /* logo-flip.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,10 +313,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2AF91501729F564001D44D5 /* main.m in Sources */,
-				C2AF91541729F564001D44D5 /* MYSAppDelegate.m in Sources */,
-				C2AF91631729F564001D44D5 /* MYSViewController.m in Sources */,
-				C2AF91861729F584001D44D5 /* UIView+MYSAnimation.m in Sources */,
-				C2AF91871729F584001D44D5 /* MYSTimingFunctions.c in Sources */,
+				C2AF91541729F564001D44D5 /* MTAppDelegate.m in Sources */,
+				C2AF91631729F564001D44D5 /* MTViewController.m in Sources */,
+				C2AF91861729F584001D44D5 /* UIView+MTAnimation.m in Sources */,
+				C2AF91871729F584001D44D5 /* MTTimingFunctions.c in Sources */,
+				C2B71A9817341C9B00E508B8 /* MTMatrixInterpolation.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,7 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2AF91781729F564001D44D5 /* MYSAnimationTests.m in Sources */,
+				C2AF91781729F564001D44D5 /* MTAnimationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,7 +334,7 @@
 /* Begin PBXTargetDependency section */
 		C2AF916F1729F564001D44D5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C2AF913F1729F564001D44D5 /* MYSAnimation */;
+			target = C2AF913F1729F564001D44D5 /* MTAnimation */;
 			targetProxy = C2AF916E1729F564001D44D5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -427,8 +439,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MYSAnimation/MYSAnimation-Prefix.pch";
-				INFOPLIST_FILE = "MYSAnimation/MYSAnimation-Info.plist";
+				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
+				INFOPLIST_FILE = "MTAnimation/MTAnimation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -439,8 +451,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MYSAnimation/MYSAnimation-Prefix.pch";
-				INFOPLIST_FILE = "MYSAnimation/MYSAnimation-Info.plist";
+				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
+				INFOPLIST_FILE = "MTAnimation/MTAnimation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -450,14 +462,14 @@
 		C2AF917F1729F564001D44D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MYSAnimation.app/MYSAnimation";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MTAnimation.app/MTAnimation";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MYSAnimation/MYSAnimation-Prefix.pch";
-				INFOPLIST_FILE = "MYSAnimationTests/MYSAnimationTests-Info.plist";
+				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
+				INFOPLIST_FILE = "MTAnimationTests/MTAnimationTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -467,14 +479,14 @@
 		C2AF91801729F564001D44D5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MYSAnimation.app/MYSAnimation";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MTAnimation.app/MTAnimation";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MYSAnimation/MYSAnimation-Prefix.pch";
-				INFOPLIST_FILE = "MYSAnimationTests/MYSAnimationTests-Info.plist";
+				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
+				INFOPLIST_FILE = "MTAnimationTests/MTAnimationTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -484,7 +496,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C2AF913B1729F564001D44D5 /* Build configuration list for PBXProject "MYSAnimation" */ = {
+		C2AF913B1729F564001D44D5 /* Build configuration list for PBXProject "MTAnimation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C2AF91791729F564001D44D5 /* Debug */,
@@ -493,7 +505,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C2AF917B1729F564001D44D5 /* Build configuration list for PBXNativeTarget "MYSAnimation" */ = {
+		C2AF917B1729F564001D44D5 /* Build configuration list for PBXNativeTarget "MTAnimation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C2AF917C1729F564001D44D5 /* Debug */,
@@ -502,7 +514,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C2AF917E1729F564001D44D5 /* Build configuration list for PBXNativeTarget "MYSAnimationTests" */ = {
+		C2AF917E1729F564001D44D5 /* Build configuration list for PBXNativeTarget "MTAnimationTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C2AF917F1729F564001D44D5 /* Debug */,
