@@ -5,7 +5,7 @@ The animation library everyone's been waiting for.
 
 Allows you to animate views in your app in the way you're familiar with (e.g. `[UIKit animateWithDuration:animations:]`) but adds 25+ [easing functions](http://easings.net/) (from jQuery) to make your animations more [visceral](http://mysterioustrousers.com/news/2013/3/25/visceral-apps-and-you).
 
-[![Animation Sample](https://github.com/mysterioustrousers/MTAnimation/raw/master/demo.gif)](https://github.com/mysterioustrousers/MTAnimation/raw/master/demo.mov)
+[![Animation Sample](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.gif)](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.mov)
 
 *HELP NEEDED: The best I can do so far is to require an array of views that are changed in the block. If you know of any way to get from a block references to the objects it captures please let me know.*
 
