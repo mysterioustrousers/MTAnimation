@@ -83,6 +83,20 @@
     [self animate];
 }
 
+- (IBAction)endXChanged:(id)sender
+{
+  UISlider *slider = (UISlider *)sender;
+  _endX = slider.value;
+  [self animate];
+}
+
+- (IBAction)endYChanged:(id)sender
+{
+  UISlider *slider = (UISlider *)sender;
+  _endY = slider.value;
+  [self animate];
+}
+
 - (IBAction)endScaleChanged:(id)sender
 {
     UISlider *slider = (UISlider *)sender;
@@ -213,7 +227,7 @@
 {
     static NSArray *functions;
     functions = @[
-                  @{  @"EaseInQuad"     	: [NSValue valueWithPointer:&MTTimingFunctionEaseInQuad       ] },
+                  @{  @"EaseInQuad"         : [NSValue valueWithPointer:&MTTimingFunctionEaseInQuad       ] },
                   @{  @"EaseOutQuad"    	: [NSValue valueWithPointer:&MTTimingFunctionEaseOutQuad      ] },
                   @{  @"EaseInOutQuad"  	: [NSValue valueWithPointer:&MTTimingFunctionEaseInOutQuad    ] },
 
