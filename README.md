@@ -9,7 +9,7 @@ Advantages:
 - Methods very similar to Apple's API.
 - No Swizzling or other dangerous nonsense.
 - No need to mess with keypaths, just change the properties on UIView and you're golden.
-- Proper transform matrix interpolation, so rotations look correct. (I can't find another easing library that does this).
+- Proper transform matrix interpolation, so rotations look correct.
 - Install with cocoapods.
 - Category method properly prefixed.
 
