@@ -13,8 +13,6 @@ Advantages:
 - Install with cocoapods.
 - Category method properly prefixed.
 
-[![Animation Sample](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.gif)](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.mov)
-
 *HELP NEEDED: The best I can do so far is to require an array of views that are changed in the block. If you know of any way to get from a block references to the objects it captures please let me know.*
 
 ## Installation
@@ -26,6 +24,10 @@ In your Podfile, add this line:
 Then add the import:
 
     #import <UIView+MTAnimation.h>
+
+## Preview
+
+[![Animation Sample](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.gif)](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.mov)
 
 ## Example App
 
