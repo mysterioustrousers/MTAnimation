@@ -37,6 +37,12 @@ NS_INLINE MTAnimationRange MTMakeAnimationRange(CGFloat start, CGFloat end) {
 
 
 /**
+ Convenience for creating a default full range MTAnimationRange struct.
+ */
+#define MTAnimationRangeFull MTMakeAnimationRange(0,1)
+
+
+/**
  Completion blocks take no arguments and return void.
  */
 typedef void(^MTAnimationCompletionBlock)();

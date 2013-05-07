@@ -10,7 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 #import "MTMatrixInterpolation.h"
-#import "MTAnimationLayoutManager.h"
 
 
 // is b in the bitmask a
@@ -19,6 +18,8 @@ static inline BOOL inMask(NSUInteger a, NSUInteger b) { return (a & b) == b; }
 static const NSInteger fps      = 60;
 static const NSInteger second   = 1000;
 
+static const char exaggerationKey;
+static const char perspectiveKey;
 static const char startBoundsKey;
 static const char startCenterKey;
 static const char startTransformKey;
@@ -26,7 +27,6 @@ static const char startTransform3DKey;
 static const char startAlphaKey;
 static const char startBackgroundColorKey;
 static const char completionBlockKey;
-static const char layoutManagerKey;
 
 
 
@@ -38,7 +38,6 @@ static const char layoutManagerKey;
 @property (assign, nonatomic) CATransform3D                 startTransform3D;
 @property (assign, nonatomic) CGFloat                       startAlpha;
 @property (strong, nonatomic) MTAnimationCompletionBlock    completionBlock;
-@property (strong, nonatomic) MTAnimationLayoutManager      *layoutManager;
 @end
 
 
@@ -67,7 +66,7 @@ static const char layoutManagerKey;
     return [self mt_animateViews:views
                         duration:duration
                   timingFunction:timingFunction
-                     perspective:0
+                           range:MTAnimationRangeFull
                       animations:animations
                       completion:completion];
 }
@@ -75,42 +74,6 @@ static const char layoutManagerKey;
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
-            perspective:(CGFloat)perspective
-             animations:(void (^)(void))animations
-             completion:(MTAnimationCompletionBlock)completion
-{
-    return [self mt_animateViews:views
-                        duration:duration
-                  timingFunction:timingFunction
-                     perspective:perspective
-                    exaggeration:0
-                      animations:animations
-                      completion:completion];
-}
-
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-            perspective:(CGFloat)perspective
-           exaggeration:(CGFloat)exaggeration
-             animations:(void (^)(void))animations
-             completion:(MTAnimationCompletionBlock)completion
-{
-    return [self mt_animateViews:views
-                        duration:duration
-                  timingFunction:timingFunction
-                     perspective:perspective
-                           range:MTMakeAnimationRange(0, 1)
-                    exaggeration:exaggeration
-                         options:0
-                      animations:animations
-                      completion:completion];
-}
-
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-            perspective:(CGFloat)perspective
                   range:(MTAnimationRange)range
              animations:(void (^)(void))animations
              completion:(MTAnimationCompletionBlock)completion
@@ -118,9 +81,7 @@ static const char layoutManagerKey;
     return [self mt_animateViews:views
                         duration:duration
                   timingFunction:timingFunction
-                     perspective:perspective
                            range:range
-                    exaggeration:0
                          options:0
                       animations:animations
                       completion:completion];
@@ -129,9 +90,7 @@ static const char layoutManagerKey;
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
-            perspective:(CGFloat)perspective
                   range:(MTAnimationRange)range
-           exaggeration:(CGFloat)exaggeration
                 options:(UIViewAnimationOptions)options
              animations:(void (^)(void))animations
              completion:(MTAnimationCompletionBlock)completion
@@ -154,9 +113,6 @@ static const char layoutManagerKey;
 
     for (UIView *view in views) {
 
-        // add a layout manager to the view if it doesn't have one
-        if (!view.layoutManager) view.layoutManager = [MTAnimationLayoutManager new];
-
         if (!CGRectEqualToRect(view.startBounds, view.bounds)) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"bounds";
@@ -167,12 +123,12 @@ static const char layoutManagerKey;
                                                                           function:timingFunction
                                                                               from:view.startBounds
                                                                                 to:view.bounds
-                                                                      exaggeration:exaggeration];
+                                                                      exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
                         forKey:@"bounds"
                          range:range
                        options:options
-                   perspective:perspective];
+                   perspective:view.mt_animationPerspective];
         }
 
 
@@ -186,12 +142,12 @@ static const char layoutManagerKey;
                                                                            function:timingFunction
                                                                                from:view.startCenter
                                                                                  to:view.center
-                                                                       exaggeration:exaggeration];
+                                                                       exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
                         forKey:@"position"
                          range:range
                        options:options
-                   perspective:perspective];
+                   perspective:view.mt_animationPerspective];
         }
 
         // TODO: does not interpolate rotation around the z-axis correctly
@@ -205,12 +161,12 @@ static const char layoutManagerKey;
                                                                                function:timingFunction
                                                                                    from:view.startTransform3D
                                                                                      to:view.layer.transform
-                                                                           exaggeration:exaggeration];
+                                                                           exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
                         forKey:@"transform"
                          range:range
                        options:options
-                   perspective:perspective];
+                   perspective:view.mt_animationPerspective];
         }
 
         if (view.startAlpha != view.alpha) {
@@ -223,12 +179,12 @@ static const char layoutManagerKey;
                                                                            function:timingFunction
                                                                                from:view.startAlpha
                                                                                  to:view.alpha
-                                                                       exaggeration:exaggeration];
+                                                                       exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
                         forKey:@"opacity"
                          range:range
                        options:options
-                   perspective:perspective];
+                   perspective:view.mt_animationPerspective];
         }
     }
 }
@@ -296,7 +252,6 @@ static const char layoutManagerKey;
                                   to:(CGPoint)toPoint
                         exaggeration:(CGFloat)exaggeration
 {
-    exaggeration            = [self exaggerationEnumToFloat:exaggeration];
     NSInteger steps         = (NSInteger)ceil(fps * duration) + 2;
 	NSMutableArray *values  = [NSMutableArray arrayWithCapacity:steps];
     CGFloat increment       = 1.0 / (steps - 1);
@@ -324,7 +279,6 @@ static const char layoutManagerKey;
                                       to:(CATransform3D)toTransform
                             exaggeration:(CGFloat)exaggeration
 {
-    exaggeration            = [self exaggerationEnumToFloat:exaggeration];
     NSInteger steps         = (NSInteger)ceil(fps * duration) + 2;
 	NSMutableArray *values  = [NSMutableArray arrayWithCapacity:steps];
     CGFloat increment       = 1.0 / (steps - 1);
@@ -352,7 +306,6 @@ static const char layoutManagerKey;
                                   to:(CGFloat)toFloat
                         exaggeration:(CGFloat)exaggeration
 {
-    exaggeration            = [self exaggerationEnumToFloat:exaggeration];
     NSInteger steps         = (NSInteger)ceil(fps * duration) + 2;
 	NSMutableArray *values  = [NSMutableArray arrayWithCapacity:steps];
     CGFloat increment       = 1.0 / (steps - 1);
@@ -455,33 +408,38 @@ static const char layoutManagerKey;
     }
 }
 
-+ (CGFloat)exaggerationEnumToFloat:(CGFloat)exaggeration
-{
-    if (exaggeration == MTAnimationExaggerationDefault) {
-        return 1.70158;
-    }
-    else if (exaggeration == MTAnimationExaggerationLow) {
-        return 0.70158;
-    }
-    else if (exaggeration == MTAnimationExaggerationMedium) {
-        return 2.70158;
-    }
-    else if (exaggeration == MTAnimationExaggerationHigh) {
-        return 3.70158;
-    }
-    else if (exaggeration == MTAnimationExaggerationLudicrous) {
-        return 4.70158;
-    }
-    else {
-        return exaggeration;
-    }
-}
-
 
 
 
 
 #pragma mark - Added Properties
+
+- (void)setMt_animationExaggeration:(CGFloat)mt_animationExaggeration
+{
+    objc_setAssociatedObject(self, &exaggerationKey, @(mt_animationExaggeration), OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (CGFloat)mt_animationExaggeration
+{
+    NSNumber *value = objc_getAssociatedObject(self, &exaggerationKey);
+    return value ? [value floatValue] : 1.70158;
+}
+
+- (void)setMt_animationPerspective:(CGFloat)mt_animationPerspective
+{
+    objc_setAssociatedObject(self, &perspectiveKey, @(mt_animationPerspective), OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (CGFloat)mt_animationPerspective
+{
+    NSNumber *value = objc_getAssociatedObject(self, &perspectiveKey);
+    return value ? [value floatValue] : 0;
+}
+
+
+
+
+#pragma mark (private)
 
 - (void)setStartBounds:(CGRect)startBounds
 {
@@ -547,18 +505,6 @@ static const char layoutManagerKey;
 {
     return objc_getAssociatedObject(self, &completionBlockKey);
 }
-
-- (void)setLayoutManager:(MTAnimationLayoutManager *)layoutManager
-{
-    layoutManager.view = self;
-    objc_setAssociatedObject(self, &layoutManagerKey, layoutManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (MTAnimationLayoutManager *)layoutManager
-{
-    return objc_getAssociatedObject(self, &layoutManagerKey);
-}
-
 
 @end
 
