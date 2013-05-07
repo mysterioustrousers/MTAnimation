@@ -120,6 +120,7 @@ static const char completionBlockKey;
     completionReceiver.completionBlock = completion;
 
     for (UIView *view in views) {
+        [view.layer removeAllAnimations];
         [view takeStartSnapshot];
     }
 

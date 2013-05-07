@@ -1,9 +1,17 @@
 MTAnimation
 ===========
 
-The animation library everyone's been waiting for.
+Animate UIView with 25+ timing functions. (Bounce, elastic, exponential, etc.)
 
 Allows you to animate views in your app in the way you're familiar with (e.g. `[UIKit animateWithDuration:animations:]`) but adds 25+ [easing functions](http://easings.net/) (from jQuery) to make your animations more [visceral](http://mysterioustrousers.com/news/2013/3/25/visceral-apps-and-you).
+
+Advantages:
+- Methods very similar to Apple's API.
+- No Swizzling or other dangerous nonsense.
+- No need to mess with keypaths, just change the properties on UIView and you're golden.
+- Proper transform matrix interpolation, so rotations look correct. (I can't find another easing library that does this).
+- Install with cocoapods.
+- Category method properly prefixed.
 
 [![Animation Sample](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.gif)](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.mov)
 

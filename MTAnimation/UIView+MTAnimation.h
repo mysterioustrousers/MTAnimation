@@ -32,7 +32,7 @@
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
-                options:(UIViewAnimationOptions)options
+                options:(UIViewAnimationOptions)options // not working yet
          timingFunction:(MTTimingFunction)timingFunction
            exaggeration:(CGFloat)exaggeration
              animations:(void (^)(void))animations
@@ -40,7 +40,7 @@
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
-                options:(UIViewAnimationOptions)options
+                options:(UIViewAnimationOptions)options // not working yet
          timingFunction:(MTTimingFunction)timingFunction
            exaggeration:(CGFloat)exaggeration
                   range:(MTAnimationRange)range
