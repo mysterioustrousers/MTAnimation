@@ -30,6 +30,7 @@
 		C2AF91871729F584001D44D5 /* MTTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MTTimingFunctions.c */; };
 		C2AF91891729F5A1001D44D5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91881729F5A1001D44D5 /* logo.png */; };
 		C2B71A9817341C9B00E508B8 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
+		KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		C2AF91881729F5A1001D44D5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MTMatrixInterpolation.c; sourceTree = "<group>"; };
 		C2B71A9917341CB100E508B8 /* MTMatrixInterpolation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTMatrixInterpolation.h; sourceTree = "<group>"; };
+		HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 				C2AF916B1729F564001D44D5 /* SenTestingKit.framework in Frameworks */,
 				C2AF916C1729F564001D44D5 /* UIKit.framework in Frameworks */,
 				C2AF916D1729F564001D44D5 /* Foundation.framework in Frameworks */,
+				KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +133,7 @@
 				C2AF91451729F564001D44D5 /* Foundation.framework */,
 				C2AF91471729F564001D44D5 /* CoreGraphics.framework */,
 				C2AF916A1729F564001D44D5 /* SenTestingKit.framework */,
+				HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -387,9 +391,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Adam Kirk (6LD45L8UET)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/adamkirk/Library/Application Support/Spark Inspector\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -401,10 +407,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "";
-				PROVISIONING_PROFILE = "60C15E26-E9BC-4E68-B632-89A571BFE6C8";
+				OTHER_LDFLAGS = "-ObjC";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -422,13 +428,12 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
@@ -440,10 +445,12 @@
 		C2AF917C1729F564001D44D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/adamkirk/Library/Application Support/Spark Inspector\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
 				INFOPLIST_FILE = "MTAnimation/MTAnimation-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -455,7 +462,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
 				INFOPLIST_FILE = "MTAnimation/MTAnimation-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -468,10 +474,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"/Users/adamkirk/Library/Application Support/Spark Inspector\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
 				INFOPLIST_FILE = "MTAnimationTests/MTAnimationTests-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;

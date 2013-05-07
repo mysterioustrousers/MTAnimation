@@ -10,8 +10,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 #import "MTMatrixInterpolation.h"
+#import "MTAnimationLayoutManager.h"
 
 
+// is b in the bitmask a
+static inline BOOL inMask(NSUInteger a, NSUInteger b) { return (a & b) == b; }
 
 static const NSInteger fps      = 60;
 static const NSInteger second   = 1000;
@@ -23,6 +26,7 @@ static const char startTransform3DKey;
 static const char startAlphaKey;
 static const char startBackgroundColorKey;
 static const char completionBlockKey;
+static const char layoutManagerKey;
 
 
 
@@ -34,6 +38,7 @@ static const char completionBlockKey;
 @property (assign, nonatomic) CATransform3D                 startTransform3D;
 @property (assign, nonatomic) CGFloat                       startAlpha;
 @property (strong, nonatomic) MTAnimationCompletionBlock    completionBlock;
+@property (strong, nonatomic) MTAnimationLayoutManager      *layoutManager;
 @end
 
 
@@ -46,11 +51,11 @@ static const char completionBlockKey;
          timingFunction:(MTTimingFunction)timingFunction
              animations:(void (^)(void))animations
 {
-    [self mt_animateViews:views
-                 duration:duration
-           timingFunction:timingFunction
-               animations:animations
-               completion:nil];
+    return [self mt_animateViews:views
+                        duration:duration
+                  timingFunction:timingFunction
+                      animations:animations
+                      completion:nil];
 }
 
 + (void)mt_animateViews:(NSArray *)views
@@ -59,54 +64,75 @@ static const char completionBlockKey;
              animations:(void (^)(void))animations
              completion:(MTAnimationCompletionBlock)completion
 {
-    [self mt_animateViews:views
-                 duration:duration
-                  options:0
-           timingFunction:timingFunction
-               animations:animations
-               completion:completion];
+    return [self mt_animateViews:views
+                        duration:duration
+                  timingFunction:timingFunction
+                     perspective:0
+                      animations:animations
+                      completion:completion];
 }
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
-                options:(UIViewAnimationOptions)options
          timingFunction:(MTTimingFunction)timingFunction
+            perspective:(CGFloat)perspective
              animations:(void (^)(void))animations
              completion:(MTAnimationCompletionBlock)completion
 {
-    [self mt_animateViews:views
-                 duration:duration
-                  options:options
-           timingFunction:timingFunction
-             exaggeration:MTAnimationExaggerationDefault
-               animations:animations
-               completion:completion];
+    return [self mt_animateViews:views
+                        duration:duration
+                  timingFunction:timingFunction
+                     perspective:perspective
+                    exaggeration:0
+                      animations:animations
+                      completion:completion];
 }
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
-                options:(UIViewAnimationOptions)options
          timingFunction:(MTTimingFunction)timingFunction
+            perspective:(CGFloat)perspective
            exaggeration:(CGFloat)exaggeration
              animations:(void (^)(void))animations
              completion:(MTAnimationCompletionBlock)completion
 {
-    [self mt_animateViews:views
-                 duration:duration
-                  options:options
-           timingFunction:timingFunction
-             exaggeration:exaggeration
-                    range:MTMakeAnimationRange(0, 1)
-              animations:animations
-               completion:completion];
+    return [self mt_animateViews:views
+                        duration:duration
+                  timingFunction:timingFunction
+                     perspective:perspective
+                           range:MTMakeAnimationRange(0, 1)
+                    exaggeration:exaggeration
+                         options:0
+                      animations:animations
+                      completion:completion];
 }
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
-                options:(UIViewAnimationOptions)options
          timingFunction:(MTTimingFunction)timingFunction
-           exaggeration:(CGFloat)exaggeration
+            perspective:(CGFloat)perspective
                   range:(MTAnimationRange)range
+             animations:(void (^)(void))animations
+             completion:(MTAnimationCompletionBlock)completion
+{
+    return [self mt_animateViews:views
+                        duration:duration
+                  timingFunction:timingFunction
+                     perspective:perspective
+                           range:range
+                    exaggeration:0
+                         options:0
+                      animations:animations
+                      completion:completion];
+}
+
++ (void)mt_animateViews:(NSArray *)views
+               duration:(NSTimeInterval)duration
+         timingFunction:(MTTimingFunction)timingFunction
+            perspective:(CGFloat)perspective
+                  range:(MTAnimationRange)range
+           exaggeration:(CGFloat)exaggeration
+                options:(UIViewAnimationOptions)options
              animations:(void (^)(void))animations
              completion:(MTAnimationCompletionBlock)completion
 {
@@ -128,6 +154,9 @@ static const char completionBlockKey;
 
     for (UIView *view in views) {
 
+        // add a layout manager to the view if it doesn't have one
+        if (!view.layoutManager) view.layoutManager = [MTAnimationLayoutManager new];
+
         if (!CGRectEqualToRect(view.startBounds, view.bounds)) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"bounds";
@@ -139,7 +168,11 @@ static const char completionBlockKey;
                                                                               from:view.startBounds
                                                                                 to:view.bounds
                                                                       exaggeration:exaggeration];
-            [view addAnimation:keyframeAnimation forKey:@"bounds" range:range];
+            [view addAnimation:keyframeAnimation
+                        forKey:@"bounds"
+                         range:range
+                       options:options
+                   perspective:perspective];
         }
 
 
@@ -154,7 +187,11 @@ static const char completionBlockKey;
                                                                                from:view.startCenter
                                                                                  to:view.center
                                                                        exaggeration:exaggeration];
-            [view addAnimation:keyframeAnimation forKey:@"position" range:range];
+            [view addAnimation:keyframeAnimation
+                        forKey:@"position"
+                         range:range
+                       options:options
+                   perspective:perspective];
         }
 
         // TODO: does not interpolate rotation around the z-axis correctly
@@ -169,7 +206,11 @@ static const char completionBlockKey;
                                                                                    from:view.startTransform3D
                                                                                      to:view.layer.transform
                                                                            exaggeration:exaggeration];
-            [view addAnimation:keyframeAnimation forKey:@"transform" range:range];
+            [view addAnimation:keyframeAnimation
+                        forKey:@"transform"
+                         range:range
+                       options:options
+                   perspective:perspective];
         }
 
         if (view.startAlpha != view.alpha) {
@@ -183,7 +224,11 @@ static const char completionBlockKey;
                                                                                from:view.startAlpha
                                                                                  to:view.alpha
                                                                        exaggeration:exaggeration];
-            [view addAnimation:keyframeAnimation forKey:@"opacity" range:range];
+            [view addAnimation:keyframeAnimation
+                        forKey:@"opacity"
+                         range:range
+                       options:options
+                   perspective:perspective];
         }
     }
 }
@@ -201,6 +246,7 @@ static const char completionBlockKey;
         self.completionBlock = nil;
     }
 }
+
 
 
 
@@ -327,7 +373,11 @@ static const char completionBlockKey;
     return values;
 }
 
-- (void)addAnimation:(CAKeyframeAnimation *)animation forKey:(NSString *)key range:(MTAnimationRange)range
+- (void)addAnimation:(CAKeyframeAnimation *)animation
+              forKey:(NSString *)key
+               range:(MTAnimationRange)range
+             options:(UIViewAnimationOptions)options
+         perspective:(CGFloat)perspective
 {
     // slice the animation to the range
     CGFloat rangeDelta  = range.end - range.start;
@@ -338,6 +388,51 @@ static const char completionBlockKey;
     NSRange valueRange  = NSMakeRange(MAX(loc, 0), MIN(len, steps));
     animation.values    = [animation.values subarrayWithRange:valueRange];
 
+
+
+    // apply options
+    /**
+     TODO: Options to implement:
+     - UIViewAnimationOptionLayoutSubviews
+     - UIViewAnimationOptionAllowUserInteraction
+     + UIViewAnimationOptionBeginFromCurrentState
+     + UIViewAnimationOptionRepeat
+     + UIViewAnimationOptionAutoreverse
+     - UIViewAnimationOptionOverrideInheritedDuration
+     - UIViewAnimationOptionOverrideInheritedCurve
+     - UIViewAnimationOptionAllowAnimatedContent
+     - UIViewAnimationOptionShowHideTransitionViews
+     (- needs, + done)
+     */
+
+    // TODO: this seems to be enabled by default when animating with UIView, so I'm not sure what the difference
+    // is with the UIViewAnimationOptionLayoutSubviews option. I think it has something to do with telling it to
+    // layout in the beginning so that the beginning of the animation looks sort of blurry/pixelated but the end
+    // looks sharp.
+    self.layer.needsDisplayOnBoundsChange = YES;
+//    if (inMask(options, UIViewAnimationOptionLayoutSubviews)) {
+//        self.layer.needsDisplayOnBoundsChange = YES;
+//    }
+
+    if (inMask(options, UIViewAnimationOptionBeginFromCurrentState)) {
+        animation.additive = YES;
+    }
+
+    if (inMask(options, UIViewAnimationOptionAutoreverse)) {
+        animation.autoreverses = YES;
+    }
+
+    if (inMask(options, UIViewAnimationOptionRepeat)) {
+        animation.repeatCount = HUGE_VALF;
+    }
+
+
+    // add perspective
+    CATransform3D perspectiveTransform = CATransform3DIdentity;
+    perspectiveTransform.m34 = perspective;
+    self.layer.superlayer.sublayerTransform = perspectiveTransform;
+
+    // add the animation
     if ([key isEqualToString:@"bounds"]) {
         self.bounds                     = self.startBounds;
         [self.layer addAnimation:animation forKey:key];
@@ -421,6 +516,17 @@ static const char completionBlockKey;
     return value ? [value CGAffineTransformValue] : CGAffineTransformIdentity;
 }
 
+- (void)setStartTransform3D:(CATransform3D)startTransform3D
+{
+    objc_setAssociatedObject(self, &startTransform3DKey, [NSValue valueWithCATransform3D:startTransform3D], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CATransform3D)startTransform3D
+{
+    NSValue *value = objc_getAssociatedObject(self, &startTransform3DKey);
+    return value ? [value CATransform3DValue] : CATransform3DIdentity;
+}
+
 - (void)setStartAlpha:(CGFloat)startAlpha
 {
     objc_setAssociatedObject(self, &startAlphaKey, @(startAlpha), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -442,15 +548,15 @@ static const char completionBlockKey;
     return objc_getAssociatedObject(self, &completionBlockKey);
 }
 
-- (void)setStartTransform3D:(CATransform3D)startTransform3D
+- (void)setLayoutManager:(MTAnimationLayoutManager *)layoutManager
 {
-    objc_setAssociatedObject(self, &startTransform3DKey, [NSValue valueWithCATransform3D:startTransform3D], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    layoutManager.view = self;
+    objc_setAssociatedObject(self, &layoutManagerKey, layoutManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CATransform3D)startTransform3D
+- (MTAnimationLayoutManager *)layoutManager
 {
-    NSValue *value = objc_getAssociatedObject(self, &startTransform3DKey);
-    return value ? [value CATransform3DValue] : CATransform3DIdentity;
+    return objc_getAssociatedObject(self, &layoutManagerKey);
 }
 
 

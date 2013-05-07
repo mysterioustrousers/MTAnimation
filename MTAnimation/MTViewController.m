@@ -167,60 +167,56 @@
 
     [UIView mt_animateViews:@[_logoImageView]
                    duration:_duration
-                    options:0
              timingFunction:_timingFuction
-               exaggeration:_exaggeration
-                 animations:^{
-                     CGRect r                           = _logoImageView.frame;
-                     r.origin.x                         = _endX;
-                     r.origin.y                         = _endY;
-                     _logoImageView.frame               = [self scaledRect:r];
-                     _logoImageView.alpha               = _endAlpha;
-                     CGFloat radians                    = mt_degreesToRadians(_endRotation);
-                     _logoImageView.layer.transform        = CATransform3DMakeRotation(radians, 0, 0, 1);
-                 } completion:nil];
+                perspective:(-1.0 / 500.0)
+               exaggeration:_exaggeration animations:^{
+                   CGRect r                           = _logoImageView.frame;
+                   r.origin.x                         = _endX;
+                   r.origin.y                         = _endY;
+                   _logoImageView.frame               = [self scaledRect:r];
+                   _logoImageView.alpha               = _endAlpha;
+                   CGFloat radians                    = mt_degreesToRadians(_endRotation);
+                   _logoImageView.layer.transform        = CATransform3DMakeRotation(radians, 0, 0, 1);
+               } completion:^{
+                   
+               }];
 
 
 // uncomment this to try out a ranged flipping animation
 // TODO: could be alittle smoother
-//
+
 //    _logoImageView.image    = [UIImage imageNamed:@"logo"];
 //    [UIView mt_animateViews:@[_logoImageView]
 //                   duration:_duration
-//                    options:0
 //             timingFunction:_timingFuction
-//               exaggeration:_exaggeration
+//                perspective:(-1.0 / 500.0)
 //                      range:MTMakeAnimationRange(0, 0.135)
 //                 animations:^{
-////                     CGRect r                           = _logoImageView.frame;
-////                     r.origin.x                         = _endX;
-////                     r.origin.y                         = _endY;
-////                     _logoImageView.frame               = [self scaledRect:r];
-////                     _logoImageView.alpha               = _endAlpha;
-//                        CGFloat radians                    = mt_degreesToRadians(_endRotation);
-//                     _logoImageView.layer.transform        = CATransform3DMakeRotation(radians, 0, 1, 0);
+//                     CGRect r                       = _logoImageView.frame;
+//                     r.origin.x                     = _endX;
+//                     r.origin.y                     = _endY;
+//                     _logoImageView.frame           = [self scaledRect:r];
+//                     _logoImageView.alpha           = _endAlpha;
+//                     CGFloat radians                = mt_degreesToRadians(_endRotation);
+//                     _logoImageView.layer.transform = CATransform3DMakeRotation(radians, 0, 1, 0);
 //                 } completion:^{
 //                     _logoImageView.image = [UIImage imageNamed:@"logo-flip"];
 //                     [UIView mt_animateViews:@[_logoImageView]
 //                                    duration:_duration
-//                                     options:0
 //                              timingFunction:_timingFuction
-//                                exaggeration:_exaggeration
+//                                 perspective:(-1.0 / 500.0)
 //                                       range:MTMakeAnimationRange(0.135, 1)
 //                                  animations:^{
-//                                      //                     CGRect r                           = _logoImageView.frame;
-//                                      //                     r.origin.x                         = _endX;
-//                                      //                     r.origin.y                         = _endY;
-//                                      //                     _logoImageView.frame               = [self scaledRect:r];
-//                                      //                     _logoImageView.alpha               = _endAlpha;
-//                                      CGFloat radians                    = mt_degreesToRadians(_endRotation);
-//                                      _logoImageView.layer.transform        = CATransform3DMakeRotation(radians, 0, 1, 0);
+//                                      CGRect r                       = _logoImageView.frame;
+//                                      r.origin.x                     = _endX;
+//                                      r.origin.y                     = _endY;
+//                                      _logoImageView.frame           = [self scaledRect:r];
+//                                      _logoImageView.alpha           = _endAlpha;
+//                                      CGFloat radians                = mt_degreesToRadians(_endRotation);
+//                                      _logoImageView.layer.transform = CATransform3DMakeRotation(radians, 0, 1, 0);
 //                                  } completion:^{
 //                                  }];
 //                 }];
-
-
-
 }
 
 - (NSArray *)functionMap
