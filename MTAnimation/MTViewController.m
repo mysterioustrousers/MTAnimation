@@ -168,8 +168,7 @@
     [UIView mt_animateViews:@[_logoImageView]
                    duration:_duration
              timingFunction:_timingFuction
-                perspective:(-1.0 / 500.0)
-               exaggeration:_exaggeration animations:^{
+                 animations:^{
                    CGRect r                           = _logoImageView.frame;
                    r.origin.x                         = _endX;
                    r.origin.y                         = _endY;
@@ -189,7 +188,6 @@
 //    [UIView mt_animateViews:@[_logoImageView]
 //                   duration:_duration
 //             timingFunction:_timingFuction
-//                perspective:(-1.0 / 500.0)
 //                      range:MTMakeAnimationRange(0, 0.135)
 //                 animations:^{
 //                     CGRect r                       = _logoImageView.frame;
@@ -204,7 +202,6 @@
 //                     [UIView mt_animateViews:@[_logoImageView]
 //                                    duration:_duration
 //                              timingFunction:_timingFuction
-//                                 perspective:(-1.0 / 500.0)
 //                                       range:MTMakeAnimationRange(0.135, 1)
 //                                  animations:^{
 //                                      CGRect r                       = _logoImageView.frame;
