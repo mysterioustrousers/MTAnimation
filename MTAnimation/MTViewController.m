@@ -169,16 +169,17 @@
                    duration:_duration
              timingFunction:_timingFuction
                  animations:^{
-                   CGRect r                           = _logoImageView.frame;
-                   r.origin.x                         = _endX;
-                   r.origin.y                         = _endY;
-                   _logoImageView.frame               = [self scaledRect:r];
-                   _logoImageView.alpha               = _endAlpha;
-                   CGFloat radians                    = mt_degreesToRadians(_endRotation);
-                   _logoImageView.layer.transform        = CATransform3DMakeRotation(radians, 0, 0, 1);
-               } completion:^{
-                   
-               }];
+                     _logoImageView.mt_animationPerspective = -1.0 / 500.0;
+                     CGRect r                           = _logoImageView.frame;
+                     r.origin.x                         = _endX;
+                     r.origin.y                         = _endY;
+                     _logoImageView.frame               = [self scaledRect:r];
+                     _logoImageView.alpha               = _endAlpha;
+                     CGFloat radians                    = mt_degreesToRadians(_endRotation);
+                     _logoImageView.layer.transform        = CATransform3DMakeRotation(radians, 0, 1, 0);
+                 } completion:^{
+
+                 }];
 
 
 // uncomment this to try out a ranged flipping animation
