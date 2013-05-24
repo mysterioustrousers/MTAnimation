@@ -43,9 +43,15 @@ NS_INLINE MTAnimationRange MTMakeAnimationRange(CGFloat start, CGFloat end) {
 
 
 /**
+ Animation blocks take no arguments and return void.
+ */
+typedef void(^MTAnimationsBlock)();
+
+/**
  Completion blocks take no arguments and return void.
  */
 typedef void(^MTAnimationCompletionBlock)();
+
 
 
 /**

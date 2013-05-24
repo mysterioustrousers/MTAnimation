@@ -9,8 +9,9 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { "Adam Kirk" => "atomkirk@gmail.com" }
   s.source       = { :git => "https://github.com/mysterioustrousers/MTAnimation.git", :tag => "0.0.2" }
-  s.platform     = :ios, '5.0'
+  s.ios.deployment_target = '5.0'
+  s.osx.deployment_target = '10.7'
   s.source_files = 'MTAnimation/UIView+MTAnimation.{h,m}', 'MTAnimation/MTTimingFunctions.{h,c}', 'MTAnimation/MTMatrixInterpolation.{h,c}', 'MTAnimation/MTAnimationTypes.h'
-  s.frameworks   = 'QuartzCore', 'UIKit', 'Foundation', 'CoreGraphics'
+  s.frameworks   = 'QuartzCore', 'Foundation', 'CoreGraphics'
   s.requires_arc = true
 end

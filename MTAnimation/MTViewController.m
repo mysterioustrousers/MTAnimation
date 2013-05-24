@@ -178,7 +178,7 @@
                      CGFloat radians                    = mt_degreesToRadians(_endRotation);
                      _logoImageView.layer.transform        = CATransform3DMakeRotation(radians, 0, 1, 0);
                  } completion:^{
-
+                     NSLog(@"completed");
                  }];
 
 

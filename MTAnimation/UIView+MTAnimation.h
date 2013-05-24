@@ -9,8 +9,22 @@
 #import "MTTimingFunctions.h"
 #import "MTAnimationTypes.h"
 
+#define IS_IOS (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
 
-@interface UIView (MTAnimation)
+#if IS_IOS
+#import <UIKit/UIKit.h>
+#define MTView              UIView
+#define MTAnimationOptions  UIViewAnimationOptions
+#else
+#import <TUIKit.h>
+#define MTView              TUIView
+#define MTAnimationOptions  void *
+#endif
+
+
+
+
+@interface MTView (MTAnimation)
 
 /**
  Some (but not all) of the easing functions can be exaggerated. (e.g. elastic out will be swing 
@@ -31,7 +45,7 @@
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
-             animations:(void (^)(void))animations;
+             animations:(MTAnimationsBlock)animations;
 
 /**
  Convenience method. See full method below for param explanations.
@@ -39,7 +53,7 @@
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
-             animations:(void (^)(void))animations
+             animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion;
 
 /**
@@ -49,7 +63,7 @@
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
                   range:(MTAnimationRange)range
-             animations:(void (^)(void))animations
+             animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion;
 
 /**
@@ -64,8 +78,8 @@
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
                   range:(MTAnimationRange)range
-                options:(UIViewAnimationOptions)options
-             animations:(void (^)(void))animations
+                options:(MTAnimationOptions)options
+             animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion;
 
 

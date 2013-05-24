@@ -11,6 +11,31 @@
 #import <objc/runtime.h>
 #import "MTMatrixInterpolation.h"
 
+#if IS_IOS
+#define MTRectValue         CGRectValue
+#define MTPointValue        CGPointValue
+#define mt_valueWithCGRect  valueWithCGRect
+#define mt_valueWithCGPoint valueWithCGPoint
+#else
+#define MTRectValue         rectValue
+#define MTPointValue        pointValue
+#define mt_valueWithCGRect  valueWithRect
+#define mt_valueWithCGPoint valueWithPoint
+#endif
+
+
+
+@interface MTAnimationBatch : NSObject
+@property (nonatomic, strong, readonly) NSMutableArray              *animations;
+@property (nonatomic, strong)           MTAnimationCompletionBlock  completionBlock;
+- (BOOL)isCompleted;
+- (void)startAnimation:(CAKeyframeAnimation *)animation;
+- (void)completeAnimation:(CAKeyframeAnimation *)animation;
+- (BOOL)containsAnimation:(CAKeyframeAnimation *)animation;
+@end
+
+
+
 
 // is b in the bitmask a
 static inline BOOL inMask(NSUInteger a, NSUInteger b) { return (a & b) == b; }
@@ -26,29 +51,27 @@ static const char startTransformKey;
 static const char startTransform3DKey;
 static const char startAlphaKey;
 static const char startBackgroundColorKey;
-static const char completionBlockKey;
 
 
 
 
-@interface UIView ()
-@property (assign, nonatomic) CGRect                        startBounds;
-@property (assign, nonatomic) CGPoint                       startCenter;
-@property (assign, nonatomic) CGAffineTransform             startTransform;
-@property (assign, nonatomic) CATransform3D                 startTransform3D;
-@property (assign, nonatomic) CGFloat                       startAlpha;
-@property (strong, nonatomic) MTAnimationCompletionBlock    completionBlock;
+@interface MTView ()
+@property (assign, nonatomic) CGRect                startBounds;
+@property (assign, nonatomic) CGPoint               startCenter;
+@property (assign, nonatomic) CGAffineTransform     startTransform;
+@property (assign, nonatomic) CATransform3D         startTransform3D;
+@property (assign, nonatomic) CGFloat               startAlpha;
 @end
 
 
 
 
-@implementation UIView (MTAnimation)
+@implementation MTView (MTAnimation)
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
-             animations:(void (^)(void))animations
+             animations:(MTAnimationsBlock)animations
 {
     return [self mt_animateViews:views
                         duration:duration
@@ -60,7 +83,7 @@ static const char completionBlockKey;
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
-             animations:(void (^)(void))animations
+             animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion
 {
     return [self mt_animateViews:views
@@ -75,7 +98,7 @@ static const char completionBlockKey;
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
                   range:(MTAnimationRange)range
-             animations:(void (^)(void))animations
+             animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion
 {
     return [self mt_animateViews:views
@@ -91,8 +114,8 @@ static const char completionBlockKey;
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
                   range:(MTAnimationRange)range
-                options:(UIViewAnimationOptions)options
-             animations:(void (^)(void))animations
+                options:(MTAnimationOptions)options
+             animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion
 {
     assert([views count] > 0);
@@ -101,24 +124,24 @@ static const char completionBlockKey;
     assert(range.start >= 0);
     assert(range.end <= 1);
 
-    UIView *completionReceiver = [views lastObject];
-    completionReceiver.completionBlock = completion;
+    MTAnimationBatch *animationBatch    = [MTAnimationBatch new];
+    animationBatch.completionBlock      = completion;
+    [[self animationBatches] addObject:animationBatch];
 
-    for (UIView *view in views) {
-        [view.layer removeAllAnimations];
+    for (MTView *view in views) {
         [view takeStartSnapshot];
     }
 
     if (animations) animations();
 
-    for (UIView *view in views) {
+    for (MTView *view in views) {
 
         if (!CGRectEqualToRect(view.startBounds, view.bounds)) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"bounds";
             keyframeAnimation.duration              = duration;
             keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = completionReceiver;
+            keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self rectValuesWithDuration:duration
                                                                           function:timingFunction
                                                                               from:view.startBounds
@@ -129,6 +152,8 @@ static const char completionBlockKey;
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
+
+            [animationBatch startAnimation:keyframeAnimation];
         }
 
 
@@ -137,7 +162,7 @@ static const char completionBlockKey;
             keyframeAnimation.keyPath               = @"position";
             keyframeAnimation.duration              = duration;
             keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = completionReceiver;
+            keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self pointValuesWithDuration:duration
                                                                            function:timingFunction
                                                                                from:view.startCenter
@@ -148,6 +173,8 @@ static const char completionBlockKey;
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
+
+            [animationBatch startAnimation:keyframeAnimation];
         }
 
         // TODO: does not interpolate rotation around the z-axis correctly
@@ -156,7 +183,7 @@ static const char completionBlockKey;
             keyframeAnimation.keyPath               = @"transform";
             keyframeAnimation.duration              = duration;
             keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = completionReceiver;
+            keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self transformValuesWithDuration:duration
                                                                                function:timingFunction
                                                                                    from:view.startTransform3D
@@ -167,6 +194,8 @@ static const char completionBlockKey;
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
+
+            [animationBatch startAnimation:keyframeAnimation];
         }
 
         if (view.startAlpha != view.alpha) {
@@ -174,7 +203,7 @@ static const char completionBlockKey;
             keyframeAnimation.keyPath               = @"opacity";
             keyframeAnimation.duration              = duration;
             keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = completionReceiver;
+            keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self floatValuesWithDuration:duration
                                                                            function:timingFunction
                                                                                from:view.startAlpha
@@ -185,7 +214,13 @@ static const char completionBlockKey;
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
+
+            [animationBatch startAnimation:keyframeAnimation];
         }
+    }
+
+    if ([animationBatch.animations count] == 0 && completion) {
+        completion();
     }
 }
 
@@ -194,12 +229,20 @@ static const char completionBlockKey;
 
 #pragma mark - CAAnimation Delegate
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished
+- (void)animationDidStop:(CAKeyframeAnimation *)anim finished:(BOOL)finished
 {
-    if (self.completionBlock != nil)
-    {
-        self.completionBlock();
-        self.completionBlock = nil;
+    if ([anim isKindOfClass:[CAKeyframeAnimation class]]) {
+        MTAnimationBatch *animationBatch = [[self class] animationBatchContainingAnimation:anim];
+
+        if (animationBatch) {
+            [animationBatch completeAnimation:anim];
+
+            if ([animationBatch isCompleted] && animationBatch.completionBlock)
+            {
+                animationBatch.completionBlock();
+                [[[self class] animationBatches] removeObject:animationBatch];
+            }
+        }
     }
 }
 
@@ -238,7 +281,7 @@ static const char completionBlockKey;
         rect.size.width     = fromRect.size.width   + (v * (toRect.size.width    - fromRect.size.width));
         rect.size.height    = fromRect.size.height  + (v * (toRect.size.height   - fromRect.size.height));
 
-        [values addObject:[NSValue valueWithCGRect:rect]];
+        [values addObject:[NSValue mt_valueWithCGRect:rect]];
 
         progress += increment;
     }
@@ -265,7 +308,7 @@ static const char completionBlockKey;
         point.x             = fromPoint.x     + (v * (toPoint.x      - fromPoint.x));
         point.y             = fromPoint.y     + (v * (toPoint.y      - fromPoint.y));
 
-        [values addObject:[NSValue valueWithCGPoint:point]];
+        [values addObject:[NSValue mt_valueWithCGPoint:point]];
 
         progress += increment;
     }
@@ -289,8 +332,6 @@ static const char completionBlockKey;
         CGFloat v           = timingFuction(duration * progress, 0, 1, duration, exaggeration);
 
         CATransform3D transform = interpolatedMatrixFromMatrix(fromTransform, toTransform, v);
-
-        // TODO: add perspective. isn't working at the moment. I set it and it's ignored.
 
         [values addObject:[NSValue valueWithCATransform3D:transform]];
 
@@ -329,7 +370,7 @@ static const char completionBlockKey;
 - (void)addAnimation:(CAKeyframeAnimation *)animation
               forKey:(NSString *)key
                range:(MTAnimationRange)range
-             options:(UIViewAnimationOptions)options
+             options:(MTAnimationOptions)options
          perspective:(CGFloat)perspective
 {
     // slice the animation to the range
@@ -367,6 +408,7 @@ static const char completionBlockKey;
 //        self.layer.needsDisplayOnBoundsChange = YES;
 //    }
 
+#if IS_IOS
     if (inMask(options, UIViewAnimationOptionBeginFromCurrentState)) {
         animation.additive = YES;
     }
@@ -378,6 +420,7 @@ static const char completionBlockKey;
     if (inMask(options, UIViewAnimationOptionRepeat)) {
         animation.repeatCount = HUGE_VALF;
     }
+#endif
 
 
     // add perspective
@@ -388,22 +431,22 @@ static const char completionBlockKey;
     // add the animation
     if ([key isEqualToString:@"bounds"]) {
         self.bounds                     = self.startBounds;
-        [self.layer addAnimation:animation forKey:key];
-        self.layer.bounds               = [[animation.values lastObject] CGRectValue];
+        [self.layer addAnimation:animation forKey:nil];
+        self.layer.bounds               = [[animation.values lastObject] MTRectValue];
     }
     else if ([key isEqualToString:@"position"]) {
         self.center                     = self.startCenter;
-        [self.layer addAnimation:animation forKey:key];
-        self.layer.position             = [[animation.values lastObject] CGPointValue];
+        [self.layer addAnimation:animation forKey:nil];
+        self.layer.position             = [[animation.values lastObject] MTPointValue];
     }
     else if ([key isEqualToString:@"opacity"]) {
         self.alpha                      = self.startAlpha;
-        [self.layer addAnimation:animation forKey:key];
+        [self.layer addAnimation:animation forKey:nil];
         self.layer.opacity              = [[animation.values lastObject] floatValue];
     }
     else if ([key isEqualToString:@"transform"]) {
         self.layer.transform            = self.startTransform3D;
-        [self.layer addAnimation:animation forKey:key];
+        [self.layer addAnimation:animation forKey:nil];
         self.layer.transform            = [[animation.values lastObject] CATransform3DValue];
     }
 }
@@ -443,35 +486,35 @@ static const char completionBlockKey;
 
 - (void)setStartBounds:(CGRect)startBounds
 {
-    objc_setAssociatedObject(self, &startBoundsKey, [NSValue valueWithCGRect:startBounds], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &startBoundsKey, [NSValue mt_valueWithCGRect:startBounds], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGRect)startBounds
 {
     NSValue *value = objc_getAssociatedObject(self, &startBoundsKey);
-    return value ? [value CGRectValue] : CGRectZero;
+    return value ? [value MTRectValue] : CGRectZero;
 }
 
 - (void)setStartCenter:(CGPoint)startCenter
 {
-    objc_setAssociatedObject(self, &startCenterKey, [NSValue valueWithCGPoint:startCenter], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &startCenterKey, [NSValue mt_valueWithCGPoint:startCenter], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGPoint)startCenter
 {
     NSValue *value = objc_getAssociatedObject(self, &startCenterKey);
-    return value ? [value CGPointValue] : CGPointZero;
+    return value ? [value MTPointValue] : CGPointZero;
 }
 
 - (void)setStartTransform:(CGAffineTransform)startTransform
 {
-    objc_setAssociatedObject(self, &startTransformKey, [NSValue valueWithCGAffineTransform:startTransform], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &startTransformKey, [NSValue valueWithCATransform3D:CATransform3DMakeAffineTransform(startTransform)], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGAffineTransform)startTransform
 {
     NSValue *value = objc_getAssociatedObject(self, &startTransformKey);
-    return value ? [value CGAffineTransformValue] : CGAffineTransformIdentity;
+    return value ? CATransform3DGetAffineTransform([value CATransform3DValue]) : CATransform3DGetAffineTransform(CATransform3DIdentity);
 }
 
 - (void)setStartTransform3D:(CATransform3D)startTransform3D
@@ -496,14 +539,32 @@ static const char completionBlockKey;
     return value ? [value floatValue] : 1;
 }
 
-- (void)setCompletionBlock:(MTAnimationCompletionBlock)completionBlock
+
+
+
+
++ (NSMutableArray *)animationBatches
 {
-    objc_setAssociatedObject(self, &completionBlockKey, completionBlock, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    static NSMutableArray *batches = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        batches = [NSMutableArray array];
+    });
+    return batches;
 }
 
-- (MTAnimationCompletionBlock)completionBlock
+/**
+ There's really no good way to compare CAAnimation obects, since I think it passes us back a copy
+ in the animationDidFinish method. So we try our best to see if they are the same animation.
+ */
++ (MTAnimationBatch *)animationBatchContainingAnimation:(CAKeyframeAnimation *)animation
 {
-    return objc_getAssociatedObject(self, &completionBlockKey);
+    for (MTAnimationBatch *batch in [self animationBatches]) {
+        if ([batch containsAnimation:animation]) {
+            return batch;
+        }
+    }
+    return nil;
 }
 
 @end
@@ -513,6 +574,60 @@ static const char completionBlockKey;
 
 
 
+
+@implementation MTAnimationBatch
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _animations = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (void)startAnimation:(CAKeyframeAnimation *)animation
+{
+    [_animations addObject:animation];
+}
+
+- (void)completeAnimation:(CAKeyframeAnimation *)animation
+{
+    for (CAKeyframeAnimation *anim in [_animations copy]) {
+        if ([MTAnimationBatch animation:anim equalToAnimation:animation]) {
+            [_animations removeObject:animation];
+            [_animations removeObject:anim];
+            return;
+        }
+    }
+}
+
+- (BOOL)isCompleted
+{
+    return [self.animations count] == 0;
+}
+
+- (BOOL)containsAnimation:(CAKeyframeAnimation *)animation
+{
+    for (CAKeyframeAnimation *anim in _animations) {
+        if ([MTAnimationBatch animation:anim equalToAnimation:animation]) {
+            return YES;
+        }
+    }
+}
+
++ (BOOL)animation:(CAKeyframeAnimation *)animation1 equalToAnimation:(CAKeyframeAnimation *)animation2
+{
+    BOOL equalValues    = [animation1.values isEqualToArray:animation2.values];
+    BOOL equalDelegates = animation1.delegate == animation2.delegate;
+    BOOL equalDuration  = animation1.duration == animation2.duration;
+    if (equalValues && equalDelegates && equalDuration) {
+        return YES;
+    }
+}
+
+
+@end
 
 
 
