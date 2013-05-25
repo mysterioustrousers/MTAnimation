@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C21CB4F8175165510082CB97"
-               BuildableName = "libMTAnimation-iOS copy.a"
+               BuildableName = "libMTAnimation.a"
                BlueprintName = "MTAnimation-OSX"
                ReferencedContainer = "container:MTAnimation.xcodeproj">
             </BuildableReference>
