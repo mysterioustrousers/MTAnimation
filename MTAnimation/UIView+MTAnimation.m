@@ -614,6 +614,7 @@ static const char startBackgroundColorKey;
             return YES;
         }
     }
+    return NO;
 }
 
 + (BOOL)animation:(CAKeyframeAnimation *)animation1 equalToAnimation:(CAKeyframeAnimation *)animation2
@@ -624,6 +625,7 @@ static const char startBackgroundColorKey;
     if (equalValues && equalDelegates && equalDuration) {
         return YES;
     }
+    return NO;
 }
 
 
