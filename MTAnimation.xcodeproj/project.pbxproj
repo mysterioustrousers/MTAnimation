@@ -16,6 +16,10 @@
 		C21CB4FC175165510082CB97 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
 		C21CB4FE175165510082CB97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
 		C22CC0D4172A009700EB3CB3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
+		C241F0491751D59D00B9AAA5 /* TwUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C241F0481751D59D00B9AAA5 /* TwUI.framework */; };
+		C241F04A1751D6AA00B9AAA5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91471729F564001D44D5 /* CoreGraphics.framework */; };
+		C241F04B1751D6BA00B9AAA5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
+		C241F04C1751D6CA00B9AAA5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
 		C2A2AC6E17342F0500085235 /* logo-flip.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A2AC6D17342F0500085235 /* logo-flip.png */; };
 		C2AF91441729F564001D44D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C2AF91461729F564001D44D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
@@ -76,6 +80,7 @@
 		C21CB4E9175164C00082CB97 /* libMTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMTAnimation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21CB503175165510082CB97 /* libMTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMTAnimation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C241F0481751D59D00B9AAA5 /* TwUI.framework */ = {isa = PBXFileReference; lastKnownFileType = file; name = TwUI.framework; path = twui/build/Release/TwUI.framework; sourceTree = "<group>"; };
 		C2A2AC6C1734243900085235 /* MTAnimationTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAnimationTypes.h; sourceTree = "<group>"; };
 		C2A2AC6D17342F0500085235 /* logo-flip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-flip.png"; sourceTree = "<group>"; };
 		C2AF91401729F564001D44D5 /* MTAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +121,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C241F04C1751D6CA00B9AAA5 /* QuartzCore.framework in Frameworks */,
+				C241F04B1751D6BA00B9AAA5 /* UIKit.framework in Frameworks */,
+				C241F04A1751D6AA00B9AAA5 /* CoreGraphics.framework in Frameworks */,
 				C21CB4EA175164C00082CB97 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C241F0491751D59D00B9AAA5 /* TwUI.framework in Frameworks */,
 				C21CB4FE175165510082CB97 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,6 +186,7 @@
 		C2AF91421729F564001D44D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C241F0481751D59D00B9AAA5 /* TwUI.framework */,
 				C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */,
 				C2AF91431729F564001D44D5 /* UIKit.framework */,
 				C2AF91451729F564001D44D5 /* Foundation.framework */,
@@ -509,9 +519,11 @@
 		C21CB501175165510082CB97 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DSTROOT = /tmp/MTAnimation.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
+				HEADER_SEARCH_PATHS = "${SRCROOT}/twui/lib/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = MTAnimation;
 				SDKROOT = macosx;
@@ -523,9 +535,11 @@
 		C21CB502175165510082CB97 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DSTROOT = /tmp/MTAnimation.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
+				HEADER_SEARCH_PATHS = "${SRCROOT}/twui/lib/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = MTAnimation;
 				SDKROOT = macosx;
@@ -678,6 +692,7 @@
 				C21CB4F3175164C00082CB97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C21CB500175165510082CB97 /* Build configuration list for PBXNativeTarget "MTAnimation-OSX" */ = {
 			isa = XCConfigurationList;
@@ -686,6 +701,7 @@
 				C21CB502175165510082CB97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C2AF913B1729F564001D44D5 /* Build configuration list for PBXProject "MTAnimation" */ = {
 			isa = XCConfigurationList;
