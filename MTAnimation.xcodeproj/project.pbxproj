@@ -494,7 +494,6 @@
 				DSTROOT = /tmp/MTAnimation.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
-				PRODUCT_NAME = MTAnimation;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -505,7 +504,6 @@
 				DSTROOT = /tmp/MTAnimation.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
-				PRODUCT_NAME = MTAnimation;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -593,6 +591,7 @@
 					"-all_load",
 					"-ObjC",
 				);
+				PRODUCT_NAME = MTAnimation;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -624,6 +623,7 @@
 					"-all_load",
 					"-ObjC",
 				);
+				PRODUCT_NAME = MTAnimation;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
