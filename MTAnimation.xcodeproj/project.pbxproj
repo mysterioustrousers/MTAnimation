@@ -16,14 +16,11 @@
 		C21CB4FC175165510082CB97 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
 		C21CB4FE175165510082CB97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
 		C22CC0D4172A009700EB3CB3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
-		C241F0491751D59D00B9AAA5 /* TwUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C241F0481751D59D00B9AAA5 /* TwUI.framework */; };
-		C241F04A1751D6AA00B9AAA5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91471729F564001D44D5 /* CoreGraphics.framework */; };
 		C241F04B1751D6BA00B9AAA5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C241F04C1751D6CA00B9AAA5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
 		C2A2AC6E17342F0500085235 /* logo-flip.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A2AC6D17342F0500085235 /* logo-flip.png */; };
 		C2AF91441729F564001D44D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C2AF91461729F564001D44D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
-		C2AF91481729F564001D44D5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91471729F564001D44D5 /* CoreGraphics.framework */; };
 		C2AF914E1729F564001D44D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2AF914C1729F564001D44D5 /* InfoPlist.strings */; };
 		C2AF91501729F564001D44D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF914F1729F564001D44D5 /* main.m */; };
 		C2AF91541729F564001D44D5 /* MTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91531729F564001D44D5 /* MTAppDelegate.m */; };
@@ -42,6 +39,7 @@
 		C2AF91871729F584001D44D5 /* MTTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MTTimingFunctions.c */; };
 		C2AF91891729F5A1001D44D5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91881729F5A1001D44D5 /* logo.png */; };
 		C2B71A9817341C9B00E508B8 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
+		C2FF4B861751DD83004CDD96 /* TwUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FF4B851751DD83004CDD96 /* TwUI.framework */; };
 		KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
 /* End PBXBuildFile section */
 
@@ -80,13 +78,11 @@
 		C21CB4E9175164C00082CB97 /* libMTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMTAnimation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21CB503175165510082CB97 /* libMTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMTAnimation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		C241F0481751D59D00B9AAA5 /* TwUI.framework */ = {isa = PBXFileReference; lastKnownFileType = file; name = TwUI.framework; path = twui/build/Release/TwUI.framework; sourceTree = "<group>"; };
 		C2A2AC6C1734243900085235 /* MTAnimationTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAnimationTypes.h; sourceTree = "<group>"; };
 		C2A2AC6D17342F0500085235 /* logo-flip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-flip.png"; sourceTree = "<group>"; };
 		C2AF91401729F564001D44D5 /* MTAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2AF91431729F564001D44D5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C2AF91451729F564001D44D5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		C2AF91471729F564001D44D5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C2AF914B1729F564001D44D5 /* MTAnimation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MTAnimation-Info.plist"; sourceTree = "<group>"; };
 		C2AF914D1729F564001D44D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C2AF914F1729F564001D44D5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -113,6 +109,7 @@
 		C2AF91881729F5A1001D44D5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MTMatrixInterpolation.c; sourceTree = "<group>"; };
 		C2B71A9917341CB100E508B8 /* MTMatrixInterpolation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTMatrixInterpolation.h; sourceTree = "<group>"; };
+		C2FF4B851751DD83004CDD96 /* TwUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwUI.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug/TwUI.framework"; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -123,7 +120,6 @@
 			files = (
 				C241F04C1751D6CA00B9AAA5 /* QuartzCore.framework in Frameworks */,
 				C241F04B1751D6BA00B9AAA5 /* UIKit.framework in Frameworks */,
-				C241F04A1751D6AA00B9AAA5 /* CoreGraphics.framework in Frameworks */,
 				C21CB4EA175164C00082CB97 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,7 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C241F0491751D59D00B9AAA5 /* TwUI.framework in Frameworks */,
+				C2FF4B861751DD83004CDD96 /* TwUI.framework in Frameworks */,
 				C21CB4FE175165510082CB97 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,7 +140,6 @@
 				C22CC0D4172A009700EB3CB3 /* QuartzCore.framework in Frameworks */,
 				C2AF91441729F564001D44D5 /* UIKit.framework in Frameworks */,
 				C2AF91461729F564001D44D5 /* Foundation.framework in Frameworks */,
-				C2AF91481729F564001D44D5 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,11 +181,10 @@
 		C2AF91421729F564001D44D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C241F0481751D59D00B9AAA5 /* TwUI.framework */,
+				C2FF4B851751DD83004CDD96 /* TwUI.framework */,
 				C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */,
 				C2AF91431729F564001D44D5 /* UIKit.framework */,
 				C2AF91451729F564001D44D5 /* Foundation.framework */,
-				C2AF91471729F564001D44D5 /* CoreGraphics.framework */,
 				C2AF916A1729F564001D44D5 /* SenTestingKit.framework */,
 				HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */,
 			);
@@ -521,10 +515,18 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DSTROOT = /tmp/MTAnimation.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SRCROOT}/twui/lib/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug\"",
+				);
 				PRODUCT_NAME = MTAnimation;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -537,10 +539,18 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DSTROOT = /tmp/MTAnimation.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SRCROOT}/twui/lib/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug\"",
+				);
 				PRODUCT_NAME = MTAnimation;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
