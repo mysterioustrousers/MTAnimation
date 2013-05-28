@@ -6,7 +6,12 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
+
+#if (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
+#import <CoreGraphics/CoreGraphics.h>
+#else
 #import <ApplicationServices/ApplicationServices.h>
+#endif
 
 
 /**
