@@ -129,7 +129,7 @@ static const char startBackgroundColorKey;
     [[self animationBatches] addObject:animationBatch];
 
     for (MTView *view in views) {
-        [view takeStartSnapshot];
+        [view takeStartSnapshot:options];
     }
 
     if (animations) animations();
@@ -251,13 +251,23 @@ static const char startBackgroundColorKey;
 
 #pragma mark - Private
 
-- (void)takeStartSnapshot
+- (void)takeStartSnapshot:(UIViewAnimationOptions)options
 {
-    self.startBounds            = self.bounds;
-    self.startCenter            = self.center;
-    self.startTransform         = self.transform;
-    self.startTransform3D       = self.layer.transform;
-    self.startAlpha             = self.alpha;
+    CALayer * presentationLayer;
+    if ((options & UIViewAnimationOptionBeginFromCurrentState) && (presentationLayer = self.layer.presentationLayer)) {
+        self.startBounds            = presentationLayer.bounds;
+        self.startCenter            = presentationLayer.position;
+        self.startTransform         = presentationLayer.affineTransform;
+        self.startTransform3D       = presentationLayer.transform;
+        self.startAlpha             = presentationLayer.opacity;
+    }
+    else {
+        self.startBounds            = self.bounds;
+        self.startCenter            = self.center;
+        self.startTransform         = self.transform;
+        self.startTransform3D       = self.layer.transform;
+        self.startAlpha             = self.alpha;
+    }
 }
 
 + (NSArray *)rectValuesWithDuration:(NSTimeInterval)duration
