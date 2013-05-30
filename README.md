@@ -92,10 +92,6 @@ This code will animate until the image is sideways, then swap out the image view
 
 I have `TODO:` comments on stuff I need some help with, so feel free.
 
-For the OSX target to build, you must init the TwUI submodule, like so:
-
-    git submodule update --init --recursive
-
 ## Credits
 
 Inspired by [Nocho Soto's NSBKeyframeAnimation Library](https://github.com/NachoSoto/NSBKeyframeAnimation)
