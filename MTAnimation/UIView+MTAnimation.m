@@ -44,7 +44,7 @@ static const char startBackgroundColorKey;
 static const char startUserInteractionEnabledKey;
 
 
-@interface MTView ()
+@interface UIView ()
 @property (assign, nonatomic) CGRect                startBounds;
 @property (assign, nonatomic) CGPoint               startCenter;
 @property (assign, nonatomic) CGAffineTransform     startTransform;
@@ -54,7 +54,7 @@ static const char startUserInteractionEnabledKey;
 @end
 
 
-@implementation MTView (MTAnimation)
+@implementation UIView (MTAnimation)
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
@@ -121,13 +121,13 @@ static const char startUserInteractionEnabledKey;
     animationBatch.views                = views;
     [[self animationBatches] addObject:animationBatch];
 
-    for (MTView *view in views) {
+    for (UIView *view in views) {
         [view takeStartSnapshot:options];
     }
 
     if (animations) animations();
 
-    for (MTView *view in views) {
+    for (UIView *view in views) {
 
         if (!CGRectEqualToRect(view.startBounds, view.bounds)) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
@@ -233,7 +233,7 @@ static const char startUserInteractionEnabledKey;
             if ([animationBatch isCompleted]) {
 
                 // restore user interaction values
-                for (MTView *view in animationBatch.views) {
+                for (UIView *view in animationBatch.views) {
                     view.userInteractionEnabled = view.startUserInteractionEnabled;
                 }
 
@@ -429,11 +429,11 @@ static const char startUserInteractionEnabledKey;
 //        self.layer.needsDisplayOnBoundsChange = YES;
 //    }
 
-    if (inMask(options, MTAnimationOptionAutoreverse)) {
+    if (inMask(options, UIViewAnimationOptionAutoreverse)) {
         animation.autoreverses = YES;
     }
 
-    if (inMask(options, MTAnimationOptionRepeat)) {
+    if (inMask(options, UIViewAnimationOptionRepeat)) {
         animation.repeatCount = HUGE_VALF;
     }
 
@@ -474,7 +474,7 @@ static const char startUserInteractionEnabledKey;
 
 - (void)setMt_animationExaggeration:(CGFloat)mt_animationExaggeration
 {
-    objc_setAssociatedObject(self, &exaggerationKey, @(mt_animationExaggeration), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &exaggerationKey, @(mt_animationExaggeration), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)mt_animationExaggeration
@@ -485,7 +485,7 @@ static const char startUserInteractionEnabledKey;
 
 - (void)setMt_animationPerspective:(CGFloat)mt_animationPerspective
 {
-    objc_setAssociatedObject(self, &perspectiveKey, @(mt_animationPerspective), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &perspectiveKey, @(mt_animationPerspective), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)mt_animationPerspective
