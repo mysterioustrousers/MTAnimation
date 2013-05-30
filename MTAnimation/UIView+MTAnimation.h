@@ -9,19 +9,16 @@
 #import "MTTimingFunctions.h"
 #import "MTAnimationTypes.h"
 
-#define IS_IOS (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
 
 #if IS_IOS
 #import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 #define MTView              UIView
-#define MTAnimationOptions  UIViewAnimationOptions
 #else
 #import <TUIKit.h>
+#import <ApplicationServices/ApplicationServices.h>
 #define MTView              TUIView
-#define MTAnimationOptions  void *
 #endif
-
-
 
 
 @interface MTView (MTAnimation)
@@ -45,7 +42,8 @@
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
-             animations:(MTAnimationsBlock)animations;
+             animations:(MTAnimationsBlock)animations
+             completion:(MTAnimationCompletionBlock)completion;
 
 /**
  Convenience method. See full method below for param explanations.
@@ -53,6 +51,7 @@
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
+                options:(UIViewAnimationOptions)options
              animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion;
 
@@ -78,7 +77,7 @@
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
                   range:(MTAnimationRange)range
-                options:(MTAnimationOptions)options
+                options:(UIViewAnimationOptions)options
              animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion;
 

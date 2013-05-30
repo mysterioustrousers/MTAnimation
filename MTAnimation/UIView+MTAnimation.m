@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 #import "MTMatrixInterpolation.h"
 
+
 #if IS_IOS
 #define MTRectValue         CGRectValue
 #define MTPointValue        CGPointValue
@@ -24,10 +25,10 @@
 #endif
 
 
-
 @interface MTAnimationBatch : NSObject
 @property (nonatomic, strong, readonly) NSMutableArray              *animations;
 @property (nonatomic, strong)           MTAnimationCompletionBlock  completionBlock;
+@property (nonatomic, strong)           NSArray                     *views;
 - (BOOL)isCompleted;
 - (void)startAnimation:(CAKeyframeAnimation *)animation;
 - (void)completeAnimation:(CAKeyframeAnimation *)animation;
@@ -35,13 +36,13 @@
 @end
 
 
-
-
 // is b in the bitmask a
 static inline BOOL inMask(NSUInteger a, NSUInteger b) { return (a & b) == b; }
 
+
 static const NSInteger fps      = 60;
 static const NSInteger second   = 1000;
+
 
 static const char exaggerationKey;
 static const char perspectiveKey;
@@ -51,8 +52,7 @@ static const char startTransformKey;
 static const char startTransform3DKey;
 static const char startAlphaKey;
 static const char startBackgroundColorKey;
-
-
+static const char startUserInteractionEnabledKey;
 
 
 @interface MTView ()
@@ -61,24 +61,11 @@ static const char startBackgroundColorKey;
 @property (assign, nonatomic) CGAffineTransform     startTransform;
 @property (assign, nonatomic) CATransform3D         startTransform3D;
 @property (assign, nonatomic) CGFloat               startAlpha;
+@property (assign, nonatomic) BOOL                  startUserInteractionEnabled;
 @end
 
 
-
-
 @implementation MTView (MTAnimation)
-
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-             animations:(MTAnimationsBlock)animations
-{
-    return [self mt_animateViews:views
-                        duration:duration
-                  timingFunction:timingFunction
-                      animations:animations
-                      completion:nil];
-}
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
@@ -90,6 +77,22 @@ static const char startBackgroundColorKey;
                         duration:duration
                   timingFunction:timingFunction
                            range:MTAnimationRangeFull
+                      animations:animations
+                      completion:completion];
+}
+
++ (void)mt_animateViews:(NSArray *)views
+               duration:(NSTimeInterval)duration
+         timingFunction:(MTTimingFunction)timingFunction
+                options:(UIViewAnimationOptions)options
+             animations:(MTAnimationsBlock)animations
+             completion:(MTAnimationCompletionBlock)completion
+{
+    return [self mt_animateViews:views
+                        duration:duration
+                  timingFunction:timingFunction
+                           range:MTAnimationRangeFull
+                         options:options
                       animations:animations
                       completion:completion];
 }
@@ -114,7 +117,7 @@ static const char startBackgroundColorKey;
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
                   range:(MTAnimationRange)range
-                options:(MTAnimationOptions)options
+                options:(UIViewAnimationOptions)options
              animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion
 {
@@ -126,6 +129,7 @@ static const char startBackgroundColorKey;
 
     MTAnimationBatch *animationBatch    = [MTAnimationBatch new];
     animationBatch.completionBlock      = completion;
+    animationBatch.views                = views;
     [[self animationBatches] addObject:animationBatch];
 
     for (MTView *view in views) {
@@ -237,9 +241,14 @@ static const char startBackgroundColorKey;
         if (animationBatch) {
             [animationBatch completeAnimation:anim];
 
-            if ([animationBatch isCompleted] && animationBatch.completionBlock)
-            {
-                animationBatch.completionBlock();
+            if ([animationBatch isCompleted]) {
+
+                // restore user interaction values
+                for (MTView *view in animationBatch.views) {
+                    view.userInteractionEnabled = view.startUserInteractionEnabled;
+                }
+
+                if (animationBatch.completionBlock) animationBatch.completionBlock();
                 [[[self class] animationBatches] removeObject:animationBatch];
             }
         }
@@ -253,20 +262,36 @@ static const char startBackgroundColorKey;
 
 - (void)takeStartSnapshot:(UIViewAnimationOptions)options
 {
-    CALayer * presentationLayer;
-    if ((options & UIViewAnimationOptionBeginFromCurrentState) && (presentationLayer = self.layer.presentationLayer)) {
-        self.startBounds            = presentationLayer.bounds;
-        self.startCenter            = presentationLayer.position;
-        self.startTransform         = presentationLayer.affineTransform;
-        self.startTransform3D       = presentationLayer.transform;
-        self.startAlpha             = presentationLayer.opacity;
+    // MTAnimationOptionBeginFromCurrentState
+    CALayer *presentationLayer;
+    if (inMask(options, MTAnimationOptionBeginFromCurrentState) && (presentationLayer = self.layer.presentationLayer)) {
+        self.startBounds                = presentationLayer.bounds;
+        self.startCenter                = presentationLayer.position;
+        self.startTransform             = presentationLayer.affineTransform;
+        self.startTransform3D           = presentationLayer.transform;
+        self.startAlpha                 = presentationLayer.opacity;
+//        [self.layer removeAllAnimations];
+//        self.bounds                     = presentationLayer.bounds;
+//        self.center                     = presentationLayer.position;
+//        self.transform                  = presentationLayer.affineTransform;
+//        self.layer.transform            = presentationLayer.transform;
+//        self.alpha                      = presentationLayer.opacity;
     }
     else {
-        self.startBounds            = self.bounds;
-        self.startCenter            = self.center;
-        self.startTransform         = self.transform;
-        self.startTransform3D       = self.layer.transform;
-        self.startAlpha             = self.alpha;
+        self.startBounds                = self.bounds;
+        self.startCenter                = self.center;
+        self.startTransform             = self.transform;
+        self.startTransform3D           = self.layer.transform;
+        self.startAlpha                 = self.alpha;
+    }
+
+    // MTAnimationOptionBeginFromCurrentState
+    self.startUserInteractionEnabled    = self.userInteractionEnabled;
+    if (!inMask(options, MTAnimationOptionAllowUserInteraction)) {
+        self.userInteractionEnabled = NO;
+    }
+    else {
+        self.userInteractionEnabled = YES;
     }
 }
 
@@ -380,7 +405,7 @@ static const char startBackgroundColorKey;
 - (void)addAnimation:(CAKeyframeAnimation *)animation
               forKey:(NSString *)key
                range:(MTAnimationRange)range
-             options:(MTAnimationOptions)options
+             options:(UIViewAnimationOptions)options
          perspective:(CGFloat)perspective
 {
     // slice the animation to the range
@@ -398,7 +423,7 @@ static const char startBackgroundColorKey;
     /**
      TODO: Options to implement:
      - UIViewAnimationOptionLayoutSubviews
-     - UIViewAnimationOptionAllowUserInteraction
+     + UIViewAnimationOptionAllowUserInteraction
      + UIViewAnimationOptionBeginFromCurrentState
      + UIViewAnimationOptionRepeat
      + UIViewAnimationOptionAutoreverse
@@ -413,24 +438,18 @@ static const char startBackgroundColorKey;
     // is with the UIViewAnimationOptionLayoutSubviews option. I think it has something to do with telling it to
     // layout in the beginning so that the beginning of the animation looks sort of blurry/pixelated but the end
     // looks sharp.
-    self.layer.needsDisplayOnBoundsChange = YES;
-//    if (inMask(options, UIViewAnimationOptionLayoutSubviews)) {
+//    self.layer.needsDisplayOnBoundsChange = YES;
+//    if (inMask(options, MTAnimationOptionLayoutSubviews)) {
 //        self.layer.needsDisplayOnBoundsChange = YES;
 //    }
 
-#if IS_IOS
-    if (inMask(options, UIViewAnimationOptionBeginFromCurrentState)) {
-        animation.additive = YES;
-    }
-
-    if (inMask(options, UIViewAnimationOptionAutoreverse)) {
+    if (inMask(options, MTAnimationOptionAutoreverse)) {
         animation.autoreverses = YES;
     }
 
-    if (inMask(options, UIViewAnimationOptionRepeat)) {
+    if (inMask(options, MTAnimationOptionRepeat)) {
         animation.repeatCount = HUGE_VALF;
     }
-#endif
 
 
     // add perspective
@@ -549,6 +568,18 @@ static const char startBackgroundColorKey;
     return value ? [value floatValue] : 1;
 }
 
+- (void)setStartUserInteractionEnabled:(BOOL)startUserInteractionEnabled
+{
+    objc_setAssociatedObject(self, &startUserInteractionEnabledKey, @(startUserInteractionEnabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)startUserInteractionEnabled
+{
+    NSNumber *value = objc_getAssociatedObject(self, &startUserInteractionEnabledKey);
+    return value ? [value boolValue] : YES;
+}
+
+
 
 
 
@@ -563,10 +594,6 @@ static const char startBackgroundColorKey;
     return batches;
 }
 
-/**
- There's really no good way to compare CAAnimation obects, since I think it passes us back a copy
- in the animationDidFinish method. So we try our best to see if they are the same animation.
- */
 + (MTAnimationBatch *)animationBatchContainingAnimation:(CAKeyframeAnimation *)animation
 {
     for (MTAnimationBatch *batch in [self animationBatches]) {
@@ -627,6 +654,10 @@ static const char startBackgroundColorKey;
     return NO;
 }
 
+/**
+ There's really no good way to compare CAAnimation obects, since I think it passes us back a copy
+ in the animationDidFinish method. So we try our best to see if they are the same animation.
+ */
 + (BOOL)animation:(CAKeyframeAnimation *)animation1 equalToAnimation:(CAKeyframeAnimation *)animation2
 {
     BOOL equalValues    = [animation1.values isEqualToArray:animation2.values];

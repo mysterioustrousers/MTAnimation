@@ -19,6 +19,7 @@
 		C241F04B1751D6BA00B9AAA5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C241F04C1751D6CA00B9AAA5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
 		C27D915D1753CAD300C622DA /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C27D915B1753CAC200C622DA /* ApplicationServices.framework */; };
+		C29976721756562A00A99069 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2997670175655F300A99069 /* CoreGraphics.framework */; };
 		C2A2AC6E17342F0500085235 /* logo-flip.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A2AC6D17342F0500085235 /* logo-flip.png */; };
 		C2AF91441729F564001D44D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C2AF91461729F564001D44D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
@@ -80,6 +81,7 @@
 		C21CB503175165510082CB97 /* libMTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMTAnimation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C27D915B1753CAC200C622DA /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
+		C2997670175655F300A99069 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C2A2AC6C1734243900085235 /* MTAnimationTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAnimationTypes.h; sourceTree = "<group>"; };
 		C2A2AC6D17342F0500085235 /* logo-flip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-flip.png"; sourceTree = "<group>"; };
 		C2AF91401729F564001D44D5 /* MTAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MTAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C22CC0D4172A009700EB3CB3 /* QuartzCore.framework in Frameworks */,
+				C29976721756562A00A99069 /* CoreGraphics.framework in Frameworks */,
 				C2AF91441729F564001D44D5 /* UIKit.framework in Frameworks */,
 				C2AF91461729F564001D44D5 /* Foundation.framework in Frameworks */,
 			);
@@ -184,6 +187,7 @@
 		C2AF91421729F564001D44D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C2997670175655F300A99069 /* CoreGraphics.framework */,
 				C27D915B1753CAC200C622DA /* ApplicationServices.framework */,
 				C2FF4B851751DD83004CDD96 /* TwUI.framework */,
 				C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */,
