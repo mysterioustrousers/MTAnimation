@@ -6,14 +6,8 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
-#define IS_IOS (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
-
-
-#if IS_IOS
+#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
-#else
-#import <ApplicationServices/ApplicationServices.h>
-#endif
 
 
 /**
@@ -61,27 +55,6 @@ typedef void(^MTAnimationsBlock)();
  Completion blocks take no arguments and return void.
  */
 typedef void(^MTAnimationCompletionBlock)();
-
-
-/**
- Animation options
- */
-typedef NS_ENUM(NSUInteger, MTAnimationOptions) {
-    MTAnimationOptionLayoutSubviews            = 1 << 0, // TODO: Not implemented yet
-    MTAnimationOptionAllowUserInteraction      = 1 << 1,
-    MTAnimationOptionBeginFromCurrentState     = 1 << 2,
-    MTAnimationOptionRepeat                    = 1 << 3,
-    MTAnimationOptionAutoreverse               = 1 << 4,
-    MTAnimationOptionOverrideInheritedDuration = 1 << 5, // TODO: Not implemented yet
-    MTAnimationOptionOverrideInheritedCurve    = 1 << 6, // TODO: Not implemented yet
-    MTAnimationOptionAllowAnimatedContent      = 1 << 7, // TODO: Not implemented yet
-    MTAnimationOptionShowHideTransitionViews   = 1 << 8, // TODO: Not implemented yet
-};
-
-
-#if !IS_IOS
-typedef MTAnimationOptions UIViewAnimationOptions;
-#endif
 
 
 /**

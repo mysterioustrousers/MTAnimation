@@ -6,17 +6,11 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <CoreGraphics/CoreGraphics.h>
 #import "MTTimingFunctions.h"
 #import "MTAnimationTypes.h"
 
 
-// NSView support is coming
-#define MTView UIView
-
-
-@interface MTView (MTAnimation)
+@interface UIView (MTAnimation)
 
 /**
  Some (but not all) of the easing functions can be exaggerated. (e.g. elastic out will be swing 

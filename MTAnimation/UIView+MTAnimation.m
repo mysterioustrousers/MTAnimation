@@ -44,7 +44,7 @@ static const char startBackgroundColorKey;
 static const char startUserInteractionEnabledKey;
 
 
-@interface MTView ()
+@interface UIView ()
 @property (assign, nonatomic) CGRect                startBounds;
 @property (assign, nonatomic) CGPoint               startCenter;
 @property (assign, nonatomic) CGAffineTransform     startTransform;
@@ -54,7 +54,7 @@ static const char startUserInteractionEnabledKey;
 @end
 
 
-@implementation MTView (MTAnimation)
+@implementation UIView (MTAnimation)
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
@@ -121,13 +121,13 @@ static const char startUserInteractionEnabledKey;
     animationBatch.views                = views;
     [[self animationBatches] addObject:animationBatch];
 
-    for (MTView *view in views) {
+    for (UIView *view in views) {
         [view takeStartSnapshot:options];
     }
 
     if (animations) animations();
 
-    for (MTView *view in views) {
+    for (UIView *view in views) {
 
         if (!CGRectEqualToRect(view.startBounds, view.bounds)) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
@@ -233,7 +233,7 @@ static const char startUserInteractionEnabledKey;
             if ([animationBatch isCompleted]) {
 
                 // restore user interaction values
-                for (MTView *view in animationBatch.views) {
+                for (UIView *view in animationBatch.views) {
                     view.userInteractionEnabled = view.startUserInteractionEnabled;
                 }
 
@@ -253,7 +253,7 @@ static const char startUserInteractionEnabledKey;
 {
     // MTAnimationOptionBeginFromCurrentState
     CALayer *presentationLayer;
-    if (inMask(options, MTAnimationOptionBeginFromCurrentState) && (presentationLayer = self.layer.presentationLayer)) {
+    if (inMask(options, UIViewAnimationOptionBeginFromCurrentState) && (presentationLayer = self.layer.presentationLayer)) {
         self.startBounds                = presentationLayer.bounds;
         self.startCenter                = presentationLayer.position;
         self.startTransform             = presentationLayer.affineTransform;
@@ -427,11 +427,11 @@ static const char startUserInteractionEnabledKey;
 //        self.layer.needsDisplayOnBoundsChange = YES;
 //    }
 
-    if (inMask(options, MTAnimationOptionAutoreverse)) {
+    if (inMask(options, UIViewAnimationOptionAutoreverse)) {
         animation.autoreverses = YES;
     }
 
-    if (inMask(options, MTAnimationOptionRepeat)) {
+    if (inMask(options, UIViewAnimationOptionRepeat)) {
         animation.repeatCount = HUGE_VALF;
     }
 
