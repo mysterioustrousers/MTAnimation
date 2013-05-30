@@ -268,14 +268,15 @@ static const char startUserInteractionEnabledKey;
         self.startAlpha                 = self.alpha;
     }
 
-    // MTAnimationOptionBeginFromCurrentState
-    self.startUserInteractionEnabled    = self.userInteractionEnabled;
-    if (!inMask(options, MTAnimationOptionAllowUserInteraction)) {
-        self.userInteractionEnabled = NO;
-    }
-    else {
-        self.userInteractionEnabled = YES;
-    }
+    // UIViewAnimationOptionAllowUserInteraction
+    // TODO: user interaciton is not being re-enabled
+//    self.startUserInteractionEnabled    = self.userInteractionEnabled;
+//    if (!inMask(options, MTAnimationOptionAllowUserInteraction)) {
+//        self.userInteractionEnabled = NO;
+//    }
+//    else {
+//        self.userInteractionEnabled = YES;
+//    }
 }
 
 + (NSArray *)rectValuesWithDuration:(NSTimeInterval)duration
