@@ -253,7 +253,7 @@ static const char startUserInteractionEnabledKey;
 {
     // MTAnimationOptionBeginFromCurrentState
     CALayer *presentationLayer      = self.layer.presentationLayer;
-    BOOL shouldBeginFromCurrentSate = inMask(options, MTAnimationOptionBeginFromCurrentState);
+    BOOL shouldBeginFromCurrentSate = inMask(options, UIViewAnimationOptionBeginFromCurrentState);
     BOOL currentlyAnimating         = [[self.layer animationKeys] count] > 0;
     if (presentationLayer && shouldBeginFromCurrentSate && currentlyAnimating) {
         self.startBounds                = presentationLayer.bounds;
