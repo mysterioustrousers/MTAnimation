@@ -68,7 +68,7 @@ typedef void(^MTAnimationCompletionBlock)();
  */
 typedef NS_ENUM(NSUInteger, MTAnimationOptions) {
     MTAnimationOptionLayoutSubviews            = 1 << 0, // TODO: Not implemented yet
-    MTAnimationOptionAllowUserInteraction      = 1 << 1,
+    MTAnimationOptionAllowUserInteraction      = 1 << 1, // TODO: Not implemented yet
     MTAnimationOptionBeginFromCurrentState     = 1 << 2,
     MTAnimationOptionRepeat                    = 1 << 3,
     MTAnimationOptionAutoreverse               = 1 << 4,

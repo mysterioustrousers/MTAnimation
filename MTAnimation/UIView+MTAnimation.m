@@ -252,8 +252,10 @@ static const char startUserInteractionEnabledKey;
 - (void)takeStartSnapshot:(UIViewAnimationOptions)options
 {
     // MTAnimationOptionBeginFromCurrentState
-    CALayer *presentationLayer;
-    if (inMask(options, MTAnimationOptionBeginFromCurrentState) && (presentationLayer = self.layer.presentationLayer)) {
+    CALayer *presentationLayer      = self.layer.presentationLayer;
+    BOOL shouldBeginFromCurrentSate = inMask(options, MTAnimationOptionBeginFromCurrentState);
+    BOOL currentlyAnimating         = [[self.layer animationKeys] count] > 0;
+    if (presentationLayer && shouldBeginFromCurrentSate && currentlyAnimating) {
         self.startBounds                = presentationLayer.bounds;
         self.startCenter                = presentationLayer.position;
         self.startTransform             = presentationLayer.affineTransform;
@@ -407,7 +409,7 @@ static const char startUserInteractionEnabledKey;
     /**
      TODO: Options to implement:
      - UIViewAnimationOptionLayoutSubviews
-     + UIViewAnimationOptionAllowUserInteraction
+     - UIViewAnimationOptionAllowUserInteraction
      + UIViewAnimationOptionBeginFromCurrentState
      + UIViewAnimationOptionRepeat
      + UIViewAnimationOptionAutoreverse
@@ -444,22 +446,22 @@ static const char startUserInteractionEnabledKey;
     // add the animation
     if ([key isEqualToString:@"bounds"]) {
         self.bounds                     = self.startBounds;
-        [self.layer addAnimation:animation forKey:nil];
+        [self.layer addAnimation:animation forKey:key];
         self.layer.bounds               = [[animation.values lastObject] CGRectValue];
     }
     else if ([key isEqualToString:@"position"]) {
         self.center                     = self.startCenter;
-        [self.layer addAnimation:animation forKey:nil];
+        [self.layer addAnimation:animation forKey:key];
         self.layer.position             = [[animation.values lastObject] CGPointValue];
     }
     else if ([key isEqualToString:@"opacity"]) {
         self.alpha                      = self.startAlpha;
-        [self.layer addAnimation:animation forKey:nil];
+        [self.layer addAnimation:animation forKey:key];
         self.layer.opacity              = [[animation.values lastObject] floatValue];
     }
     else if ([key isEqualToString:@"transform"]) {
         self.layer.transform            = self.startTransform3D;
-        [self.layer addAnimation:animation forKey:nil];
+        [self.layer addAnimation:animation forKey:key];
         self.layer.transform            = [[animation.values lastObject] CATransform3DValue];
     }
 }
