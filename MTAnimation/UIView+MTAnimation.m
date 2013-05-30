@@ -472,7 +472,7 @@ static const char startUserInteractionEnabledKey;
 
 - (void)setMt_animationExaggeration:(CGFloat)mt_animationExaggeration
 {
-    objc_setAssociatedObject(self, &exaggerationKey, @(mt_animationExaggeration), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &exaggerationKey, @(mt_animationExaggeration), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)mt_animationExaggeration
@@ -483,7 +483,7 @@ static const char startUserInteractionEnabledKey;
 
 - (void)setMt_animationPerspective:(CGFloat)mt_animationPerspective
 {
-    objc_setAssociatedObject(self, &perspectiveKey, @(mt_animationPerspective), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &perspectiveKey, @(mt_animationPerspective), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGFloat)mt_animationPerspective
