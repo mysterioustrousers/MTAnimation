@@ -41,47 +41,10 @@
 		C2AF91871729F584001D44D5 /* MTTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MTTimingFunctions.c */; };
 		C2AF91891729F5A1001D44D5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91881729F5A1001D44D5 /* logo.png */; };
 		C2B71A9817341C9B00E508B8 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
-		C2BD0FCB1756CF130019CA85 /* TwUI.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = C2BD0FCA1756CF120019CA85 /* TwUI.xcodeproj */; };
-		C2FF4B861751DD83004CDD96 /* TwUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FF4B851751DD83004CDD96 /* TwUI.framework */; };
 		KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C257291D1756CF4500C23E47 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C2BD0FCA1756CF120019CA85 /* TwUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CB5B264C13BE6DA200579B1E;
-			remoteInfo = TwUI;
-		};
-		C257291F1756CF4500C23E47 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C2BD0FCA1756CF120019CA85 /* TwUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CB5E321813BE7098004B7899;
-			remoteInfo = "Dynamic Library";
-		};
-		C25729211756CF4500C23E47 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C2BD0FCA1756CF120019CA85 /* TwUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5EE983B713BE7809005F430D;
-			remoteInfo = "Static Library";
-		};
-		C25729231756CF4500C23E47 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C2BD0FCA1756CF120019CA85 /* TwUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CB5B266113BE6DA300579B1E;
-			remoteInfo = Tests;
-		};
-		C257292A1756CF7D00C23E47 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C2BD0FCA1756CF120019CA85 /* TwUI.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = CB5B264B13BE6DA200579B1E;
-			remoteInfo = TwUI;
-		};
 		C2AF916E1729F564001D44D5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C2AF91381729F564001D44D5 /* Project object */;
@@ -149,8 +112,6 @@
 		C2AF91881729F5A1001D44D5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MTMatrixInterpolation.c; sourceTree = "<group>"; };
 		C2B71A9917341CB100E508B8 /* MTMatrixInterpolation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTMatrixInterpolation.h; sourceTree = "<group>"; };
-		C2BD0FCA1756CF120019CA85 /* TwUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TwUI.xcodeproj; path = twui/TwUI.xcodeproj; sourceTree = "<group>"; };
-		C2FF4B851751DD83004CDD96 /* TwUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwUI.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug/TwUI.framework"; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -169,7 +130,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2FF4B861751DD83004CDD96 /* TwUI.framework in Frameworks */,
 				C21CB4FE175165510082CB97 /* Foundation.framework in Frameworks */,
 				C27D915D1753CAD300C622DA /* ApplicationServices.framework in Frameworks */,
 			);
@@ -200,17 +160,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C25729171756CF4500C23E47 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C257291E1756CF4500C23E47 /* TwUI.framework */,
-				C25729201756CF4500C23E47 /* libtwui.dylib */,
-				C25729221756CF4500C23E47 /* libtwui.a */,
-				C25729241756CF4500C23E47 /* Tests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C2AF91371729F564001D44D5 = {
 			isa = PBXGroup;
 			children = (
@@ -237,13 +186,11 @@
 			children = (
 				C2997670175655F300A99069 /* CoreGraphics.framework */,
 				C27D915B1753CAC200C622DA /* ApplicationServices.framework */,
-				C2FF4B851751DD83004CDD96 /* TwUI.framework */,
 				C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */,
 				C2AF91431729F564001D44D5 /* UIKit.framework */,
 				C2AF91451729F564001D44D5 /* Foundation.framework */,
 				C2AF916A1729F564001D44D5 /* SenTestingKit.framework */,
 				HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */,
-				C2BD0FCA1756CF120019CA85 /* TwUI.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -343,7 +290,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				C257292B1756CF7D00C23E47 /* PBXTargetDependency */,
 			);
 			name = "MTAnimation-OSX";
 			productName = "MTAnimation-iOS";
@@ -406,12 +352,6 @@
 			mainGroup = C2AF91371729F564001D44D5;
 			productRefGroup = C2AF91411729F564001D44D5 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C25729171756CF4500C23E47 /* Products */;
-					ProjectRef = C2BD0FCA1756CF120019CA85 /* TwUI.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C2AF913F1729F564001D44D5 /* MTAnimation */,
@@ -421,37 +361,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		C257291E1756CF4500C23E47 /* TwUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = TwUI.framework;
-			remoteRef = C257291D1756CF4500C23E47 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C25729201756CF4500C23E47 /* libtwui.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libtwui.dylib;
-			remoteRef = C257291F1756CF4500C23E47 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C25729221756CF4500C23E47 /* libtwui.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libtwui.a;
-			remoteRef = C25729211756CF4500C23E47 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C25729241756CF4500C23E47 /* Tests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Tests.octest;
-			remoteRef = C25729231756CF4500C23E47 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C2AF913E1729F564001D44D5 /* Resources */ = {
@@ -466,7 +375,6 @@
 				C2AF91601729F564001D44D5 /* MainStoryboard_iPad.storyboard in Resources */,
 				C2AF91891729F5A1001D44D5 /* logo.png in Resources */,
 				C2A2AC6E17342F0500085235 /* logo-flip.png in Resources */,
-				C2BD0FCB1756CF130019CA85 /* TwUI.xcodeproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,11 +449,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C257292B1756CF7D00C23E47 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = TwUI;
-			targetProxy = C257292A1756CF7D00C23E47 /* PBXContainerItemProxy */;
-		};
 		C2AF916F1729F564001D44D5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C2AF913F1729F564001D44D5 /* MTAnimation */;

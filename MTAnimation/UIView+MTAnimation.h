@@ -6,19 +6,14 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 #import "MTTimingFunctions.h"
 #import "MTAnimationTypes.h"
 
 
-#if IS_IOS
-#import <UIKit/UIKit.h>
-#import <CoreGraphics/CoreGraphics.h>
-#define MTView              UIView
-#else
-#import <TUIKit.h>
-#import <ApplicationServices/ApplicationServices.h>
-#define MTView              TUIView
-#endif
+// NSView support is coming
+#define MTView UIView
 
 
 @interface MTView (MTAnimation)

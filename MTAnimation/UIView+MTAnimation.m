@@ -12,17 +12,6 @@
 #import "MTMatrixInterpolation.h"
 
 
-#if IS_IOS
-#define MTRectValue         CGRectValue
-#define MTPointValue        CGPointValue
-#define mt_valueWithCGRect  valueWithCGRect
-#define mt_valueWithCGPoint valueWithCGPoint
-#else
-#define MTRectValue         rectValue
-#define MTPointValue        pointValue
-#define mt_valueWithCGRect  valueWithRect
-#define mt_valueWithCGPoint valueWithPoint
-#endif
 
 
 @interface MTAnimationBatch : NSObject
@@ -270,12 +259,6 @@ static const char startUserInteractionEnabledKey;
         self.startTransform             = presentationLayer.affineTransform;
         self.startTransform3D           = presentationLayer.transform;
         self.startAlpha                 = presentationLayer.opacity;
-//        [self.layer removeAllAnimations];
-//        self.bounds                     = presentationLayer.bounds;
-//        self.center                     = presentationLayer.position;
-//        self.transform                  = presentationLayer.affineTransform;
-//        self.layer.transform            = presentationLayer.transform;
-//        self.alpha                      = presentationLayer.opacity;
     }
     else {
         self.startBounds                = self.bounds;
@@ -316,7 +299,7 @@ static const char startUserInteractionEnabledKey;
         rect.size.width     = fromRect.size.width   + (v * (toRect.size.width    - fromRect.size.width));
         rect.size.height    = fromRect.size.height  + (v * (toRect.size.height   - fromRect.size.height));
 
-        [values addObject:[NSValue mt_valueWithCGRect:rect]];
+        [values addObject:[NSValue valueWithCGRect:rect]];
 
         progress += increment;
     }
@@ -343,7 +326,7 @@ static const char startUserInteractionEnabledKey;
         point.x             = fromPoint.x     + (v * (toPoint.x      - fromPoint.x));
         point.y             = fromPoint.y     + (v * (toPoint.y      - fromPoint.y));
 
-        [values addObject:[NSValue mt_valueWithCGPoint:point]];
+        [values addObject:[NSValue valueWithCGPoint:point]];
 
         progress += increment;
     }
@@ -461,12 +444,12 @@ static const char startUserInteractionEnabledKey;
     if ([key isEqualToString:@"bounds"]) {
         self.bounds                     = self.startBounds;
         [self.layer addAnimation:animation forKey:nil];
-        self.layer.bounds               = [[animation.values lastObject] MTRectValue];
+        self.layer.bounds               = [[animation.values lastObject] CGRectValue];
     }
     else if ([key isEqualToString:@"position"]) {
         self.center                     = self.startCenter;
         [self.layer addAnimation:animation forKey:nil];
-        self.layer.position             = [[animation.values lastObject] MTPointValue];
+        self.layer.position             = [[animation.values lastObject] CGPointValue];
     }
     else if ([key isEqualToString:@"opacity"]) {
         self.alpha                      = self.startAlpha;
@@ -515,24 +498,24 @@ static const char startUserInteractionEnabledKey;
 
 - (void)setStartBounds:(CGRect)startBounds
 {
-    objc_setAssociatedObject(self, &startBoundsKey, [NSValue mt_valueWithCGRect:startBounds], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &startBoundsKey, [NSValue valueWithCGRect:startBounds], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGRect)startBounds
 {
     NSValue *value = objc_getAssociatedObject(self, &startBoundsKey);
-    return value ? [value MTRectValue] : CGRectZero;
+    return value ? [value CGRectValue] : CGRectZero;
 }
 
 - (void)setStartCenter:(CGPoint)startCenter
 {
-    objc_setAssociatedObject(self, &startCenterKey, [NSValue mt_valueWithCGPoint:startCenter], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &startCenterKey, [NSValue valueWithCGPoint:startCenter], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGPoint)startCenter
 {
     NSValue *value = objc_getAssociatedObject(self, &startCenterKey);
-    return value ? [value MTPointValue] : CGPointZero;
+    return value ? [value CGPointValue] : CGPointZero;
 }
 
 - (void)setStartTransform:(CGAffineTransform)startTransform
