@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
 
