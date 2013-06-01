@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 #import "MTMatrixInterpolation.h"
+#import "bitmaskhelpers.h"
 
 
 
@@ -23,10 +24,6 @@
 - (void)completeAnimation:(CAKeyframeAnimation *)animation;
 - (BOOL)containsAnimation:(CAKeyframeAnimation *)animation;
 @end
-
-
-// is b in the bitmask a
-static inline BOOL inMask(NSUInteger a, NSUInteger b) { return (a & b) == b; }
 
 
 static const NSInteger fps      = 60;
@@ -253,7 +250,7 @@ static const char startUserInteractionEnabledKey;
 {
     // MTAnimationOptionBeginFromCurrentState
     CALayer *presentationLayer      = self.layer.presentationLayer;
-    BOOL shouldBeginFromCurrentSate = inMask(options, UIViewAnimationOptionBeginFromCurrentState);
+    BOOL shouldBeginFromCurrentSate = isInMask(options, UIViewAnimationOptionBeginFromCurrentState);
     BOOL currentlyAnimating         = [[self.layer animationKeys] count] > 0;
     if (presentationLayer && shouldBeginFromCurrentSate && currentlyAnimating) {
         self.startBounds                = presentationLayer.bounds;
@@ -429,11 +426,11 @@ static const char startUserInteractionEnabledKey;
 //        self.layer.needsDisplayOnBoundsChange = YES;
 //    }
 
-    if (inMask(options, UIViewAnimationOptionAutoreverse)) {
+    if (mt_isInMask(options, UIViewAnimationOptionAutoreverse)) {
         animation.autoreverses = YES;
     }
 
-    if (inMask(options, UIViewAnimationOptionRepeat)) {
+    if (mt_isInMask(options, UIViewAnimationOptionRepeat)) {
         animation.repeatCount = HUGE_VALF;
     }
 

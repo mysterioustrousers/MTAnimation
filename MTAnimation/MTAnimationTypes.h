@@ -14,6 +14,11 @@
  */
 static inline double mt_degreesToRadians(double degrees) { return degrees * M_PI / 180; }
 
+/**
+ Helper function to determine if an enum is in a mask
+ */
+static inline BOOL mt_isInMask(NSUInteger bitmask, NSUInteger value) { return (bitmask & value) == value; }
+
 
 /**
  This type allows you to clip an animation. For example, if you wanted to split an animation into
