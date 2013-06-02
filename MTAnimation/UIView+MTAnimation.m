@@ -15,6 +15,18 @@
 
 
 
+CGFloat UIAnimationDragCoefficient(void);
+static inline BOOL slowAnimationsEnabled()
+{
+#if TARGET_IPHONE_SIMULATOR
+    return UIAnimationDragCoefficient() != 1;
+#else
+    return NO;
+#endif
+}
+
+
+
 @interface MTAnimationBatch : NSObject
 @property (nonatomic, strong, readonly) NSMutableArray              *animations;
 @property (nonatomic, strong)           MTAnimationCompletionBlock  completionBlock;
@@ -112,6 +124,11 @@ static const char startUserInteractionEnabledKey;
     assert(animations != nil);
     assert(range.start >= 0);
     assert(range.end <= 1);
+    
+    // Debug only
+    if (slowAnimationsEnabled()) {
+        duration *= 10.0;
+    }
 
     MTAnimationBatch *animationBatch    = [MTAnimationBatch new];
     animationBatch.completionBlock      = completion;
