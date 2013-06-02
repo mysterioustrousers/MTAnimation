@@ -141,8 +141,18 @@ static const char startUserInteractionEnabledKey;
 
     if (animations) animations();
 
+    BOOL shouldBeginFromCurrentState = isInMask(options, UIViewAnimationOptionBeginFromCurrentState);
+
     for (UIView *view in views) {
 
+        CALayer * current = nil;
+        if (shouldBeginFromCurrentState) {
+            BOOL currentlyAnimating = [[view.layer animationKeys] count] > 0;
+            if (currentlyAnimating) {
+                current = view.layer.presentationLayer;
+            }
+        }
+        
         if (!CGRectEqualToRect(view.startBounds, view.bounds)) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"bounds";
@@ -151,7 +161,7 @@ static const char startUserInteractionEnabledKey;
             keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self rectValuesWithDuration:duration
                                                                           function:timingFunction
-                                                                              from:view.startBounds
+                                                                              from:current ? current.bounds : view.startBounds
                                                                                 to:view.bounds
                                                                       exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
@@ -172,7 +182,7 @@ static const char startUserInteractionEnabledKey;
             keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self pointValuesWithDuration:duration
                                                                            function:timingFunction
-                                                                               from:view.startCenter
+                                                                               from:current ? current.position : view.startCenter
                                                                                  to:view.center
                                                                        exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
@@ -193,7 +203,7 @@ static const char startUserInteractionEnabledKey;
             keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self transformValuesWithDuration:duration
                                                                                function:timingFunction
-                                                                                   from:view.startTransform3D
+                                                                                   from:current ? current.transform : view.startTransform3D
                                                                                      to:view.layer.transform
                                                                            exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
@@ -213,7 +223,7 @@ static const char startUserInteractionEnabledKey;
             keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self floatValuesWithDuration:duration
                                                                            function:timingFunction
-                                                                               from:view.startAlpha
+                                                                               from:current ? current.opacity : view.startAlpha
                                                                                  to:view.alpha
                                                                        exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
@@ -265,24 +275,11 @@ static const char startUserInteractionEnabledKey;
 
 - (void)takeStartSnapshot:(UIViewAnimationOptions)options
 {
-    // MTAnimationOptionBeginFromCurrentState
-    CALayer *presentationLayer      = self.layer.presentationLayer;
-    BOOL shouldBeginFromCurrentSate = isInMask(options, UIViewAnimationOptionBeginFromCurrentState);
-    BOOL currentlyAnimating         = [[self.layer animationKeys] count] > 0;
-    if (presentationLayer && shouldBeginFromCurrentSate && currentlyAnimating) {
-        self.startBounds                = presentationLayer.bounds;
-        self.startCenter                = presentationLayer.position;
-        self.startTransform             = presentationLayer.affineTransform;
-        self.startTransform3D           = presentationLayer.transform;
-        self.startAlpha                 = presentationLayer.opacity;
-    }
-    else {
-        self.startBounds                = self.bounds;
-        self.startCenter                = self.center;
-        self.startTransform             = self.transform;
-        self.startTransform3D           = self.layer.transform;
-        self.startAlpha                 = self.alpha;
-    }
+    self.startBounds                = self.bounds;
+    self.startCenter                = self.center;
+    self.startTransform             = self.transform;
+    self.startTransform3D           = self.layer.transform;
+    self.startAlpha                 = self.alpha;
 
     // UIViewAnimationOptionAllowUserInteraction
     // TODO: user interaciton is not being re-enabled
