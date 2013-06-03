@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "MTTimingFunctions.h"
 #import "MTAnimationTypes.h"
 

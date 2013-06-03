@@ -10,7 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 #import "MTMatrixInterpolation.h"
-#import "bitmaskhelpers.h"
 
 
 
@@ -141,12 +140,11 @@ static const char startUserInteractionEnabledKey;
 
     if (animations) animations();
 
-    BOOL shouldBeginFromCurrentState = isInMask(options, UIViewAnimationOptionBeginFromCurrentState);
-
     for (UIView *view in views) {
 
-        CALayer * current = nil;
-        if (shouldBeginFromCurrentState) {
+        // apply UIViewAnimationOptionBeginFromCurrentState option
+        CALayer *current = nil;
+        if (mt_isInMask(options, UIViewAnimationOptionBeginFromCurrentState)) {
             BOOL currentlyAnimating = [[view.layer animationKeys] count] > 0;
             if (currentlyAnimating) {
                 current = view.layer.presentationLayer;
@@ -419,8 +417,8 @@ static const char startUserInteractionEnabledKey;
     // apply options
     /**
      TODO: Options to implement:
-     - UIViewAnimationOptionLayoutSubviews
-     - UIViewAnimationOptionAllowUserInteraction
+     - UIViewAnimationOptionLayoutSubviews              // this one is tricky, not sure what CALayer option applies
+     - UIViewAnimationOptionAllowUserInteraction        // almost have this done, just need to debug
      + UIViewAnimationOptionBeginFromCurrentState
      + UIViewAnimationOptionRepeat
      + UIViewAnimationOptionAutoreverse
@@ -434,7 +432,7 @@ static const char startUserInteractionEnabledKey;
     // TODO: this seems to be enabled by default when animating with UIView, so I'm not sure what the difference
     // is with the UIViewAnimationOptionLayoutSubviews option. I think it has something to do with telling it to
     // layout in the beginning so that the beginning of the animation looks sort of blurry/pixelated but the end
-    // looks sharp.
+    // looks sharp. Could be totally wrong.
 //    self.layer.needsDisplayOnBoundsChange = YES;
 //    if (inMask(options, MTAnimationOptionLayoutSubviews)) {
 //        self.layer.needsDisplayOnBoundsChange = YES;
@@ -450,8 +448,8 @@ static const char startUserInteractionEnabledKey;
 
 
     // add perspective
-    CATransform3D perspectiveTransform = CATransform3DIdentity;
-    perspectiveTransform.m34 = perspective;
+    CATransform3D perspectiveTransform      = CATransform3DIdentity;
+    perspectiveTransform.m34                = perspective;
     self.layer.superlayer.sublayerTransform = perspectiveTransform;
 
     // add the animation
