@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
+#if TARGET_IPHONE_OS
 #import <UIKit/UIKit.h>
+#endif
+
 #import "MTTimingFunctions.h"
 #import "MTAnimationTypes.h"
 
