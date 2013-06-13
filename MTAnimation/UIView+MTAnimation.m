@@ -119,10 +119,14 @@ static const char startUserInteractionEnabledKey;
              completion:(MTAnimationCompletionBlock)completion
 {
     assert([views count] > 0);
-    assert(duration > 0);
     assert(animations != nil);
     assert(range.start >= 0);
     assert(range.end <= 1);
+
+    if (duration <= 0) {
+        if (animations) animations();
+        return;
+    }
     
     // Debug only
     if (slowAnimationsEnabled()) {
