@@ -277,11 +277,11 @@ static const char startUserInteractionEnabledKey;
 
 - (void)takeStartSnapshot:(UIViewAnimationOptions)options
 {
-    self.startBounds                = self.bounds;
-    self.startCenter                = self.center;
-    self.startTransform             = self.transform;
-    self.startTransform3D           = self.layer.transform;
-    self.startAlpha                 = self.alpha;
+    self.startBounds        = self.bounds;
+    self.startCenter        = self.center;
+    self.startTransform     = self.transform;
+    self.startTransform3D   = self.layer.transform;
+    self.startAlpha         = self.alpha;
 
     // UIViewAnimationOptionAllowUserInteraction
     // TODO: user interaciton is not being re-enabled
