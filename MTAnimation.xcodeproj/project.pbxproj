@@ -11,14 +11,10 @@
 		C21CB4F5175164E10082CB97 /* UIView+MTAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91831729F584001D44D5 /* UIView+MTAnimation.m */; };
 		C21CB4F6175164E60082CB97 /* MTTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MTTimingFunctions.c */; };
 		C21CB4F7175164EA0082CB97 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
-		C21CB4FA175165510082CB97 /* UIView+MTAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91831729F584001D44D5 /* UIView+MTAnimation.m */; };
-		C21CB4FB175165510082CB97 /* MTTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MTTimingFunctions.c */; };
-		C21CB4FC175165510082CB97 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
-		C21CB4FE175165510082CB97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
 		C22CC0D4172A009700EB3CB3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
 		C241F04B1751D6BA00B9AAA5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C241F04C1751D6CA00B9AAA5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
-		C27D915D1753CAD300C622DA /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C27D915B1753CAC200C622DA /* ApplicationServices.framework */; };
+		C28AFC23177D552000E9AFC0 /* MTTimingFunctionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C28AFC22177D552000E9AFC0 /* MTTimingFunctionsTests.m */; };
 		C29976721756562A00A99069 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2997670175655F300A99069 /* CoreGraphics.framework */; };
 		C2A2AC6E17342F0500085235 /* logo-flip.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A2AC6D17342F0500085235 /* logo-flip.png */; };
 		C2AF91441729F564001D44D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
@@ -64,22 +60,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C21CB4FF175165510082CB97 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C21CB4E9175164C00082CB97 /* libMTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMTAnimation.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C21CB503175165510082CB97 /* libMTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMTAnimation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C27D915B1753CAC200C622DA /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
+		C28AFC21177D552000E9AFC0 /* MTTimingFunctionsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTimingFunctionsTests.h; sourceTree = "<group>"; };
+		C28AFC22177D552000E9AFC0 /* MTTimingFunctionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTTimingFunctionsTests.m; sourceTree = "<group>"; };
 		C2997670175655F300A99069 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C2A2AC6C1734243900085235 /* MTAnimationTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAnimationTypes.h; sourceTree = "<group>"; };
 		C2A2AC6D17342F0500085235 /* logo-flip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-flip.png"; sourceTree = "<group>"; };
@@ -126,15 +114,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C21CB4FD175165510082CB97 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C21CB4FE175165510082CB97 /* Foundation.framework in Frameworks */,
-				C27D915D1753CAD300C622DA /* ApplicationServices.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C2AF913D1729F564001D44D5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -176,7 +155,6 @@
 				C2AF91401729F564001D44D5 /* MTAnimation.app */,
 				C2AF91691729F564001D44D5 /* MTAnimationTests.octest */,
 				C21CB4E9175164C00082CB97 /* libMTAnimation.a */,
-				C21CB503175165510082CB97 /* libMTAnimation.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -231,6 +209,8 @@
 			children = (
 				C2AF91761729F564001D44D5 /* MTAnimationTests.h */,
 				C2AF91771729F564001D44D5 /* MTAnimationTests.m */,
+				C28AFC21177D552000E9AFC0 /* MTTimingFunctionsTests.h */,
+				C28AFC22177D552000E9AFC0 /* MTTimingFunctionsTests.m */,
 				C2AF91711729F564001D44D5 /* Supporting Files */,
 			);
 			path = MTAnimationTests;
@@ -277,23 +257,6 @@
 			name = "MTAnimation-iOS";
 			productName = "MTAnimation-iOS";
 			productReference = C21CB4E9175164C00082CB97 /* libMTAnimation.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		C21CB4F8175165510082CB97 /* MTAnimation-OSX */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C21CB500175165510082CB97 /* Build configuration list for PBXNativeTarget "MTAnimation-OSX" */;
-			buildPhases = (
-				C21CB4F9175165510082CB97 /* Sources */,
-				C21CB4FD175165510082CB97 /* Frameworks */,
-				C21CB4FF175165510082CB97 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "MTAnimation-OSX";
-			productName = "MTAnimation-iOS";
-			productReference = C21CB503175165510082CB97 /* libMTAnimation.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		C2AF913F1729F564001D44D5 /* MTAnimation */ = {
@@ -356,7 +319,6 @@
 			targets = (
 				C2AF913F1729F564001D44D5 /* MTAnimation */,
 				C21CB4E8175164C00082CB97 /* MTAnimation-iOS */,
-				C21CB4F8175165510082CB97 /* MTAnimation-OSX */,
 				C2AF91681729F564001D44D5 /* MTAnimationTests */,
 			);
 		};
@@ -415,16 +377,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C21CB4F9175165510082CB97 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C21CB4FA175165510082CB97 /* UIView+MTAnimation.m in Sources */,
-				C21CB4FB175165510082CB97 /* MTTimingFunctions.c in Sources */,
-				C21CB4FC175165510082CB97 /* MTMatrixInterpolation.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C2AF913C1729F564001D44D5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -443,6 +395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2AF91781729F564001D44D5 /* MTAnimationTests.m in Sources */,
+				C28AFC23177D552000E9AFC0 /* MTTimingFunctionsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,56 +462,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		C21CB501175165510082CB97 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DSTROOT = /tmp/MTAnimation.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${SRCROOT}/twui/lib/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug\"",
-				);
-				PRODUCT_NAME = MTAnimation;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = macosx;
-			};
-			name = Debug;
-		};
-		C21CB502175165510082CB97 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DSTROOT = /tmp/MTAnimation.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${SRCROOT}/twui/lib/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/Firehose-dwkkirltcuyvbwcyicushvlbsmzy/Build/Products/Debug\"",
-				);
-				PRODUCT_NAME = MTAnimation;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = macosx;
 			};
 			name = Release;
 		};
@@ -706,15 +609,6 @@
 			buildConfigurations = (
 				C21CB4F2175164C00082CB97 /* Debug */,
 				C21CB4F3175164C00082CB97 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C21CB500175165510082CB97 /* Build configuration list for PBXNativeTarget "MTAnimation-OSX" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C21CB501175165510082CB97 /* Debug */,
-				C21CB502175165510082CB97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
