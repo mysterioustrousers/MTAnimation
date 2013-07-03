@@ -125,6 +125,7 @@ static const char startUserInteractionEnabledKey;
 
     if (duration <= 0) {
         if (animations) animations();
+        if (completion) completion();
         return;
     }
     
