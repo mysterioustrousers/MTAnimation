@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name                  = "MTAnimation"
-  s.version               = "0.1.2"
-  s.summary               = "Animate with easing functions using block methods similar to UKIt."
+  s.version               = "0.1.3"
+  s.summary               = "Animate with easing functions using block methods similar to UIKit."
   s.description           = <<-DESC
                               Allows you to animate views in your app in the way you're familiar with (e.g. [UIKit animateWithDuration:animations:]) but adds 25+ easing functions (from jQuery) to make your animations more visceral.
                             DESC
