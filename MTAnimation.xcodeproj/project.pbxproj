@@ -479,9 +479,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Users/adamkirk/Library/Application Support/Spark Inspector\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "\"/Users/adamkirk/Library/Application Support/Spark Inspector\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -543,9 +541,7 @@
 		C2AF917C1729F564001D44D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Users/adamkirk/Library/Application Support/Spark Inspector\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "\"/Users/adamkirk/Library/Application Support/Spark Inspector\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
 				INFOPLIST_FILE = "MTAnimation/MTAnimation-Info.plist";

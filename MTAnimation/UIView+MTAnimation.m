@@ -25,18 +25,6 @@ static inline BOOL slowAnimationsEnabled()
 }
 
 
-
-@interface MTAnimationBatch : NSObject
-@property (nonatomic, strong, readonly) NSMutableArray              *animations;
-@property (nonatomic, strong)           MTAnimationCompletionBlock  completionBlock;
-@property (nonatomic, strong)           NSArray                     *views;
-- (BOOL)isCompleted;
-- (void)startAnimation:(CAKeyframeAnimation *)animation;
-- (void)completeAnimation:(CAKeyframeAnimation *)animation;
-- (BOOL)containsAnimation:(CAKeyframeAnimation *)animation;
-@end
-
-
 static const NSInteger fps      = 60;
 static const NSInteger second   = 1000;
 
@@ -134,10 +122,11 @@ static const char startUserInteractionEnabledKey;
         duration *= 10.0;
     }
 
-    MTAnimationBatch *animationBatch    = [MTAnimationBatch new];
-    animationBatch.completionBlock      = completion;
-    animationBatch.views                = views;
-    [[self animationBatches] addObject:animationBatch];
+    [CATransaction lock];
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:duration];
+    [CATransaction setCompletionBlock:completion];
+    [CATransaction setDisableActions:YES];
 
     for (UIView *view in views) {
         [view takeStartSnapshot:options];
@@ -161,7 +150,6 @@ static const char startUserInteractionEnabledKey;
             keyframeAnimation.keyPath               = @"bounds";
             keyframeAnimation.duration              = duration;
             keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self rectValuesWithDuration:duration
                                                                           function:timingFunction
                                                                               from:current ? current.bounds : view.startBounds
@@ -172,8 +160,6 @@ static const char startUserInteractionEnabledKey;
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
-
-            [animationBatch startAnimation:keyframeAnimation];
         }
 
 
@@ -182,7 +168,6 @@ static const char startUserInteractionEnabledKey;
             keyframeAnimation.keyPath               = @"position";
             keyframeAnimation.duration              = duration;
             keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self pointValuesWithDuration:duration
                                                                            function:timingFunction
                                                                                from:current ? current.position : view.startCenter
@@ -193,17 +178,13 @@ static const char startUserInteractionEnabledKey;
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
-
-            [animationBatch startAnimation:keyframeAnimation];
         }
 
-        // TODO: does not interpolate rotation around the z-axis correctly
         if (!CATransform3DEqualToTransform(view.startTransform3D, view.layer.transform)) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"transform";
             keyframeAnimation.duration              = duration;
             keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self transformValuesWithDuration:duration
                                                                                function:timingFunction
                                                                                    from:current ? current.transform : view.startTransform3D
@@ -214,8 +195,6 @@ static const char startUserInteractionEnabledKey;
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
-
-            [animationBatch startAnimation:keyframeAnimation];
         }
 
         if (view.startAlpha != view.alpha) {
@@ -223,7 +202,6 @@ static const char startUserInteractionEnabledKey;
             keyframeAnimation.keyPath               = @"opacity";
             keyframeAnimation.duration              = duration;
             keyframeAnimation.calculationMode       = kCAAnimationLinear;
-            keyframeAnimation.delegate              = view;
             keyframeAnimation.values                = [self floatValuesWithDuration:duration
                                                                            function:timingFunction
                                                                                from:current ? current.opacity : view.startAlpha
@@ -234,42 +212,16 @@ static const char startUserInteractionEnabledKey;
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
-
-            [animationBatch startAnimation:keyframeAnimation];
         }
     }
 
-    if ([animationBatch.animations count] == 0 && completion) {
-        completion();
+    for (UIView *view in views) {
+        [view.layer layoutSublayers];
     }
+    [CATransaction commit];
+    [CATransaction unlock];
 }
 
-
-
-
-#pragma mark - CAAnimation Delegate
-
-- (void)animationDidStop:(CAKeyframeAnimation *)anim finished:(BOOL)finished
-{
-    if ([anim isKindOfClass:[CAKeyframeAnimation class]]) {
-        MTAnimationBatch *animationBatch = [[self class] animationBatchContainingAnimation:anim];
-
-        if (animationBatch) {
-            [animationBatch completeAnimation:anim];
-
-            if ([animationBatch isCompleted]) {
-
-                // restore user interaction values
-                for (UIView *view in animationBatch.views) {
-                    view.userInteractionEnabled = view.startUserInteractionEnabled;
-                }
-
-                if (animationBatch.completionBlock) animationBatch.completionBlock();
-                [[[self class] animationBatches] removeObject:animationBatch];
-            }
-        }
-    }
-}
 
 
 
@@ -438,10 +390,11 @@ static const char startUserInteractionEnabledKey;
     // is with the UIViewAnimationOptionLayoutSubviews option. I think it has something to do with telling it to
     // layout in the beginning so that the beginning of the animation looks sort of blurry/pixelated but the end
     // looks sharp. Could be totally wrong.
-//    self.layer.needsDisplayOnBoundsChange = YES;
-//    if (inMask(options, MTAnimationOptionLayoutSubviews)) {
-//        self.layer.needsDisplayOnBoundsChange = YES;
-//    }
+    self.layer.needsDisplayOnBoundsChange = YES;
+    if (mt_isInMask(options, UIViewAnimationOptionLayoutSubviews)) {
+        self.layer.needsDisplayOnBoundsChange = YES;
+    }
+
 
     if (mt_isInMask(options, UIViewAnimationOptionAutoreverse)) {
         animation.autoreverses = YES;
@@ -479,8 +432,6 @@ static const char startUserInteractionEnabledKey;
         self.layer.transform            = [[animation.values lastObject] CATransform3DValue];
     }
 }
-
-
 
 
 
@@ -579,98 +530,11 @@ static const char startUserInteractionEnabledKey;
     return value ? [value boolValue] : YES;
 }
 
-
-
-
-
-
-+ (NSMutableArray *)animationBatches
-{
-    static NSMutableArray *batches = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        batches = [NSMutableArray array];
-    });
-    return batches;
-}
-
-+ (MTAnimationBatch *)animationBatchContainingAnimation:(CAKeyframeAnimation *)animation
-{
-    for (MTAnimationBatch *batch in [self animationBatches]) {
-        if ([batch containsAnimation:animation]) {
-            return batch;
-        }
-    }
-    return nil;
-}
-
 @end
 
 
 
 
-
-
-
-@implementation MTAnimationBatch
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        _animations = [NSMutableArray array];
-    }
-    return self;
-}
-
-- (void)startAnimation:(CAKeyframeAnimation *)animation
-{
-    [_animations addObject:animation];
-}
-
-- (void)completeAnimation:(CAKeyframeAnimation *)animation
-{
-    for (CAKeyframeAnimation *anim in [_animations copy]) {
-        if ([MTAnimationBatch animation:anim equalToAnimation:animation]) {
-            [_animations removeObject:animation];
-            [_animations removeObject:anim];
-            return;
-        }
-    }
-}
-
-- (BOOL)isCompleted
-{
-    return [self.animations count] == 0;
-}
-
-- (BOOL)containsAnimation:(CAKeyframeAnimation *)animation
-{
-    for (CAKeyframeAnimation *anim in _animations) {
-        if ([MTAnimationBatch animation:anim equalToAnimation:animation]) {
-            return YES;
-        }
-    }
-    return NO;
-}
-
-/**
- There's really no good way to compare CAAnimation obects, since I think it passes us back a copy
- in the animationDidFinish method. So we try our best to see if they are the same animation.
- */
-+ (BOOL)animation:(CAKeyframeAnimation *)animation1 equalToAnimation:(CAKeyframeAnimation *)animation2
-{
-    BOOL equalValues    = [animation1.values isEqualToArray:animation2.values];
-    BOOL equalDelegates = animation1.delegate == animation2.delegate;
-    BOOL equalDuration  = animation1.duration == animation2.duration;
-    if (equalValues && equalDelegates && equalDuration) {
-        return YES;
-    }
-    return NO;
-}
-
-
-@end
 
 
 

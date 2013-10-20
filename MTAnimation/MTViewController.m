@@ -181,6 +181,7 @@
                  } completion:^{
                      NSLog(@"completed");
                  }];
+
 }
 
 - (NSArray *)functionMap
