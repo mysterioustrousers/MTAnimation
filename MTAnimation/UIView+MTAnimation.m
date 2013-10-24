@@ -10,19 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 #import "MTMatrixInterpolation.h"
-
-
-
-
-CGFloat UIAnimationDragCoefficient(void);
-static inline BOOL slowAnimationsEnabled()
-{
-#if TARGET_IPHONE_SIMULATOR
-    return UIAnimationDragCoefficient() != 1;
-#else
-    return NO;
-#endif
-}
+#import <mach-o/dyld.h>
+#import <dlfcn.h>
 
 
 static const NSInteger fps      = 60;
@@ -51,6 +40,11 @@ static const char startUserInteractionEnabledKey;
 
 
 @implementation UIView (MTAnimation)
+
++ (void)load
+{
+
+}
 
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
@@ -115,11 +109,6 @@ static const char startUserInteractionEnabledKey;
         if (animations) animations();
         if (completion) completion();
         return;
-    }
-    
-    // Debug only
-    if (slowAnimationsEnabled()) {
-        duration *= 10.0;
     }
 
     [CATransaction lock];
