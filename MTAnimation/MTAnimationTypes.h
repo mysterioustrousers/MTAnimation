@@ -6,7 +6,30 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
+#define IS_IOS (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
+
+
+#if IS_IOS
+
+#define MTView UIView
 #import <CoreGraphics/CoreGraphics.h>
+#define MTRectValue         CGRectValue
+#define MTPointValue        CGPointValue
+#define mt_valueWithCGRect  valueWithCGRect
+#define mt_valueWithCGPoint valueWithCGPoint
+#define mt_alpha            alpha
+
+#else
+
+#define MTView NSView
+#import <ApplicationServices/ApplicationServices.h>
+#define MTRectValue         rectValue
+#define MTPointValue        pointValue
+#define mt_valueWithCGRect  valueWithRect
+#define mt_valueWithCGPoint valueWithPoint
+#define mt_alpha            alphaValue
+
+#endif
 
 
 /**
@@ -70,5 +93,23 @@ typedef NS_ENUM(NSInteger, MTAnimationExaggeration) {
     MTAnimationExaggerationMedium,         // 2.70158;
     MTAnimationExaggerationHigh,           // 3.70158;
     MTAnimationExaggerationLudicrous       // 4.70158;
+};
+
+
+/**
+ * MTAnimation variants of the animation options for UIKit (to support OS X). The options commented out still need
+ * to be implemented by either me or contributors.
+ */
+typedef NS_OPTIONS(NSUInteger, MTViewAnimationOptions) {
+    MTViewAnimationOptionLayoutSubviews            = 1 <<  0,
+//    MTViewAnimationOptionAllowUserInteraction      = 1 <<  1, // turn on user interaction while animating
+    MTViewAnimationOptionBeginFromCurrentState     = 1 <<  2, // start all views from current value, not initial value
+    MTViewAnimationOptionRepeat                    = 1 <<  3, // repeat animation indefinitely
+    MTViewAnimationOptionAutoreverse               = 1 <<  4, // if repeat, run animation back and forth
+//    MTViewAnimationOptionOverrideInheritedDuration = 1 <<  5, // ignore nested duration
+//    MTViewAnimationOptionOverrideInheritedCurve    = 1 <<  6, // ignore nested curve
+//    MTViewAnimationOptionAllowAnimatedContent      = 1 <<  7, // animate contents (applies to transitions only)
+//    MTViewAnimationOptionShowHideTransitionViews   = 1 <<  8, // flip to/from hidden state instead of adding/removing
+//    MTViewAnimationOptionOverrideInheritedOptions  = 1 <<  9, // do not inherit any options or animation type
 };
 

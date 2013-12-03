@@ -93,8 +93,8 @@
 		C2AF91741729F564001D44D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C2AF91761729F564001D44D5 /* MTAnimationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAnimationTests.h; sourceTree = "<group>"; };
 		C2AF91771729F564001D44D5 /* MTAnimationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTAnimationTests.m; sourceTree = "<group>"; };
-		C2AF91821729F584001D44D5 /* UIView+MTAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MTAnimation.h"; sourceTree = "<group>"; };
-		C2AF91831729F584001D44D5 /* UIView+MTAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MTAnimation.m"; sourceTree = "<group>"; };
+		C2AF91821729F584001D44D5 /* UIView+MTAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UIView+MTAnimation.h"; sourceTree = "<group>"; };
+		C2AF91831729F584001D44D5 /* UIView+MTAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIView+MTAnimation.m"; sourceTree = "<group>"; };
 		C2AF91841729F584001D44D5 /* MTTimingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTimingFunctions.h; sourceTree = "<group>"; };
 		C2AF91851729F584001D44D5 /* MTTimingFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MTTimingFunctions.c; sourceTree = "<group>"; };
 		C2AF91881729F5A1001D44D5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };

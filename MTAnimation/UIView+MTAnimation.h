@@ -10,7 +10,7 @@
 #import "MTAnimationTypes.h"
 
 
-@interface UIView (MTAnimation)
+@interface MTView (MTAnimation)
 
 /**
  Some (but not all) of the easing functions can be exaggerated. (e.g. elastic out will be swing 
@@ -40,7 +40,7 @@
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
-                options:(UIViewAnimationOptions)options
+                options:(MTViewAnimationOptions)options
              animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion;
 
@@ -58,7 +58,7 @@
  @param views           The list of views you will be modifying in the animation block. You must provide all views you'll be modifying.
  @param duration        The duration of the animation.
  @param timingFunction  The timing function to use for the easing.
- @param options         Some of the UIView UIViewAnimationOptions options are implemented. Not all of them yet, but I'm working on it.
+ @param options         Some of the UIView MTViewAnimationOptions options are implemented. Not all of them yet, but I'm working on it.
  @param animations      Make your changes to your views in this block and they will be animated to those final values.
  @param completion      Called when the animation completes.
  */
@@ -66,9 +66,8 @@
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
                   range:(MTAnimationRange)range
-                options:(UIViewAnimationOptions)options
+                options:(MTViewAnimationOptions)options
              animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion;
-
 
 @end

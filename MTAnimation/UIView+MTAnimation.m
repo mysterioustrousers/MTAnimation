@@ -10,8 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 #import "MTMatrixInterpolation.h"
-#import <mach-o/dyld.h>
-#import <dlfcn.h>
 
 
 static const NSInteger fps      = 60;
@@ -29,7 +27,7 @@ static const char startBackgroundColorKey;
 static const char startUserInteractionEnabledKey;
 
 
-@interface UIView ()
+@interface MTView ()
 @property (assign, nonatomic) CGRect                startBounds;
 @property (assign, nonatomic) CGPoint               startCenter;
 @property (assign, nonatomic) CGAffineTransform     startTransform;
@@ -39,7 +37,7 @@ static const char startUserInteractionEnabledKey;
 @end
 
 
-@implementation UIView (MTAnimation)
+@implementation MTView (MTAnimation)
 
 + (void)load
 {
@@ -63,7 +61,7 @@ static const char startUserInteractionEnabledKey;
 + (void)mt_animateViews:(NSArray *)views
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
-                options:(UIViewAnimationOptions)options
+                options:(MTViewAnimationOptions)options
              animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion
 {
@@ -96,7 +94,7 @@ static const char startUserInteractionEnabledKey;
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
                   range:(MTAnimationRange)range
-                options:(UIViewAnimationOptions)options
+                options:(MTViewAnimationOptions)options
              animations:(MTAnimationsBlock)animations
              completion:(MTAnimationCompletionBlock)completion
 {
@@ -117,17 +115,17 @@ static const char startUserInteractionEnabledKey;
     [CATransaction setCompletionBlock:completion];
     [CATransaction setDisableActions:YES];
 
-    for (UIView *view in views) {
+    for (MTView *view in views) {
         [view takeStartSnapshot:options];
     }
 
     if (animations) animations();
 
-    for (UIView *view in views) {
+    for (MTView *view in views) {
 
-        // apply UIViewAnimationOptionBeginFromCurrentState option
+        // apply MTViewAnimationOptionBeginFromCurrentState option
         CALayer *current = nil;
-        if (mt_isInMask(options, UIViewAnimationOptionBeginFromCurrentState)) {
+        if (mt_isInMask(options, MTViewAnimationOptionBeginFromCurrentState)) {
             BOOL currentlyAnimating = [[view.layer animationKeys] count] > 0;
             if (currentlyAnimating) {
                 current = view.layer.presentationLayer;
@@ -186,7 +184,7 @@ static const char startUserInteractionEnabledKey;
                    perspective:view.mt_animationPerspective];
         }
 
-        if (view.startAlpha != view.alpha) {
+        if (view.startAlpha != view.mt_alpha) {
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"opacity";
             keyframeAnimation.duration              = duration;
@@ -194,7 +192,7 @@ static const char startUserInteractionEnabledKey;
             keyframeAnimation.values                = [self floatValuesWithDuration:duration
                                                                            function:timingFunction
                                                                                from:current ? current.opacity : view.startAlpha
-                                                                                 to:view.alpha
+                                                                                 to:view.mt_alpha
                                                                        exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
                         forKey:@"opacity"
@@ -204,7 +202,7 @@ static const char startUserInteractionEnabledKey;
         }
     }
 
-    for (UIView *view in views) {
+    for (MTView *view in views) {
         [view.layer layoutSublayers];
     }
     [CATransaction commit];
@@ -217,15 +215,15 @@ static const char startUserInteractionEnabledKey;
 
 #pragma mark - Private
 
-- (void)takeStartSnapshot:(UIViewAnimationOptions)options
+- (void)takeStartSnapshot:(MTViewAnimationOptions)options
 {
     self.startBounds        = self.bounds;
     self.startCenter        = self.center;
     self.startTransform     = self.transform;
     self.startTransform3D   = self.layer.transform;
-    self.startAlpha         = self.alpha;
+    self.startAlpha         = self.mt_alpha;
 
-    // UIViewAnimationOptionAllowUserInteraction
+    // MTViewAnimationOptionAllowUserInteraction
     // TODO: user interaciton is not being re-enabled
 //    self.startUserInteractionEnabled    = self.userInteractionEnabled;
 //    if (!inMask(options, MTAnimationOptionAllowUserInteraction)) {
@@ -257,7 +255,7 @@ static const char startUserInteractionEnabledKey;
         rect.size.width     = fromRect.size.width   + (v * (toRect.size.width    - fromRect.size.width));
         rect.size.height    = fromRect.size.height  + (v * (toRect.size.height   - fromRect.size.height));
 
-        [values addObject:[NSValue valueWithCGRect:rect]];
+        [values addObject:[NSValue mt_valueWithCGRect:rect]];
 
         progress += increment;
     }
@@ -284,7 +282,7 @@ static const char startUserInteractionEnabledKey;
         point.x             = fromPoint.x     + (v * (toPoint.x      - fromPoint.x));
         point.y             = fromPoint.y     + (v * (toPoint.y      - fromPoint.y));
 
-        [values addObject:[NSValue valueWithCGPoint:point]];
+        [values addObject:[NSValue mt_valueWithCGPoint:point]];
 
         progress += increment;
     }
@@ -346,7 +344,7 @@ static const char startUserInteractionEnabledKey;
 - (void)addAnimation:(CAKeyframeAnimation *)animation
               forKey:(NSString *)key
                range:(MTAnimationRange)range
-             options:(UIViewAnimationOptions)options
+             options:(MTViewAnimationOptions)options
          perspective:(CGFloat)perspective
 {
     // slice the animation to the range
@@ -363,33 +361,33 @@ static const char startUserInteractionEnabledKey;
     // apply options
     /**
      TODO: Options to implement:
-     - UIViewAnimationOptionLayoutSubviews              // this one is tricky, not sure what CALayer option applies
-     - UIViewAnimationOptionAllowUserInteraction        // almost have this done, just need to debug
-     + UIViewAnimationOptionBeginFromCurrentState
-     + UIViewAnimationOptionRepeat
-     + UIViewAnimationOptionAutoreverse
-     - UIViewAnimationOptionOverrideInheritedDuration
-     - UIViewAnimationOptionOverrideInheritedCurve
-     - UIViewAnimationOptionAllowAnimatedContent
-     - UIViewAnimationOptionShowHideTransitionViews
+     - MTViewAnimationOptionLayoutSubviews              // this one is tricky, not sure what CALayer option applies
+     - MTViewAnimationOptionAllowUserInteraction        // almost have this done, just need to debug
+     + MTViewAnimationOptionBeginFromCurrentState
+     + MTViewAnimationOptionRepeat
+     + MTViewAnimationOptionAutoreverse
+     - MTViewAnimationOptionOverrideInheritedDuration
+     - MTViewAnimationOptionOverrideInheritedCurve
+     - MTViewAnimationOptionAllowAnimatedContent
+     - MTViewAnimationOptionShowHideTransitionViews
      (- needs, + done)
      */
 
-    // TODO: this seems to be enabled by default when animating with UIView, so I'm not sure what the difference
-    // is with the UIViewAnimationOptionLayoutSubviews option. I think it has something to do with telling it to
+    // TODO: this seems to be enabled by default when animating with MTView, so I'm not sure what the difference
+    // is with the MTViewAnimationOptionLayoutSubviews option. I think it has something to do with telling it to
     // layout in the beginning so that the beginning of the animation looks sort of blurry/pixelated but the end
     // looks sharp. Could be totally wrong.
     self.layer.needsDisplayOnBoundsChange = YES;
-    if (mt_isInMask(options, UIViewAnimationOptionLayoutSubviews)) {
+    if (mt_isInMask(options, MTViewAnimationOptionLayoutSubviews)) {
         self.layer.needsDisplayOnBoundsChange = YES;
     }
 
 
-    if (mt_isInMask(options, UIViewAnimationOptionAutoreverse)) {
+    if (mt_isInMask(options, MTViewAnimationOptionAutoreverse)) {
         animation.autoreverses = YES;
     }
 
-    if (mt_isInMask(options, UIViewAnimationOptionRepeat)) {
+    if (mt_isInMask(options, MTViewAnimationOptionRepeat)) {
         animation.repeatCount = HUGE_VALF;
     }
 
@@ -403,15 +401,15 @@ static const char startUserInteractionEnabledKey;
     if ([key isEqualToString:@"bounds"]) {
         self.bounds                     = self.startBounds;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.bounds               = [[animation.values lastObject] CGRectValue];
+        self.layer.bounds               = [[animation.values lastObject] MTRectValue];
     }
     else if ([key isEqualToString:@"position"]) {
         self.center                     = self.startCenter;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.position             = [[animation.values lastObject] CGPointValue];
+        self.layer.position             = [[animation.values lastObject] MTPointValue];
     }
     else if ([key isEqualToString:@"opacity"]) {
-        self.alpha                      = self.startAlpha;
+        self.mt_alpha                   = self.startAlpha;
         [self.layer addAnimation:animation forKey:key];
         self.layer.opacity              = [[animation.values lastObject] floatValue];
     }
@@ -455,24 +453,24 @@ static const char startUserInteractionEnabledKey;
 
 - (void)setStartBounds:(CGRect)startBounds
 {
-    objc_setAssociatedObject(self, &startBoundsKey, [NSValue valueWithCGRect:startBounds], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &startBoundsKey, [NSValue mt_valueWithCGRect:startBounds], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGRect)startBounds
 {
     NSValue *value = objc_getAssociatedObject(self, &startBoundsKey);
-    return value ? [value CGRectValue] : CGRectZero;
+    return value ? [value MTRectValue] : CGRectZero;
 }
 
 - (void)setStartCenter:(CGPoint)startCenter
 {
-    objc_setAssociatedObject(self, &startCenterKey, [NSValue valueWithCGPoint:startCenter], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &startCenterKey, [NSValue mt_valueWithCGPoint:startCenter], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGPoint)startCenter
 {
     NSValue *value = objc_getAssociatedObject(self, &startCenterKey);
-    return value ? [value CGPointValue] : CGPointZero;
+    return value ? [value MTPointValue] : CGPointZero;
 }
 
 - (void)setStartTransform:(CGAffineTransform)startTransform
@@ -518,6 +516,34 @@ static const char startUserInteractionEnabledKey;
     NSNumber *value = objc_getAssociatedObject(self, &startUserInteractionEnabledKey);
     return value ? [value boolValue] : YES;
 }
+
+
+#if !IS_IOS
+
+- (CGAffineTransform)transform
+{
+    return [self.layer affineTransform];
+}
+
+- (void)setTransform:(CGAffineTransform)m
+{
+    [self.layer setAffineTransform:m];
+}
+
+- (CGPoint)center
+{
+    return CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+}
+
+- (void)setCenter:(CGPoint)newCenter
+{
+    CGRect r = self.frame;
+    r.origin.x = newCenter.x - (self.frame.size.width / 2);
+    r.origin.y = newCenter.y - (self.frame.size.height / 2);
+    self.frame = r;
+}
+
+#endif
 
 @end
 
