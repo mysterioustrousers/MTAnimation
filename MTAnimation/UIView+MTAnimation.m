@@ -23,7 +23,6 @@ static const char startCenterKey;
 static const char startTransformKey;
 static const char startTransform3DKey;
 static const char startAlphaKey;
-static const char startBackgroundColorKey;
 static const char startUserInteractionEnabledKey;
 
 
