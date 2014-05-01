@@ -349,10 +349,10 @@ static const char startUserInteractionEnabledKey;
     // slice the animation to the range
     CGFloat rangeDelta  = range.end - range.start;
     animation.duration  = animation.duration * rangeDelta;
-    NSInteger steps     = [animation.values count];
+    NSUInteger steps     = [animation.values count];
     NSUInteger loc      = lroundf(steps * range.start);
     NSUInteger len      = lroundf(steps * range.end) - loc;
-    NSRange valueRange  = NSMakeRange(MAX(loc, 0), MIN(len, steps));
+    NSRange valueRange  = NSMakeRange(MAX(loc, (NSUInteger)0), MIN(len, steps));
     animation.values    = [animation.values subarrayWithRange:valueRange];
 
 
