@@ -83,7 +83,6 @@ static GSQuartzCoreQuaternion matrixToQuaternion(CATransform3D m)
 
     GSQuartzCoreQuaternion q;
 
-    m = m;
     if (m.m11 + m.m22 + m.m33 > 0)
     {
         CGFloat t = m.m11 + m.m22 + m.m33 + 1.;
