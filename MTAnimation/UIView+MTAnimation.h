@@ -56,6 +56,7 @@
 
 /**
  @param views           The list of views you will be modifying in the animation block. You must provide all views you'll be modifying.
+ @param delay           Waits for `delay` before beginning the animation.
  @param duration        The duration of the animation.
  @param timingFunction  The timing function to use for the easing.
  @param options         Some of the UIView MTViewAnimationOptions options are implemented. Not all of them yet, but I'm working on it.
@@ -63,6 +64,7 @@
  @param completion      Called when the animation completes.
  */
 + (void)mt_animateViews:(NSArray *)views
+                  delay:(NSTimeInterval)delay
                duration:(NSTimeInterval)duration
          timingFunction:(MTTimingFunction)timingFunction
                   range:(MTAnimationRange)range

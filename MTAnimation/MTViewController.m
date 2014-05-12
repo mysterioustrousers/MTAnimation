@@ -168,7 +168,7 @@
     [UIView mt_animateViews:@[_logoImageView]
                    duration:_duration
              timingFunction:_timingFuction
-                    options:UIViewAnimationOptionBeginFromCurrentState
+                    options:MTViewAnimationOptionBeginFromCurrentState
                  animations:^{
                      _logoImageView.mt_animationPerspective = -1.0 / 500.0;
                      CGRect r                               = _logoImageView.frame;
