@@ -28,7 +28,6 @@
 		C2AF915D1729F564001D44D5 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2AF915B1729F564001D44D5 /* MainStoryboard_iPhone.storyboard */; };
 		C2AF91601729F564001D44D5 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2AF915E1729F564001D44D5 /* MainStoryboard_iPad.storyboard */; };
 		C2AF91631729F564001D44D5 /* MTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91621729F564001D44D5 /* MTViewController.m */; };
-		C2AF916B1729F564001D44D5 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF916A1729F564001D44D5 /* SenTestingKit.framework */; };
 		C2AF916C1729F564001D44D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C2AF916D1729F564001D44D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
 		C2AF91751729F564001D44D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91731729F564001D44D5 /* InfoPlist.strings */; };
@@ -87,8 +86,7 @@
 		C2AF915F1729F564001D44D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		C2AF91611729F564001D44D5 /* MTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTViewController.h; sourceTree = "<group>"; };
 		C2AF91621729F564001D44D5 /* MTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTViewController.m; sourceTree = "<group>"; };
-		C2AF91691729F564001D44D5 /* MTAnimationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MTAnimationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2AF916A1729F564001D44D5 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		C2AF91691729F564001D44D5 /* MTAnimationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MTAnimationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2AF91721729F564001D44D5 /* MTAnimationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MTAnimationTests-Info.plist"; sourceTree = "<group>"; };
 		C2AF91741729F564001D44D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C2AF91761729F564001D44D5 /* MTAnimationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTAnimationTests.h; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2AF916B1729F564001D44D5 /* SenTestingKit.framework in Frameworks */,
 				C2AF916C1729F564001D44D5 /* UIKit.framework in Frameworks */,
 				C2AF916D1729F564001D44D5 /* Foundation.framework in Frameworks */,
 				KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */,
@@ -153,7 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				C2AF91401729F564001D44D5 /* MTAnimation.app */,
-				C2AF91691729F564001D44D5 /* MTAnimationTests.octest */,
+				C2AF91691729F564001D44D5 /* MTAnimationTests.xctest */,
 				C21CB4E9175164C00082CB97 /* libMTAnimation.a */,
 			);
 			name = Products;
@@ -167,7 +164,6 @@
 				C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */,
 				C2AF91431729F564001D44D5 /* UIKit.framework */,
 				C2AF91451729F564001D44D5 /* Foundation.framework */,
-				C2AF916A1729F564001D44D5 /* SenTestingKit.framework */,
 				HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */,
 			);
 			name = Frameworks;
@@ -292,8 +288,8 @@
 			);
 			name = MTAnimationTests;
 			productName = MTAnimationTests;
-			productReference = C2AF91691729F564001D44D5 /* MTAnimationTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = C2AF91691729F564001D44D5 /* MTAnimationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -302,7 +298,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MT;
-				LastUpgradeCheck = 0460;
+				LastTestingUpgradeCheck = 0510;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Mysterious Trousers";
 			};
 			buildConfigurationList = C2AF913B1729F564001D44D5 /* Build configuration list for PBXProject "MTAnimation" */;
@@ -469,7 +466,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -511,7 +507,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -571,6 +566,7 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 					"\"/Users/adamkirk/Library/Application Support/Spark Inspector\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
@@ -578,7 +574,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -589,13 +584,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MTAnimation/MTAnimation-Prefix.pch";
 				INFOPLIST_FILE = "MTAnimationTests/MTAnimationTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface MTAnimationTests : SenTestCase
+@interface MTAnimationTests : XCTestCase
 
 @end

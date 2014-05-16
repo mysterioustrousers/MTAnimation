@@ -23,7 +23,7 @@ static const char startCenterKey;
 static const char startTransformKey;
 static const char startTransform3DKey;
 static const char startAlphaKey;
-static const char startBackgroundColorKey;
+//static const char startBackgroundColorKey;
 static const char startUserInteractionEnabledKey;
 
 
@@ -381,7 +381,6 @@ static const char startUserInteractionEnabledKey;
     if (mt_isInMask(options, MTViewAnimationOptionLayoutSubviews)) {
         self.layer.needsDisplayOnBoundsChange = YES;
     }
-
 
     if (mt_isInMask(options, MTViewAnimationOptionAutoreverse)) {
         animation.autoreverses = YES;
