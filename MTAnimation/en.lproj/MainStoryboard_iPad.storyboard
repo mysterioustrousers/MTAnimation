@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Hex-JS-vja">
-                                <rect key="frame" x="448" y="0.0" width="320" height="180"/>
+                                <rect key="frame" x="448" y="20" width="320" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -50,14 +50,14 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Duration" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zdv-Wp-OoQ">
-                                <rect key="frame" x="20" y="20" width="83" height="17"/>
+                                <rect key="frame" x="20" y="40" width="83" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.10000000000000001" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="HaJ-Kb-WT2">
-                                <rect key="frame" x="128" y="18" width="283" height="31"/>
+                                <rect key="frame" x="128" y="38" width="283" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="minimumTrackTintColor" white="0.33203125" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -65,14 +65,14 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Exaggeration" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x20-5c-2qf">
-                                <rect key="frame" x="20" y="45" width="83" height="17"/>
+                                <rect key="frame" x="20" y="65" width="83" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.7" minValue="0.10000000000000001" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="72G-s3-Otx">
-                                <rect key="frame" x="128" y="43" width="283" height="31"/>
+                                <rect key="frame" x="128" y="63" width="283" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="minimumTrackTintColor" white="0.33203125" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -80,14 +80,14 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="End Scale" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9N-1f-RRL">
-                                <rect key="frame" x="20" y="70" width="83" height="17"/>
+                                <rect key="frame" x="20" y="90" width="83" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.10000000000000001" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="oxC-D8-xUH">
-                                <rect key="frame" x="128" y="68" width="283" height="31"/>
+                                <rect key="frame" x="128" y="88" width="283" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="minimumTrackTintColor" white="0.33203125" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -95,14 +95,14 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Rotation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sw3-CO-GDd">
-                                <rect key="frame" x="20" y="96" width="83" height="17"/>
+                                <rect key="frame" x="20" y="116" width="83" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="360" translatesAutoresizingMaskIntoConstraints="NO" id="k2F-zj-1Or">
-                                <rect key="frame" x="128" y="94" width="283" height="31"/>
+                                <rect key="frame" x="128" y="114" width="283" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="minimumTrackTintColor" white="0.33203125" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -110,14 +110,14 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Alpha" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="viz-YA-lPW">
-                                <rect key="frame" x="20" y="122" width="83" height="17"/>
+                                <rect key="frame" x="20" y="142" width="83" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="qyu-jW-KYy">
-                                <rect key="frame" x="128" y="120" width="283" height="31"/>
+                                <rect key="frame" x="128" y="140" width="283" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="minimumTrackTintColor" white="0.33203125" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -125,7 +125,7 @@
                                 </connections>
                             </slider>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8VC-lO-P70">
-                                <rect key="frame" x="0.0" y="180" width="768" height="844"/>
+                                <rect key="frame" x="0.0" y="200" width="768" height="824"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="nVR-hN-mdT">
@@ -172,8 +172,8 @@
                             <constraint firstItem="viz-YA-lPW" firstAttribute="centerY" secondItem="qyu-jW-KYy" secondAttribute="centerY" constant="-4.5" id="iVE-VC-dqT"/>
                             <constraint firstItem="Sw3-CO-GDd" firstAttribute="centerY" secondItem="k2F-zj-1Or" secondAttribute="centerY" constant="-4.5" id="kgo-Db-uJX"/>
                             <constraint firstItem="Zdv-Wp-OoQ" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="20" id="mYg-v0-cE8"/>
-                            <constraint firstItem="Zdv-Wp-OoQ" firstAttribute="top" secondItem="WrJ-Yj-LvS" secondAttribute="bottom" id="oR9-kK-eoQ"/>
-                            <constraint firstItem="Hex-JS-vja" firstAttribute="top" secondItem="WrJ-Yj-LvS" secondAttribute="bottom" constant="-20" id="oXE-gK-CjC"/>
+                            <constraint firstItem="Zdv-Wp-OoQ" firstAttribute="top" secondItem="WrJ-Yj-LvS" secondAttribute="bottom" constant="20" id="oR9-kK-eoQ"/>
+                            <constraint firstItem="Hex-JS-vja" firstAttribute="top" secondItem="WrJ-Yj-LvS" secondAttribute="bottom" id="oXE-gK-CjC"/>
                             <constraint firstItem="Sw3-CO-GDd" firstAttribute="top" secondItem="C9N-1f-RRL" secondAttribute="bottom" constant="9" id="oeo-eZ-O27"/>
                             <constraint firstItem="x20-5c-2qf" firstAttribute="top" secondItem="Zdv-Wp-OoQ" secondAttribute="bottom" constant="8" id="pmt-gA-u5A"/>
                             <constraint firstItem="72G-s3-Otx" firstAttribute="leading" secondItem="x20-5c-2qf" secondAttribute="trailing" constant="27" id="uVH-Qf-fiM"/>

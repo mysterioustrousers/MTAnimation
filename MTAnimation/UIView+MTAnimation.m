@@ -44,61 +44,53 @@ static const char startUserInteractionEnabledKey;
 
 }
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-             animations:(MTAnimationsBlock)animations
-             completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
 {
-    return [self mt_animateViews:views
-                        duration:duration
-                  timingFunction:timingFunction
-                           range:MTAnimationRangeFull
-                      animations:animations
-                      completion:completion];
+    return [self mt_animateWithDuration:duration
+                         timingFunction:timingFunction
+                                  range:MTAnimationRangeFull
+                             animations:animations
+                             completion:completion];
 }
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-                options:(MTViewAnimationOptions)options
-             animations:(MTAnimationsBlock)animations
-             completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                       options:(MTViewAnimationOptions)options
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
 {
-    return [self mt_animateViews:views
-                        duration:duration
-                  timingFunction:timingFunction
-                           range:MTAnimationRangeFull
-                         options:options
-                      animations:animations
-                      completion:completion];
+    return [self mt_animateWithDuration:duration
+                         timingFunction:timingFunction
+                                  range:MTAnimationRangeFull
+                                options:options
+                             animations:animations
+                             completion:completion];
 }
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-                  range:(MTAnimationRange)range
-             animations:(MTAnimationsBlock)animations
-             completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                         range:(MTAnimationRange)range
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
 {
-    return [self mt_animateViews:views
-                        duration:duration
-                  timingFunction:timingFunction
-                           range:range
-                         options:0
-                      animations:animations
-                      completion:completion];
+    return [self mt_animateWithDuration:duration
+                         timingFunction:timingFunction
+                                  range:range
+                                options:0
+                             animations:animations
+                             completion:completion];
 }
 
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-                  range:(MTAnimationRange)range
-                options:(MTViewAnimationOptions)options
-             animations:(MTAnimationsBlock)animations
-             completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                         range:(MTAnimationRange)range
+                       options:(MTViewAnimationOptions)options
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
 {
-    assert([views count] > 0);
     assert(animations != nil);
     assert(range.start >= 0);
     assert(range.end <= 1);
@@ -108,6 +100,8 @@ static const char startUserInteractionEnabledKey;
         if (completion) completion();
         return;
     }
+
+    NSArray *views = [self allViewsInWindow];
 
     [CATransaction lock];
     [CATransaction begin];
@@ -121,6 +115,7 @@ static const char startUserInteractionEnabledKey;
 
     if (animations) animations();
 
+    NSMutableArray *changedViews = [NSMutableArray new];
     for (MTView *view in views) {
 
         // apply MTViewAnimationOptionBeginFromCurrentState option
@@ -133,6 +128,7 @@ static const char startUserInteractionEnabledKey;
         }
         
         if (!CGRectEqualToRect(view.startBounds, view.bounds)) {
+            [changedViews addObject:view];
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"bounds";
             keyframeAnimation.duration              = duration;
@@ -151,6 +147,7 @@ static const char startUserInteractionEnabledKey;
 
 
         if (!CGPointEqualToPoint(view.startCenter, view.center)) {
+            [changedViews addObject:view];
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"position";
             keyframeAnimation.duration              = duration;
@@ -168,6 +165,7 @@ static const char startUserInteractionEnabledKey;
         }
 
         if (!CATransform3DEqualToTransform(view.startTransform3D, view.layer.transform)) {
+            [changedViews addObject:view];
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"transform";
             keyframeAnimation.duration              = duration;
@@ -185,6 +183,7 @@ static const char startUserInteractionEnabledKey;
         }
 
         if (view.startAlpha != view.mt_alpha) {
+            [changedViews addObject:view];
             CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
             keyframeAnimation.keyPath               = @"opacity";
             keyframeAnimation.duration              = duration;
@@ -202,8 +201,8 @@ static const char startUserInteractionEnabledKey;
         }
     }
 
-    for (MTView *view in views) {
-        [view.layer layoutSublayers];
+    for (MTView *view in changedViews) {
+        [view.layer layoutIfNeeded];
     }
     [CATransaction commit];
     [CATransaction unlock];
@@ -514,6 +513,25 @@ static const char startUserInteractionEnabledKey;
 {
     NSNumber *value = objc_getAssociatedObject(self, &startUserInteractionEnabledKey);
     return value ? [value boolValue] : YES;
+}
+
+
+#pragma mark (views)
+
++ (NSArray *)allViewsInWindow
+{
+#if IS_IOS
+    MTView *view = [[UIApplication sharedApplication] keyWindow];
+#else
+    MTView *view = [[NSApplication sharedApplication] keyWindow].contentView;
+#endif
+    NSUInteger i = 0;
+    NSMutableArray *collectedViews = [[view subviews] mutableCopy];
+    while(i < [collectedViews count]) {
+        view = collectedViews[i++];
+        [collectedViews addObjectsFromArray:[view subviews]];
+    }
+    return collectedViews;
 }
 
 

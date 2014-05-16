@@ -28,31 +28,28 @@
 /**
  Convenience method. See full method below for param explanations.
  */
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-             animations:(MTAnimationsBlock)animations
-             completion:(MTAnimationCompletionBlock)completion;
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion;
 
 /**
  Convenience method. See full method below for param explanations.
  */
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-                options:(MTViewAnimationOptions)options
-             animations:(MTAnimationsBlock)animations
-             completion:(MTAnimationCompletionBlock)completion;
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                       options:(MTViewAnimationOptions)options
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion;
 
 /**
  Convenience method. See full method below for param explanations.
  */
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-                  range:(MTAnimationRange)range
-             animations:(MTAnimationsBlock)animations
-             completion:(MTAnimationCompletionBlock)completion;
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                         range:(MTAnimationRange)range
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion;
 
 /**
  @param views           The list of views you will be modifying in the animation block. You must provide all views you'll be modifying.
@@ -62,12 +59,11 @@
  @param animations      Make your changes to your views in this block and they will be animated to those final values.
  @param completion      Called when the animation completes.
  */
-+ (void)mt_animateViews:(NSArray *)views
-               duration:(NSTimeInterval)duration
-         timingFunction:(MTTimingFunction)timingFunction
-                  range:(MTAnimationRange)range
-                options:(MTViewAnimationOptions)options
-             animations:(MTAnimationsBlock)animations
-             completion:(MTAnimationCompletionBlock)completion;
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                         range:(MTAnimationRange)range
+                       options:(MTViewAnimationOptions)options
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion;
 
 @end

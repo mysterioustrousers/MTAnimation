@@ -165,22 +165,21 @@
     _logoImageView.layer.transform  = CATransform3DIdentity;
     _logoImageView.alpha            = 1;
 
-    [UIView mt_animateViews:@[_logoImageView]
-                   duration:_duration
-             timingFunction:_timingFuction
-                    options:MTViewAnimationOptionBeginFromCurrentState
-                 animations:^{
-                     _logoImageView.mt_animationPerspective = -1.0 / 500.0;
-                     CGRect r                               = _logoImageView.frame;
-                     r.origin.x                             = _endX;
-                     r.origin.y                             = _endY;
-                     _logoImageView.frame                   = [self scaledRect:r];
-                     _logoImageView.alpha                   = _endAlpha;
-                     CGFloat radians                        = mt_degreesToRadians(_endRotation);
-                     _logoImageView.layer.transform         = CATransform3DMakeRotation(radians, 0, 1, 0);
-                 } completion:^{
-                     NSLog(@"completed");
-                 }];
+    [UIView mt_animateWithDuration:_duration
+                    timingFunction:_timingFuction
+                           options:MTViewAnimationOptionBeginFromCurrentState
+                        animations:^{
+                            _logoImageView.mt_animationPerspective = -1.0 / 500.0;
+                            CGRect r                               = _logoImageView.frame;
+                            r.origin.x                             = _endX;
+                            r.origin.y                             = _endY;
+                            _logoImageView.frame                   = [self scaledRect:r];
+                            _logoImageView.alpha                   = _endAlpha;
+                            CGFloat radians                        = mt_degreesToRadians(_endRotation);
+                            _logoImageView.layer.transform         = CATransform3DMakeRotation(radians, 0, 1, 0);
+                        } completion:^{
+                            NSLog(@"completed");
+                        }];
 
 }
 
