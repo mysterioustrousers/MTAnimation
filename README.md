@@ -13,8 +13,6 @@ Advantages:
 - Install with cocoapods.
 - Category method properly prefixed.
 
-*HELP NEEDED: The best I can do so far is to require an array of views that are changed in the block. If you know of any way to get from a block references to the objects it captures please let me know.*
-
 ## Installation
 
 In your Podfile, add this line:
@@ -29,22 +27,31 @@ Then add the import:
 
 [![Animation Sample](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.gif)](https://dl.dropboxusercontent.com/u/2771219/github/MTAnimation/demo.mov)
 
+
 ## Example App
 
-Clone the repo (or download [the zip](https://github.com/mysterioustrousers/MTAnimation/archive/master.zip)) and run the iPad demo app to play around.
+#### iOS
+
+* Clone the repo (or download [the zip](https://github.com/mysterioustrousers/MTAnimation/archive/master.zip)) and run the iPad demo app to play around.
+
+#### OSX
+
+* Download and run a developer signed [Mac Example](https://github.com/mysterioustrousers/MTAnimation-Mac-Example/raw/master/MTAnimationMacExample.app.zip)
+
+* Clone the [repo](https://github.com/mysterioustrousers/MTAnimation-Mac-Example) (or download [the zip](https://github.com/mysterioustrousers/MTAnimation-Mac-Example/archive/master.zip)) and build & run the mac app yourself.
+
 
 ## Example Usage
 
 Similar to the UIKits animation methods but you must supply an array of all the views you will be animating and an easing function.
 
-    [UIView mt_animateViews:@[_logoImageView]
-               duration:0.25
-         timingFunction:kMTEaseOutBack
-             animations:^{
-                 CGRect r               = _logoImageView.frame;
-                 r.origin.x             = 50;
-                 _logoImageView.frame   = r;
-             }];
+    [UIView mt_animateWithDuration:0.25
+                    timingFunction:kMTEaseOutBack
+                        animations:^{
+                            CGRect r             = _logoImageView.frame;
+                            r.origin.x           = 50;
+                            _logoImageView.frame = r;
+                        }];
 
 You can animate:
 
@@ -57,32 +64,35 @@ You can animate:
 
 You can cut an animation into parts (using the `range` param). You might use this to swap the view half way through a flip animation:
 
-        _logoImageView.image    = [UIImage imageNamed:@"logo"];
-        [UIView mt_animateViews:@[_logoImageView]
-                       duration:0.25
-                        options:0
-                 timingFunction:kMTEaseOutBack
-                   exaggeration:MTAnimationExaggerationDefault
-                          range:MTMakeAnimationRange(0, 0.135)
-                     animations:^{
-                        CGFloat radians                 = mt_degreesToRadians(_endRotation);
-                        _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
-                     } completion:^{
-                         _logoImageView.image = [UIImage imageNamed:@"logo-flip"];
-                         [UIView mt_animateViews:@[_logoImageView]
-                                        duration:0.25
-                                         options:0
-                                  timingFunction:kMTEaseOutBack
-                                    exaggeration:MTAnimationExaggerationDefault
-                                           range:MTMakeAnimationRange(0.135, 1)
-                                      animations:^{
-                                          CGFloat radians                 = mt_degreesToRadians(_endRotation);
-                                          _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
-                                      } completion:^{
-                                      }];
-                     }];
+    _logoImageView.image = [UIImage imageNamed:@"logo"];
+    [UIView mt_animateWithDuration:0.25
+                             delay:0
+                    timingFunction:kMTEaseOutBack
+                             range:MTMakeAnimationRange(0, 0.135)
+                           options:0
+                        animations:^{
+                            CGFloat radians                 = mt_degreesToRadians(_endRotation);
+                            _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
+                        } completion:^{
+                            _logoImageView.image = [UIImage imageNamed:@"logo-flip"];
+                            [UIView mt_animateWithDuration:0.25
+                                                     delay:0
+                                            timingFunction:kMTEaseOutBack
+                                                     range:MTMakeAnimationRange(0.135, 1)
+                                                   options:0
+                                                animations:^{
+                                                    CGFloat radians                 = mt_degreesToRadians(_endRotation);
+                                                    _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
+                                                } completion:^{
+                                                }];
+                        }];
 
 This code will animate until the image is sideways, then swap out the image view's image and continue the animation so it looks like it has a backside.
+
+
+## Notes
+
+* The view you animate must be layer backed. See `[NSView setWantsLayer:]`.
 
 ## Author
 
