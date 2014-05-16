@@ -56,7 +56,7 @@ Similar to the UIKits animation methods but you must supply an array of all the 
 
 You can animate:
 
-```objc
+```objective-c
 UIView/NSView - frame
 UIView/NSView - bounds
 UIView        - center
