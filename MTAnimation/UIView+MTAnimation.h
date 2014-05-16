@@ -60,6 +60,7 @@
  @param completion      Called when the animation completes.
  */
 + (void)mt_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
                 timingFunction:(MTTimingFunction)timingFunction
                          range:(MTAnimationRange)range
                        options:(MTViewAnimationOptions)options
