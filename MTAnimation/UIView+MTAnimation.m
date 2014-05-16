@@ -402,24 +402,25 @@ static const char startUserInteractionEnabledKey;
 
     // add the animation
     if ([key isEqualToString:@"bounds"]) {
-        self.bounds                     = self.startBounds;
+        self.bounds             = self.startBounds;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.bounds               = [[animation.values lastObject] MTRectValue];
+        self.layer.bounds       = [[animation.values lastObject] MTRectValue];
     }
     else if ([key isEqualToString:@"position"]) {
-        self.center                     = self.startCenter;
+        self.center             = self.startCenter;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.position             = [[animation.values lastObject] MTPointValue];
+        self.layer.position     = [[animation.values lastObject] MTPointValue];
+        self.center             = self.layer.position;
     }
     else if ([key isEqualToString:@"opacity"]) {
-        self.mt_alpha                   = self.startAlpha;
+        self.mt_alpha           = self.startAlpha;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.opacity              = [[animation.values lastObject] floatValue];
+        self.layer.opacity      = [[animation.values lastObject] floatValue];
     }
     else if ([key isEqualToString:@"transform"]) {
-        self.layer.transform            = self.startTransform3D;
+        self.layer.transform    = self.startTransform3D;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.transform            = [[animation.values lastObject] CATransform3DValue];
+        self.layer.transform    = [[animation.values lastObject] CATransform3DValue];
     }
 }
 
@@ -554,14 +555,14 @@ static const char startUserInteractionEnabledKey;
 
 - (CGPoint)center
 {
-    return CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    return self.frame.origin;
 }
 
 - (void)setCenter:(CGPoint)newCenter
 {
     CGRect r = self.frame;
-    r.origin.x = newCenter.x - (self.frame.size.width / 2);
-    r.origin.y = newCenter.y - (self.frame.size.height / 2);
+    r.origin.x = newCenter.x;
+    r.origin.y = newCenter.y;
     self.frame = r;
 }
 
