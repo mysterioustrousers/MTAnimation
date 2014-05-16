@@ -56,12 +56,12 @@ Similar to the UIKits animation methods but you must supply an array of all the 
 
 You can animate:
 
-* UIView  - frame
-* UIView  - bounds
-* UIView  - center
-* UIView  - alpha
-* UIView  - transform (CGAffineTransform)
-* CALayer - transform (CATransform3D)
+* UIView/NSView - frame
+* UIView/NSView - bounds
+* UIView        - center
+* UIView/NSView - alpha
+* UIView        - transform (CGAffineTransform)
+* CALayer       - transform (CATransform3D)
 
 You can cut an animation into parts (using the `range` param). You might use this to swap the view half way through a flip animation:
 
