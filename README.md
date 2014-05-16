@@ -21,8 +21,10 @@ In your Podfile, add this line:
 
 Then add the import:
 
-    // Same import for both iOS/OSX
-    #import <UIView+MTAnimation.h>
+```objc
+// Same import for both iOS/OSX
+#import <UIView+MTAnimation.h>
+```
 
 ## Preview
 
@@ -46,17 +48,19 @@ Then add the import:
 
 Similar to the UIKits animation methods but you must supply an array of all the views you will be animating and an easing function.
 
-    [UIView mt_animateWithDuration:0.25
-                    timingFunction:kMTEaseOutBack
-                        animations:^{
-                            CGRect r             = _logoImageView.frame;
-                            r.origin.x           = 50;
-                            _logoImageView.frame = r;
-                        }];
+```objc
+[UIView mt_animateWithDuration:0.25
+                timingFunction:kMTEaseOutBack
+                    animations:^{
+                        CGRect r             = _logoImageView.frame;
+                        r.origin.x           = 50;
+                        _logoImageView.frame = r;
+                    }];
+```
 
 You can animate:
 
-```objective-c
+```objc
 UIView/NSView - frame
 UIView/NSView - bounds
 UIView        - center
@@ -67,28 +71,30 @@ CALayer       - transform (CATransform3D)
 
 You can cut an animation into parts (using the `range` param). You might use this to swap the view half way through a flip animation:
 
-    _logoImageView.image = [UIImage imageNamed:@"logo"];
-    [UIView mt_animateWithDuration:0.25
-                             delay:0
-                    timingFunction:kMTEaseOutBack
-                             range:MTMakeAnimationRange(0, 0.135)
-                           options:0
-                        animations:^{
-                            CGFloat radians                 = mt_degreesToRadians(_endRotation);
-                            _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
-                        } completion:^{
-                            _logoImageView.image = [UIImage imageNamed:@"logo-flip"];
-                            [UIView mt_animateWithDuration:0.25
-                                                     delay:0
-                                            timingFunction:kMTEaseOutBack
-                                                     range:MTMakeAnimationRange(0.135, 1)
-                                                   options:0
-                                                animations:^{
-                                                    CGFloat radians                 = mt_degreesToRadians(_endRotation);
-                                                    _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
-                                                } completion:^{
-                                                }];
-                        }];
+```objc
+_logoImageView.image = [UIImage imageNamed:@"logo"];
+[UIView mt_animateWithDuration:0.25
+                         delay:0
+                timingFunction:kMTEaseOutBack
+                         range:MTMakeAnimationRange(0, 0.135)
+                       options:0
+                    animations:^{
+                        CGFloat radians                 = mt_degreesToRadians(_endRotation);
+                        _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
+                    } completion:^{
+                        _logoImageView.image = [UIImage imageNamed:@"logo-flip"];
+                        [UIView mt_animateWithDuration:0.25
+                                                 delay:0
+                                        timingFunction:kMTEaseOutBack
+                                                 range:MTMakeAnimationRange(0.135, 1)
+                                               options:0
+                                            animations:^{
+                                                CGFloat radians                 = mt_degreesToRadians(_endRotation);
+                                                _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
+                                            } completion:^{
+                                            }];
+                    }];
+```
 
 This code will animate until the image is sideways, then swap out the image view's image and continue the animation so it looks like it has a backside.
 
