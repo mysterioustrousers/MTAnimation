@@ -7,7 +7,7 @@ Allows you to animate views in your app in the way you're familiar with (e.g. `[
 
 Advantages:
 - Methods very similar to Apple's API.
-- No [Swizzling](https://github.com/nst/iOS-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIViewController.h#L458) or other dangerous nonsense.
+- No [Swizzling](https://github.com/nst/iOS-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIViewController.h#L674) or other dangerous nonsense.
 - No need to mess with keypaths, just change the properties on UIView and you're golden.
 - Proper transform matrix interpolation, so rotations look correct.
 - Install with cocoapods.
