@@ -1,9 +1,9 @@
 MTAnimation
 ===========
 
-Animate UIView with 25+ timing functions. (Bounce, elastic, exponential, etc.)
+Animate UIView/NSView with 25+ timing functions. (Bounce, elastic, exponential, etc.)
 
-Allows you to animate views in your app in the way you're familiar with (e.g. `[UIKit animateWithDuration:animations:]`) but adds 25+ [easing functions](http://easings.net/) (from jQuery) to make your animations more [visceral](http://mysterioustrousers.com/news/2013/3/25/visceral-apps-and-you).
+Allows you to animate views in your app in the way you're familiar with (e.g. `[UIView animateWithDuration:animations:]`) but adds 25+ [easing functions](http://easings.net/) (from jQuery) to make your animations more [visceral](http://mysterioustrousers.com/news/2013/3/25/visceral-apps-and-you).
 
 Advantages:
 - Methods very similar to Apple's API.
@@ -21,6 +21,7 @@ In your Podfile, add this line:
 
 Then add the import:
 
+    // Same import for both iOS/OSX
     #import <UIView+MTAnimation.h>
 
 ## Preview
