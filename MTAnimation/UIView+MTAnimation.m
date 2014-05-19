@@ -47,11 +47,36 @@ static const char startUserInteractionEnabledKey;
 + (void)mt_animateWithDuration:(NSTimeInterval)duration
                 timingFunction:(MTTimingFunction)timingFunction
                     animations:(MTAnimationsBlock)animations
+{
+    return [self mt_animateWithDuration:duration
+                         timingFunction:timingFunction
+                             animations:animations
+                             completion:nil];
+}
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                    animations:(MTAnimationsBlock)animations
                     completion:(MTAnimationCompletionBlock)completion
 {
     return [self mt_animateWithDuration:duration
                          timingFunction:timingFunction
                                   range:MTAnimationRangeFull
+                             animations:animations
+                             completion:completion];
+}
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
+                timingFunction:(MTTimingFunction)timingFunction
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
+{
+    return [self mt_animateWithDuration:duration
+                                  delay:delay
+                         timingFunction:timingFunction
+                                  range:MTAnimationRangeFull
+                                options:0
                              animations:animations
                              completion:completion];
 }

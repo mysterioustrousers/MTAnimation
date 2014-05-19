@@ -30,6 +30,21 @@
  */
 + (void)mt_animateWithDuration:(NSTimeInterval)duration
                 timingFunction:(MTTimingFunction)timingFunction
+                    animations:(MTAnimationsBlock)animations;
+
+/**
+ Convenience method. See full method below for param explanations.
+ */
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion;
+/**
+ Convenience method. See full method below for param explanations.
+ */
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
+                timingFunction:(MTTimingFunction)timingFunction
                     animations:(MTAnimationsBlock)animations
                     completion:(MTAnimationCompletionBlock)completion;
 
