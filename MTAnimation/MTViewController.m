@@ -17,7 +17,8 @@
 @property (weak,   nonatomic) IBOutlet UIView       *animationAreaView;
 @property (assign, nonatomic) CGRect                startFrame;
 @property (assign, nonatomic) MTTimingFunction      timingFuction;
-@property (assign, nonatomic) CGFloat               duration;
+@property (assign, nonatomic) NSTimeInterval        duration;
+@property (assign, nonatomic) NSTimeInterval        delay;
 @property (assign, nonatomic) CGFloat               exaggeration;
 @property (assign, nonatomic) CGFloat               endY;
 @property (assign, nonatomic) CGFloat               endX;
@@ -33,17 +34,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _startFrame     = _logoImageView.frame;
-    _timingFuction  = kMTEaseOutBack;
-    _duration       = 1;
-    _exaggeration   = 1.7;
-    _endY           = 50;
-    _endX           = 50;
-    _endScale       = 1;
-    _endRotation    = 0;
-    _endAlpha       = 1;
+    self.startFrame     = self.logoImageView.frame;
+    self.timingFuction  = kMTEaseOutBack;
+    self.duration       = 1;
+    self.delay          = 0;
+    self.exaggeration   = 1.7;
+    self.endY           = 50;
+    self.endX           = 50;
+    self.endScale       = 1;
+    self.endRotation    = 0;
+    self.endAlpha       = 1;
 
-    [_animationAreaView addGestureRecognizer:[[UITapGestureRecognizer alloc]
+    [self.animationAreaView addGestureRecognizer:[[UITapGestureRecognizer alloc]
                                               initWithTarget:self
                                               action:@selector(animationAreaWasTapped:)]];
 }
@@ -51,9 +53,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:25 inSection:0]
-                            animated:NO
-                      scrollPosition:UITableViewScrollPositionTop];
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:25 inSection:0]
+                                animated:NO
+                          scrollPosition:UITableViewScrollPositionTop];
 }
 
 
@@ -63,58 +65,51 @@
 
 - (void)animationAreaWasTapped:(UITapGestureRecognizer *)gesture
 {
-    CGPoint point = [gesture locationInView:_animationAreaView];
-    _endX = point.x - (_logoImageView.frame.size.width / 2.0);
-    _endY = point.y - (_logoImageView.frame.size.height / 2.0);
+    CGPoint point = [gesture locationInView:self.animationAreaView];
+    self.endX = point.x - (self.logoImageView.frame.size.width / 2.0);
+    self.endY = point.y - (self.logoImageView.frame.size.height / 2.0);
     [self animate];
 }
 
 - (IBAction)durationChanged:(id)sender
 {
     UISlider *slider = (UISlider *)sender;
-    _duration = slider.value;
+    self.duration = slider.value;
+    [self animate];
+}
+
+- (IBAction)delayChanged:(id)sender
+{
+    UISlider *slider = (UISlider *)sender;
+    self.delay = slider.value;
     [self animate];
 }
 
 - (IBAction)exaggerationChanged:(id)sender
 {
     UISlider *slider = (UISlider *)sender;
-    _exaggeration = slider.value;
+    self.exaggeration = slider.value;
     [self animate];
-}
-
-- (IBAction)endXChanged:(id)sender
-{
-  UISlider *slider = (UISlider *)sender;
-  _endX = slider.value;
-  [self animate];
-}
-
-- (IBAction)endYChanged:(id)sender
-{
-  UISlider *slider = (UISlider *)sender;
-  _endY = slider.value;
-  [self animate];
 }
 
 - (IBAction)endScaleChanged:(id)sender
 {
     UISlider *slider = (UISlider *)sender;
-    _endScale = slider.value;
+    self.endScale = slider.value;
     [self animate];
 }
 
 - (IBAction)endRotationChanged:(id)sender
 {
     UISlider *slider = (UISlider *)sender;
-    _endRotation = slider.value;
+    self.endRotation = slider.value;
     [self animate];
 }
 
 - (IBAction)endAlphaDidChange:(id)sender
 {
     UISlider *slider = (UISlider *)sender;
-    _endAlpha = slider.value;
+    self.endAlpha = slider.value;
     [self animate];
 }
 
@@ -158,25 +153,26 @@
 
 - (void)animate
 {
-    CGRect r                        = _logoImageView.frame;
-    r.size                          = _startFrame.size;
-    _logoImageView.frame            = r;
+    CGRect r                           = self.logoImageView.frame;
+    r.size                             = self.startFrame.size;
+    self.logoImageView.frame           = r;
 
-    _logoImageView.layer.transform  = CATransform3DIdentity;
-    _logoImageView.alpha            = 1;
+    self.logoImageView.layer.transform = CATransform3DIdentity;
+    self.logoImageView.alpha           = 1;
 
-    [UIView mt_animateWithDuration:_duration
-                    timingFunction:_timingFuction
+    [UIView mt_animateWithDuration:self.duration
+                             delay:self.delay
+                    timingFunction:self.timingFuction
                            options:MTViewAnimationOptionBeginFromCurrentState
                         animations:^{
-                            _logoImageView.mt_animationPerspective = -1.0 / 500.0;
-                            CGRect r                               = _logoImageView.frame;
-                            r.origin.x                             = _endX;
-                            r.origin.y                             = _endY;
-                            _logoImageView.frame                   = [self scaledRect:r];
-                            _logoImageView.alpha                   = _endAlpha;
-                            CGFloat radians                        = mt_degreesToRadians(_endRotation);
-                            _logoImageView.layer.transform         = CATransform3DMakeRotation(radians, 0, 1, 0);
+                            self.logoImageView.mt_animationPerspective = -1.0 / 500.0;
+                            CGRect r                                   = self.logoImageView.frame;
+                            r.origin.x                                 = self.endX;
+                            r.origin.y                                 = self.endY;
+                            self.logoImageView.frame                   = [self scaledRect:r];
+                            self.logoImageView.alpha                   = self.endAlpha;
+                            CGFloat radians                            = mt_degreesToRadians(self.endRotation);
+                            self.logoImageView.layer.transform         = CATransform3DMakeRotation(radians, 0, 1, 0);
                         } completion:^{
                             NSLog(@"completed");
                         }];
@@ -245,10 +241,10 @@
 
 - (CGRect)scaledRect:(CGRect)r
 {
-    CGFloat h       = _startFrame.size.height;
-    CGFloat w       = _startFrame.size.width;
-    CGFloat hh      = h * _endScale;
-    CGFloat ww      = w * _endScale;
+    CGFloat h       = self.startFrame.size.height;
+    CGFloat w       = self.startFrame.size.width;
+    CGFloat hh      = h * self.endScale;
+    CGFloat ww      = w * self.endScale;
     r.size.height   = hh;
     r.size.width    = ww;
     r.origin.y      -= (hh - h) / 2.0;

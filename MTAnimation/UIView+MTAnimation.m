@@ -39,11 +39,6 @@ static const char startUserInteractionEnabledKey;
 
 @implementation MTView (MTAnimation)
 
-+ (void)load
-{
-
-}
-
 + (void)mt_animateWithDuration:(NSTimeInterval)duration
                 timingFunction:(MTTimingFunction)timingFunction
                     animations:(MTAnimationsBlock)animations
@@ -97,6 +92,22 @@ static const char startUserInteractionEnabledKey;
 }
 
 + (void)mt_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
+                timingFunction:(MTTimingFunction)timingFunction
+                       options:(MTViewAnimationOptions)options
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
+{
+    return [self mt_animateWithDuration:duration
+                                  delay:delay
+                         timingFunction:timingFunction
+                                  range:MTAnimationRangeFull
+                                options:options
+                             animations:animations
+                             completion:completion];
+}
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
                 timingFunction:(MTTimingFunction)timingFunction
                          range:(MTAnimationRange)range
                     animations:(MTAnimationsBlock)animations
@@ -119,123 +130,135 @@ static const char startUserInteractionEnabledKey;
                     animations:(MTAnimationsBlock)animations
                     completion:(MTAnimationCompletionBlock)completion
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        assert(animations != nil);
-        assert(range.start >= 0);
-        assert(range.end <= 1);
+    assert(animations != nil);
+    assert(range.start >= 0);
+    assert(range.end <= 1);
 
-        if (duration <= 0) {
-            if (animations) animations();
-            if (completion) completion();
-            return;
-        }
-
-        NSArray *views = [self allViewsInWindow];
-
-        [CATransaction lock];
-        [CATransaction begin];
-        [CATransaction setAnimationDuration:duration];
-        [CATransaction setCompletionBlock:completion];
-        [CATransaction setDisableActions:YES];
-
-        for (MTView *view in views) {
-            [view takeStartSnapshot:options];
-        }
-
+    if (duration <= 0) {
         if (animations) animations();
+        if (completion) completion();
+        return;
+    }
 
-        NSMutableArray *changedViews = [NSMutableArray new];
-        for (MTView *view in views) {
+    CGFloat beginTime = 0;
+    if (delay > 0) {
+        beginTime = CACurrentMediaTime() + delay;
+    }
 
-            // apply MTViewAnimationOptionBeginFromCurrentState option
-            CALayer *current = nil;
-            if (mt_isInMask(options, MTViewAnimationOptionBeginFromCurrentState)) {
-                BOOL currentlyAnimating = [[view.layer animationKeys] count] > 0;
-                if (currentlyAnimating) {
-                    current = view.layer.presentationLayer;
-                }
-            }
+    [CATransaction lock];
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:duration];
+    [CATransaction setCompletionBlock:completion];
+    [CATransaction setDisableActions:YES];
 
-            if (!CGRectEqualToRect(view.startBounds, view.bounds)) {
-                [changedViews addObject:view];
-                CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
-                keyframeAnimation.keyPath               = @"bounds";
-                keyframeAnimation.duration              = duration;
-                keyframeAnimation.calculationMode       = kCAAnimationLinear;
-                keyframeAnimation.values                = [self rectValuesWithDuration:duration
-                                                                              function:timingFunction
-                                                                                  from:current ? current.bounds : view.startBounds
-                                                                                    to:view.bounds
-                                                                          exaggeration:view.mt_animationExaggeration];
-                [view addAnimation:keyframeAnimation
-                            forKey:@"bounds"
-                             range:range
-                           options:options
-                       perspective:view.mt_animationPerspective];
-            }
+    NSArray *views = [self allViewsInWindow];
 
+    for (MTView *view in views) {
+        [view takeStartSnapshot:options];
+    }
 
-            if (!CGPointEqualToPoint(view.startCenter, view.center)) {
-                [changedViews addObject:view];
-                CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
-                keyframeAnimation.keyPath               = @"position";
-                keyframeAnimation.duration              = duration;
-                keyframeAnimation.calculationMode       = kCAAnimationLinear;
-                keyframeAnimation.values                = [self pointValuesWithDuration:duration
-                                                                               function:timingFunction
-                                                                                   from:current ? current.position : view.startCenter
-                                                                                     to:view.center
-                                                                           exaggeration:view.mt_animationExaggeration];
-                [view addAnimation:keyframeAnimation
-                            forKey:@"position"
-                             range:range
-                           options:options
-                       perspective:view.mt_animationPerspective];
-            }
+    if (animations) animations();
 
-            if (!CATransform3DEqualToTransform(view.startTransform3D, view.layer.transform)) {
-                [changedViews addObject:view];
-                CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
-                keyframeAnimation.keyPath               = @"transform";
-                keyframeAnimation.duration              = duration;
-                keyframeAnimation.calculationMode       = kCAAnimationLinear;
-                keyframeAnimation.values                = [self transformValuesWithDuration:duration
-                                                                                   function:timingFunction
-                                                                                       from:current ? current.transform : view.startTransform3D
-                                                                                         to:view.layer.transform
-                                                                               exaggeration:view.mt_animationExaggeration];
-                [view addAnimation:keyframeAnimation
-                            forKey:@"transform"
-                             range:range
-                           options:options
-                       perspective:view.mt_animationPerspective];
-            }
+    NSMutableArray *changedViews = [NSMutableArray new];
+    for (MTView *view in views) {
 
-            if (view.startAlpha != view.mt_alpha) {
-                [changedViews addObject:view];
-                CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
-                keyframeAnimation.keyPath               = @"opacity";
-                keyframeAnimation.duration              = duration;
-                keyframeAnimation.calculationMode       = kCAAnimationLinear;
-                keyframeAnimation.values                = [self floatValuesWithDuration:duration
-                                                                               function:timingFunction
-                                                                                   from:current ? current.opacity : view.startAlpha
-                                                                                     to:view.mt_alpha
-                                                                           exaggeration:view.mt_animationExaggeration];
-                [view addAnimation:keyframeAnimation
-                            forKey:@"opacity"
-                             range:range
-                           options:options
-                       perspective:view.mt_animationPerspective];
+        // apply MTViewAnimationOptionBeginFromCurrentState option
+        CALayer *current = nil;
+        if (mt_isInMask(options, MTViewAnimationOptionBeginFromCurrentState)) {
+            BOOL currentlyAnimating = [[view.layer animationKeys] count] > 0;
+            if (currentlyAnimating) {
+                current = view.layer.presentationLayer;
             }
         }
-        
-        for (MTView *view in changedViews) {
-            [view.layer layoutIfNeeded];
+
+        if (!CGRectEqualToRect(view.startBounds, view.bounds)) {
+            [changedViews addObject:view];
+            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
+            keyframeAnimation.beginTime             = beginTime;
+            keyframeAnimation.keyPath               = @"bounds";
+            keyframeAnimation.duration              = duration;
+            keyframeAnimation.calculationMode       = kCAAnimationLinear;
+            keyframeAnimation.values                = [self rectValuesWithDuration:duration
+                                                                          function:timingFunction
+                                                                              from:current ? current.bounds : view.startBounds
+                                                                                to:view.bounds
+                                                                      exaggeration:view.mt_animationExaggeration];
+            [view addAnimation:keyframeAnimation
+                         delay:delay
+                        forKey:@"bounds"
+                         range:range
+                       options:options
+                   perspective:view.mt_animationPerspective];
         }
-        [CATransaction commit];
-        [CATransaction unlock];
-    });
+
+
+        if (!CGPointEqualToPoint(view.startCenter, view.center)) {
+            [changedViews addObject:view];
+            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
+            keyframeAnimation.beginTime             = beginTime;
+            keyframeAnimation.keyPath               = @"position";
+            keyframeAnimation.duration              = duration;
+            keyframeAnimation.calculationMode       = kCAAnimationLinear;
+            keyframeAnimation.values                = [self pointValuesWithDuration:duration
+                                                                           function:timingFunction
+                                                                               from:current ? current.position : view.startCenter
+                                                                                 to:view.center
+                                                                       exaggeration:view.mt_animationExaggeration];
+            [view addAnimation:keyframeAnimation
+                         delay:delay
+                        forKey:@"position"
+                         range:range
+                       options:options
+                   perspective:view.mt_animationPerspective];
+        }
+
+        if (!CATransform3DEqualToTransform(view.startTransform3D, view.layer.transform)) {
+            [changedViews addObject:view];
+            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
+            keyframeAnimation.beginTime             = beginTime;
+            keyframeAnimation.keyPath               = @"transform";
+            keyframeAnimation.duration              = duration;
+            keyframeAnimation.calculationMode       = kCAAnimationLinear;
+            keyframeAnimation.values                = [self transformValuesWithDuration:duration
+                                                                               function:timingFunction
+                                                                                   from:current ? current.transform : view.startTransform3D
+                                                                                     to:view.layer.transform
+                                                                           exaggeration:view.mt_animationExaggeration];
+            [view addAnimation:keyframeAnimation
+                         delay:delay
+                        forKey:@"transform"
+                         range:range
+                       options:options
+                   perspective:view.mt_animationPerspective];
+        }
+
+        if (view.startAlpha != view.mt_alpha) {
+            [changedViews addObject:view];
+            CAKeyframeAnimation *keyframeAnimation  = [CAKeyframeAnimation new];
+            keyframeAnimation.beginTime             = beginTime;
+            keyframeAnimation.keyPath               = @"opacity";
+            keyframeAnimation.duration              = duration;
+            keyframeAnimation.calculationMode       = kCAAnimationLinear;
+            keyframeAnimation.values                = [self floatValuesWithDuration:duration
+                                                                           function:timingFunction
+                                                                               from:current ? current.opacity : view.startAlpha
+                                                                                 to:view.mt_alpha
+                                                                       exaggeration:view.mt_animationExaggeration];
+            [view addAnimation:keyframeAnimation
+                         delay:delay
+                        forKey:@"opacity"
+                         range:range
+                       options:options
+                   perspective:view.mt_animationPerspective];
+        }
+    }
+
+    for (MTView *view in changedViews) {
+        [view.layer layoutIfNeeded];
+    }
+
+    [CATransaction commit];
+    [CATransaction unlock];
 }
 
 
@@ -371,6 +394,7 @@ static const char startUserInteractionEnabledKey;
 }
 
 - (void)addAnimation:(CAKeyframeAnimation *)animation
+               delay:(NSTimeInterval)delay
               forKey:(NSString *)key
                range:(MTAnimationRange)range
              options:(MTViewAnimationOptions)options
@@ -425,27 +449,46 @@ static const char startUserInteractionEnabledKey;
     perspectiveTransform.m34                = perspective;
     self.layer.superlayer.sublayerTransform = perspectiveTransform;
 
+    void (^setFinalValueBlock)() = nil;
+
     // add the animation
     if ([key isEqualToString:@"bounds"]) {
         self.bounds             = self.startBounds;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.bounds       = [[animation.values lastObject] MTRectValue];
+        setFinalValueBlock = ^{
+            self.layer.bounds = [[animation.values lastObject] MTRectValue];
+        };
     }
     else if ([key isEqualToString:@"position"]) {
         self.center             = self.startCenter;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.position     = [[animation.values lastObject] MTPointValue];
-        self.center             = self.layer.position;
+        setFinalValueBlock = ^{
+            self.layer.position = [[animation.values lastObject] MTPointValue];
+            self.center         = self.layer.position;
+        };
     }
     else if ([key isEqualToString:@"opacity"]) {
         self.mt_alpha           = self.startAlpha;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.opacity      = [[animation.values lastObject] floatValue];
+        setFinalValueBlock = ^{
+            self.layer.opacity = [[animation.values lastObject] floatValue];
+        };
     }
     else if ([key isEqualToString:@"transform"]) {
         self.layer.transform    = self.startTransform3D;
         [self.layer addAnimation:animation forKey:key];
-        self.layer.transform    = [[animation.values lastObject] CATransform3DValue];
+        setFinalValueBlock = ^{
+            self.layer.transform    = [[animation.values lastObject] CATransform3DValue];
+        };
+    }
+
+    if (delay > 0) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (setFinalValueBlock) setFinalValueBlock();
+        });
+    }
+    else {
+        if (setFinalValueBlock) setFinalValueBlock();
     }
 }
 

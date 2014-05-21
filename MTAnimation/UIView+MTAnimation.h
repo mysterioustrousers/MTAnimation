@@ -61,14 +61,24 @@
  Convenience method. See full method below for param explanations.
  */
 + (void)mt_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
+                timingFunction:(MTTimingFunction)timingFunction
+                       options:(MTViewAnimationOptions)options
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion;
+
+/**
+ Convenience method. See full method below for param explanations.
+ */
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
                 timingFunction:(MTTimingFunction)timingFunction
                          range:(MTAnimationRange)range
                     animations:(MTAnimationsBlock)animations
                     completion:(MTAnimationCompletionBlock)completion;
 
 /**
- @param views           The list of views you will be modifying in the animation block. You must provide all views you'll be modifying.
  @param duration        The duration of the animation.
+ @param delay           A delay before the animation begins.
  @param timingFunction  The timing function to use for the easing.
  @param options         Some of the UIView MTViewAnimationOptions options are implemented. Not all of them yet, but I'm working on it.
  @param animations      Make your changes to your views in this block and they will be animated to those final values.
