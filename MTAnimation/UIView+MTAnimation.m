@@ -62,7 +62,7 @@ static const char startUserInteractionEnabledKey;
                         delay:0
                timingFunction:timingFunction
                    animations:animations
-                   completion:nil];
+                   completion:completion];
 }
 
 + (void)mt_animateWithViews:(NSArray *)views
@@ -78,7 +78,7 @@ static const char startUserInteractionEnabledKey;
                timingFunction:timingFunction
                       options:0
                    animations:animations
-                   completion:nil];
+                   completion:completion];
 
 }
 
@@ -95,7 +95,7 @@ static const char startUserInteractionEnabledKey;
                timingFunction:timingFunction
                       options:options
                    animations:animations
-                   completion:nil];
+                   completion:completion];
 }
 
 + (void)mt_animateWithViews:(NSArray *)views
@@ -113,7 +113,7 @@ static const char startUserInteractionEnabledKey;
                         range:MTAnimationRangeFull
                       options:options
                    animations:animations
-                   completion:nil];
+                   completion:completion];
 }
 
 + (void)mt_animateWithViews:(NSArray *)views
@@ -130,7 +130,7 @@ static const char startUserInteractionEnabledKey;
                         range:range
                       options:0
                    animations:animations
-                   completion:nil];
+                   completion:completion];
 }
 
 + (void)mt_animateWithViews:(NSArray *)views
