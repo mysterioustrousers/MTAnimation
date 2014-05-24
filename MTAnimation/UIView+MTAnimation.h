@@ -13,14 +13,14 @@
 @interface MTView (MTAnimation)
 
 /**
- Some (but not all) of the easing functions can be exaggerated. (e.g. elastic out will be swing 
- more dramatically with more exaggeration). 
+ Some (but not all) of the easing functions can be exaggerated. (e.g. elastic out will be swing
+ more dramatically with more exaggeration).
  values: The default value is 1.70158, so any value from 0 to 10 is usually pretty reasonable.
  */
 @property (assign, nonatomic) CGFloat mt_animationExaggeration;
 
 /**
- The perspective to apply to the 3D transform matrix. 0 is no perspective. 
+ The perspective to apply to the 3D transform matrix. 0 is no perspective.
  values: (- 1 / 500) is a good value to experiment with.
  */
 @property (assign, nonatomic) CGFloat mt_animationPerspective;
@@ -124,7 +124,7 @@
  it would interfere with the dynamic animations because (if I'm not mistaken), it
  appears dynamics changes the view's model layer tree on each frame. Whereas, core
  animation changes the model layer tree to the final value.
- 2. Using MTAnimation on OSX limited initiated an animation in the key window.
+ 2. Using MTAnimation on OSX limited initiated an animation to the key window.
  *********************************************************************************/
 
 /**
