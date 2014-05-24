@@ -25,12 +25,113 @@
  */
 @property (assign, nonatomic) CGFloat mt_animationPerspective;
 
+
+
+/**
+ Convenience method. See full method below for param explanations.
+ */
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+             timingFunction:(MTTimingFunction)timingFunction
+                 animations:(MTAnimationsBlock)animations;
+
+/**
+ Convenience method. See full method below for param explanations.
+ */
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+             timingFunction:(MTTimingFunction)timingFunction
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion;
+/**
+ Convenience method. See full method below for param explanations.
+ */
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+                      delay:(NSTimeInterval)delay
+             timingFunction:(MTTimingFunction)timingFunction
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion;
+
+/**
+ Convenience method. See full method below for param explanations.
+ */
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+             timingFunction:(MTTimingFunction)timingFunction
+                    options:(MTViewAnimationOptions)options
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion;
+
+/**
+ Convenience method. See full method below for param explanations.
+ */
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+                      delay:(NSTimeInterval)delay
+             timingFunction:(MTTimingFunction)timingFunction
+                    options:(MTViewAnimationOptions)options
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion;
+
+/**
+ Convenience method. See full method below for param explanations.
+ */
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+             timingFunction:(MTTimingFunction)timingFunction
+                      range:(MTAnimationRange)range
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion;
+
+/**
+ @param duration        The duration of the animation.
+ @param delay           A delay before the animation begins.
+ @param timingFunction  The timing function to use for the easing.
+ @param options         Some of the UIView MTViewAnimationOptions options are implemented. Not all of them yet, but I'm working on it.
+ @param animations      Make your changes to your views in this block and they will be animated to those final values.
+ @param completion      Called when the animation completes.
+ */
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+                      delay:(NSTimeInterval)delay
+             timingFunction:(MTTimingFunction)timingFunction
+                      range:(MTAnimationRange)range
+                    options:(MTViewAnimationOptions)options
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion;
+
+/**
+ Convenience method to add all the views in a view's subview heirarchy.
+ */
+- (NSArray *)mt_allSubviews;
+
+
+
+
+
+
+
+
+
+
+
+/**********************************************************************************
+ Automatically involving all views in the current window turned out to be a bad
+ idea for a few reasons:
+ 1. If a UIKit Dynamics animation was running, and you call [UIView layoutIfNeeded]
+ it would interfere with the dynamic animations because (if I'm not mistaken), it
+ appers dynamcs changes the view's model layer tree on each frame. Whereas, core
+ animation changes the model layer tree to the final value.
+ 2. Using MTAnimation on OSX limited initiated an animation in the key window.
+ *********************************************************************************/
+
 /**
  Convenience method. See full method below for param explanations.
  */
 + (void)mt_animateWithDuration:(NSTimeInterval)duration
                 timingFunction:(MTTimingFunction)timingFunction
-                    animations:(MTAnimationsBlock)animations;
+                    animations:(MTAnimationsBlock)animations __deprecated;
 
 /**
  Convenience method. See full method below for param explanations.
@@ -38,7 +139,7 @@
 + (void)mt_animateWithDuration:(NSTimeInterval)duration
                 timingFunction:(MTTimingFunction)timingFunction
                     animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion;
+                    completion:(MTAnimationCompletionBlock)completion __deprecated;
 /**
  Convenience method. See full method below for param explanations.
  */
@@ -46,7 +147,7 @@
                          delay:(NSTimeInterval)delay
                 timingFunction:(MTTimingFunction)timingFunction
                     animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion;
+                    completion:(MTAnimationCompletionBlock)completion __deprecated;
 
 /**
  Convenience method. See full method below for param explanations.
@@ -55,7 +156,7 @@
                 timingFunction:(MTTimingFunction)timingFunction
                        options:(MTViewAnimationOptions)options
                     animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion;
+                    completion:(MTAnimationCompletionBlock)completion __deprecated;
 
 /**
  Convenience method. See full method below for param explanations.
@@ -65,7 +166,7 @@
                 timingFunction:(MTTimingFunction)timingFunction
                        options:(MTViewAnimationOptions)options
                     animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion;
+                    completion:(MTAnimationCompletionBlock)completion __deprecated;
 
 /**
  Convenience method. See full method below for param explanations.
@@ -74,7 +175,7 @@
                 timingFunction:(MTTimingFunction)timingFunction
                          range:(MTAnimationRange)range
                     animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion;
+                    completion:(MTAnimationCompletionBlock)completion __deprecated;
 
 /**
  @param duration        The duration of the animation.
@@ -90,6 +191,6 @@
                          range:(MTAnimationRange)range
                        options:(MTViewAnimationOptions)options
                     animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion;
+                    completion:(MTAnimationCompletionBlock)completion __deprecated;
 
 @end

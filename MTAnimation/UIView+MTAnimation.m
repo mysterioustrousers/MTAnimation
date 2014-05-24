@@ -39,96 +39,108 @@ static const char startUserInteractionEnabledKey;
 
 @implementation MTView (MTAnimation)
 
-+ (void)mt_animateWithDuration:(NSTimeInterval)duration
-                timingFunction:(MTTimingFunction)timingFunction
-                    animations:(MTAnimationsBlock)animations
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+             timingFunction:(MTTimingFunction)timingFunction
+                 animations:(MTAnimationsBlock)animations
 {
-    return [self mt_animateWithDuration:duration
-                         timingFunction:timingFunction
-                             animations:animations
-                             completion:nil];
+    [self mt_animateWithViews:views
+                     duration:duration
+               timingFunction:timingFunction
+                   animations:animations
+                   completion:nil];
 }
 
-+ (void)mt_animateWithDuration:(NSTimeInterval)duration
-                timingFunction:(MTTimingFunction)timingFunction
-                    animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+             timingFunction:(MTTimingFunction)timingFunction
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion
 {
-    return [self mt_animateWithDuration:duration
-                         timingFunction:timingFunction
-                                  range:MTAnimationRangeFull
-                             animations:animations
-                             completion:completion];
+    [self mt_animateWithViews:views
+                     duration:duration
+                        delay:0
+               timingFunction:timingFunction
+                   animations:animations
+                   completion:nil];
 }
 
-+ (void)mt_animateWithDuration:(NSTimeInterval)duration
-                         delay:(NSTimeInterval)delay
-                timingFunction:(MTTimingFunction)timingFunction
-                    animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+                      delay:(NSTimeInterval)delay
+             timingFunction:(MTTimingFunction)timingFunction
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion
 {
-    return [self mt_animateWithDuration:duration
-                                  delay:delay
-                         timingFunction:timingFunction
-                                  range:MTAnimationRangeFull
-                                options:0
-                             animations:animations
-                             completion:completion];
+    [self mt_animateWithViews:views
+                     duration:duration
+                        delay:delay
+               timingFunction:timingFunction
+                      options:0
+                   animations:animations
+                   completion:nil];
+
 }
 
-+ (void)mt_animateWithDuration:(NSTimeInterval)duration
-                timingFunction:(MTTimingFunction)timingFunction
-                       options:(MTViewAnimationOptions)options
-                    animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+             timingFunction:(MTTimingFunction)timingFunction
+                    options:(MTViewAnimationOptions)options
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion
 {
-    return [self mt_animateWithDuration:duration
-                                  delay:0
-                         timingFunction:timingFunction
-                                  range:MTAnimationRangeFull
-                                options:options
-                             animations:animations
-                             completion:completion];
+    [self mt_animateWithViews:views
+                     duration:duration
+                        delay:0
+               timingFunction:timingFunction
+                      options:options
+                   animations:animations
+                   completion:nil];
 }
 
-+ (void)mt_animateWithDuration:(NSTimeInterval)duration
-                         delay:(NSTimeInterval)delay
-                timingFunction:(MTTimingFunction)timingFunction
-                       options:(MTViewAnimationOptions)options
-                    animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+                      delay:(NSTimeInterval)delay
+             timingFunction:(MTTimingFunction)timingFunction
+                    options:(MTViewAnimationOptions)options
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion
 {
-    return [self mt_animateWithDuration:duration
-                                  delay:delay
-                         timingFunction:timingFunction
-                                  range:MTAnimationRangeFull
-                                options:options
-                             animations:animations
-                             completion:completion];
+    [self mt_animateWithViews:views
+                     duration:duration
+                        delay:delay
+               timingFunction:timingFunction
+                        range:MTAnimationRangeFull
+                      options:options
+                   animations:animations
+                   completion:nil];
 }
 
-+ (void)mt_animateWithDuration:(NSTimeInterval)duration
-                timingFunction:(MTTimingFunction)timingFunction
-                         range:(MTAnimationRange)range
-                    animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+             timingFunction:(MTTimingFunction)timingFunction
+                      range:(MTAnimationRange)range
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion
 {
-    return [self mt_animateWithDuration:duration
-                                  delay:0
-                         timingFunction:timingFunction
-                                  range:range
-                                options:0
-                             animations:animations
-                             completion:completion];
+    [self mt_animateWithViews:views
+                     duration:duration
+                        delay:0
+               timingFunction:timingFunction
+                        range:range
+                      options:0
+                   animations:animations
+                   completion:nil];
 }
 
-+ (void)mt_animateWithDuration:(NSTimeInterval)duration
-                         delay:(NSTimeInterval)delay
-                timingFunction:(MTTimingFunction)timingFunction
-                         range:(MTAnimationRange)range
-                       options:(MTViewAnimationOptions)options
-                    animations:(MTAnimationsBlock)animations
-                    completion:(MTAnimationCompletionBlock)completion
++ (void)mt_animateWithViews:(NSArray *)views
+                   duration:(NSTimeInterval)duration
+                      delay:(NSTimeInterval)delay
+             timingFunction:(MTTimingFunction)timingFunction
+                      range:(MTAnimationRange)range
+                    options:(MTViewAnimationOptions)options
+                 animations:(MTAnimationsBlock)animations
+                 completion:(MTAnimationCompletionBlock)completion
 {
     assert(animations != nil);
     assert(range.start >= 0);
@@ -150,8 +162,6 @@ static const char startUserInteractionEnabledKey;
     [CATransaction setAnimationDuration:duration];
     [CATransaction setCompletionBlock:completion];
     [CATransaction setDisableActions:YES];
-
-    NSArray *views = [self allViewsInWindow];
 
     for (MTView *view in views) {
         [view takeStartSnapshot:options];
@@ -259,6 +269,18 @@ static const char startUserInteractionEnabledKey;
 
     [CATransaction commit];
     [CATransaction unlock];
+}
+
+- (NSArray *)mt_allSubviews
+{
+    MTView *view                   = self;
+    NSUInteger i                   = 0;
+    NSMutableArray *collectedViews = [[view subviews] mutableCopy];
+    while(i < [collectedViews count]) {
+        view = collectedViews[i++];
+        [collectedViews addObjectsFromArray:[view subviews]];
+    }
+    return collectedViews;
 }
 
 
@@ -590,25 +612,6 @@ static const char startUserInteractionEnabledKey;
 }
 
 
-#pragma mark (views)
-
-+ (NSArray *)allViewsInWindow
-{
-#if IS_IOS
-    MTView *view = [[UIApplication sharedApplication] keyWindow];
-#else
-    MTView *view = [[NSApplication sharedApplication] keyWindow].contentView;
-#endif
-    NSUInteger i = 0;
-    NSMutableArray *collectedViews = [[view subviews] mutableCopy];
-    while(i < [collectedViews count]) {
-        view = collectedViews[i++];
-        [collectedViews addObjectsFromArray:[view subviews]];
-    }
-    return collectedViews;
-}
-
-
 #if !IS_IOS
 
 - (CGAffineTransform)transform
@@ -635,6 +638,126 @@ static const char startUserInteractionEnabledKey;
 }
 
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                    animations:(MTAnimationsBlock)animations
+{
+    return [self mt_animateWithDuration:duration
+                         timingFunction:timingFunction
+                             animations:animations
+                             completion:nil];
+}
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
+{
+    return [self mt_animateWithDuration:duration
+                         timingFunction:timingFunction
+                                  range:MTAnimationRangeFull
+                             animations:animations
+                             completion:completion];
+}
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
+                timingFunction:(MTTimingFunction)timingFunction
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
+{
+    return [self mt_animateWithDuration:duration
+                                  delay:delay
+                         timingFunction:timingFunction
+                                  range:MTAnimationRangeFull
+                                options:0
+                             animations:animations
+                             completion:completion];
+}
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                       options:(MTViewAnimationOptions)options
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
+{
+    return [self mt_animateWithDuration:duration
+                                  delay:0
+                         timingFunction:timingFunction
+                                  range:MTAnimationRangeFull
+                                options:options
+                             animations:animations
+                             completion:completion];
+}
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
+                timingFunction:(MTTimingFunction)timingFunction
+                       options:(MTViewAnimationOptions)options
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
+{
+    return [self mt_animateWithDuration:duration
+                                  delay:delay
+                         timingFunction:timingFunction
+                                  range:MTAnimationRangeFull
+                                options:options
+                             animations:animations
+                             completion:completion];
+}
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                timingFunction:(MTTimingFunction)timingFunction
+                         range:(MTAnimationRange)range
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
+{
+    return [self mt_animateWithDuration:duration
+                                  delay:0
+                         timingFunction:timingFunction
+                                  range:range
+                                options:0
+                             animations:animations
+                             completion:completion];
+}
+
++ (void)mt_animateWithDuration:(NSTimeInterval)duration
+                         delay:(NSTimeInterval)delay
+                timingFunction:(MTTimingFunction)timingFunction
+                         range:(MTAnimationRange)range
+                       options:(MTViewAnimationOptions)options
+                    animations:(MTAnimationsBlock)animations
+                    completion:(MTAnimationCompletionBlock)completion
+{
+#if IS_IOS
+    UIView *window = [[UIApplication sharedApplication] keyWindow];
+#else
+    id window = [[NSApplication sharedApplication] keyWindow].contentView;
+#endif
+    NSArray *allViewsInWindow = [window mt_allSubviews];
+    [MTView mt_animateWithViews:allViewsInWindow
+                       duration:duration
+                          delay:delay
+                 timingFunction:timingFunction
+                          range:range
+                        options:options
+                     animations:animations
+                     completion:completion];
+}
 
 @end
 

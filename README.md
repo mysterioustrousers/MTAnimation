@@ -11,7 +11,7 @@ Advantages:
 - No need to mess with keypaths, just change the properties on UIView and you're golden.
 - Proper transform matrix interpolation, so rotations look correct.
 - Install with cocoapods.
-- Category method properly prefixed.
+- Category methods prefixed.
 
 ## Installation
 
@@ -49,13 +49,14 @@ Then add the import:
 Similar to the UIKits animation methods but you must supply an array of all the views you will be animating and an easing function.
 
 ```objc
-[UIView mt_animateWithDuration:0.25
-                timingFunction:kMTEaseOutBack
-                    animations:^{
-                        CGRect r             = _logoImageView.frame;
-                        r.origin.x           = 50;
-                        _logoImageView.frame = r;
-                    }];
+[UIView mt_animateWithViews:@[view]
+                   duration:0.25
+             timingFunction:kMTEaseOutBack
+                 animations:^{
+                     CGRect r             = _logoImageView.frame;
+                     r.origin.x           = 50;
+                     _logoImageView.frame = r;
+                 }];
 ```
 
 You can animate:
@@ -73,27 +74,29 @@ You can cut an animation into parts (using the `range` param). You might use thi
 
 ```objc
 _logoImageView.image = [UIImage imageNamed:@"logo"];
-[UIView mt_animateWithDuration:0.25
-                         delay:0
-                timingFunction:kMTEaseOutBack
-                         range:MTMakeAnimationRange(0, 0.135)
-                       options:0
-                    animations:^{
-                        CGFloat radians                 = mt_degreesToRadians(_endRotation);
-                        _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
-                    } completion:^{
-                        _logoImageView.image = [UIImage imageNamed:@"logo-flip"];
-                        [UIView mt_animateWithDuration:0.25
-                                                 delay:0
-                                        timingFunction:kMTEaseOutBack
-                                                 range:MTMakeAnimationRange(0.135, 1)
-                                               options:0
-                                            animations:^{
-                                                CGFloat radians                 = mt_degreesToRadians(_endRotation);
-                                                _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
-                                            } completion:^{
-                                            }];
-                    }];
+[UIView mt_animateWithViews:[view mt_allSubviews]
+                   duration:0.25
+                      delay:0
+             timingFunction:kMTEaseOutBack
+                      range:MTMakeAnimationRange(0, 0.135)
+                    options:0
+                 animations:^{
+                     CGFloat radians                 = mt_degreesToRadians(_endRotation);
+                     _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
+                 } completion:^{
+                     _logoImageView.image = [UIImage imageNamed:@"logo-flip"];
+                     [UIView mt_animateWithWithViews:[view mt_allSubviews]
+                                            duration:0.25
+                                               delay:0
+                                      timingFunction:kMTEaseOutBack
+                                               range:MTMakeAnimationRange(0.135, 1)
+                                             options:0
+                                          animations:^{
+                                              CGFloat radians                 = mt_degreesToRadians(_endRotation);
+                                              _logoImageView.layer.transform  = CATransform3DMakeRotation(radians, 0, 1, 0);
+                                          } completion:^{
+                                          }];
+                 }];
 ```
 
 This code will animate until the image is sideways, then swap out the image view's image and continue the animation so it looks like it has a backside.

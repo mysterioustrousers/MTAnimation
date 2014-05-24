@@ -82,7 +82,6 @@
 {
     UISlider *slider = (UISlider *)sender;
     self.delay = slider.value;
-    [self animate];
 }
 
 - (IBAction)exaggerationChanged:(id)sender
@@ -112,6 +111,8 @@
     self.endAlpha = slider.value;
     [self animate];
 }
+
+
 
 
 
@@ -160,22 +161,24 @@
     self.logoImageView.layer.transform = CATransform3DIdentity;
     self.logoImageView.alpha           = 1;
 
-    [UIView mt_animateWithDuration:self.duration
-                             delay:self.delay
-                    timingFunction:self.timingFuction
-                           options:MTViewAnimationOptionBeginFromCurrentState
-                        animations:^{
-                            self.logoImageView.mt_animationPerspective = -1.0 / 500.0;
-                            CGRect r                                   = self.logoImageView.frame;
-                            r.origin.x                                 = self.endX;
-                            r.origin.y                                 = self.endY;
-                            self.logoImageView.frame                   = [self scaledRect:r];
-                            self.logoImageView.alpha                   = self.endAlpha;
-                            CGFloat radians                            = mt_degreesToRadians(self.endRotation);
-                            self.logoImageView.layer.transform         = CATransform3DMakeRotation(radians, 0, 1, 0);
-                        } completion:^{
-                            NSLog(@"completed");
-                        }];
+    [UIView mt_animateWithViews:[self.view.window mt_allSubviews]
+                       duration:self.duration
+                          delay:self.delay
+                 timingFunction:self.timingFuction
+                        options:MTViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.logoImageView.mt_animationPerspective = -1.0 / 500.0;
+                         CGRect r                                   = self.logoImageView.frame;
+                         r.origin.x                                 = self.endX;
+                         r.origin.y                                 = self.endY;
+                         self.logoImageView.frame                   = [self scaledRect:r];
+                         self.logoImageView.alpha                   = self.endAlpha;
+                         CGFloat radians                            = mt_degreesToRadians(self.endRotation);
+                         self.logoImageView.layer.transform         = CATransform3DMakeRotation(radians, 0, 1, 0);
+                     } completion:^{
+                         NSLog(@"completed");
+                     }];
+
 
 }
 
