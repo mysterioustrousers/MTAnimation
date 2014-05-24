@@ -85,6 +85,7 @@
                  completion:(MTAnimationCompletionBlock)completion;
 
 /**
+ @param views           The views involved in the animation.
  @param duration        The duration of the animation.
  @param delay           A delay before the animation begins.
  @param timingFunction  The timing function to use for the easing.
@@ -121,7 +122,7 @@
  idea for a few reasons:
  1. If a UIKit Dynamics animation was running, and you call [UIView layoutIfNeeded]
  it would interfere with the dynamic animations because (if I'm not mistaken), it
- appers dynamcs changes the view's model layer tree on each frame. Whereas, core
+ appears dynamics changes the view's model layer tree on each frame. Whereas, core
  animation changes the model layer tree to the final value.
  2. Using MTAnimation on OSX limited initiated an animation in the key window.
  *********************************************************************************/
