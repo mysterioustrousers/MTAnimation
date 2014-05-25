@@ -432,7 +432,6 @@ static const char startUserInteractionEnabledKey;
     animation.values    = [animation.values subarrayWithRange:valueRange];
 
 
-
     // apply options
     /**
      TODO: Options to implement:
@@ -500,7 +499,7 @@ static const char startUserInteractionEnabledKey;
         self.layer.transform    = self.startTransform3D;
         [self.layer addAnimation:animation forKey:key];
         setFinalValueBlock = ^{
-            self.layer.transform    = [[animation.values lastObject] CATransform3DValue];
+            self.layer.transform = [[animation.values lastObject] CATransform3DValue];
         };
     }
 
