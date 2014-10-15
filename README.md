@@ -1,13 +1,17 @@
 MTAnimation
 ===========
 
+![](http://img.shields.io/cocoapods/v/MTAnimation.svg?style=flat-square)
+![](http://img.shields.io/cocoapods/l/MTAnimation.svg?style=flat-square)
+![](http://img.shields.io/cocoapods/p/MTAnimation.svg?style=flat-square)
+
 Animate UIView/NSView with 25+ timing functions. (Bounce, elastic, exponential, etc.)
 
 Allows you to animate views in your app in the way you're familiar with (e.g. `[UIView animateWithDuration:animations:]`) but adds 25+ [easing functions](http://easings.net/) (from jQuery) to make your animations more [visceral](http://mysterioustrousers.com/news/2013/3/25/visceral-apps-and-you).
 
 Advantages:
 - Methods very similar to Apple's API.
-- No [Swizzling](https://github.com/nst/iOS-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIViewController.h#L674) or other dangerous nonsense.
+- No Swizzling.
 - No need to mess with keypaths, just change the properties on UIView and you're golden.
 - Proper transform matrix interpolation, so rotations look correct.
 - Install with cocoapods.
