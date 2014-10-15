@@ -8,8 +8,8 @@
 //  Extracts taken from http://svn.gna.org/svn/gnustep/libs/quartzcore/trunk/Source/CAAnimation.m
 
 
-
-#include "MTMatrixInterpolation.h"
+#import <QuartzCore/QuartzCore.h>
+#import "MTMatrixInterpolation.h"
 
 
 #define GSQC_POW2(x) ((x)*(x))
@@ -22,16 +22,15 @@ typedef struct _GSQuartzCoreQuaternion
 
 static CGFloat linearInterpolation(CGFloat from, CGFloat to, CGFloat fraction)
 {
-    return from + (to-from)*fraction;
+    return from + (to - from) * fraction;
 }
 
 static CATransform3D transpose(CATransform3D m)
 {
     CATransform3D r;
-    CGFloat *mF = (CGFloat *)&m;
-    CGFloat *rF = (CGFloat *)&r;
-    for(int i = 0; i < 16; i++)
-    {
+    CGFloat *mF = (CGFloat *) &m;
+    CGFloat *rF = (CGFloat *) &r;
+    for (int i = 0; i < 16; i ++) {
         int col = i % 4;
         int row = i / 4;
         int j = col * 4 + row;
@@ -48,21 +47,21 @@ static CATransform3D transpose(CATransform3D m)
 static CATransform3D quaternionToMatrix(GSQuartzCoreQuaternion q)
 {
     CATransform3D m;
-    CGFloat x=q.x, y=q.y, z=q.z, w=q.w;
+    CGFloat x = q.x, y = q.y, z = q.z, w = q.w;
 
-    m.m11 = 1 - 2*y*y - 2*z*z;
-    m.m12 = 2*x*y + 2*w*z;
-    m.m13 = 2*x*z - 2*w*y;
+    m.m11 = 1 - 2 * y * y - 2 * z * z;
+    m.m12 = 2 * x * y + 2 * w * z;
+    m.m13 = 2 * x * z - 2 * w * y;
     m.m14 = 0;
 
-    m.m21 = 2*x*y - 2*w*z;
-    m.m22 = 1 - 2*x*x - 2*z*z;
-    m.m23 = 2*y*z + 2*w*x;
+    m.m21 = 2 * x * y - 2 * w * z;
+    m.m22 = 1 - 2 * x * x - 2 * z * z;
+    m.m23 = 2 * y * z + 2 * w * x;
     m.m24 = 0;
 
-    m.m31 = 2*x*z + 2*w*y;
-    m.m32 = 2*y*z - 2*w*x;
-    m.m33 = 1 - 2*x*x - 2*y*y;
+    m.m31 = 2 * x * z + 2 * w * y;
+    m.m32 = 2 * y * z - 2 * w * x;
+    m.m33 = 1 - 2 * x * x - 2 * y * y;
     m.m34 = 0;
 
     m.m41 = 0;
@@ -83,104 +82,97 @@ static GSQuartzCoreQuaternion matrixToQuaternion(CATransform3D m)
 
     GSQuartzCoreQuaternion q;
 
-    if (m.m11 + m.m22 + m.m33 > 0)
-    {
+    if (m.m11 + m.m22 + m.m33 > 0) {
         CGFloat t = m.m11 + m.m22 + m.m33 + 1.;
-        CGFloat s = 0.5/sqrt(t);
+        CGFloat s = 0.5 / sqrt(t);
 
-        q.w = s*t;
-        q.z = (m.m12 - m.m21)*s;
-        q.y = (m.m31 - m.m13)*s;
-        q.x = (m.m23 - m.m32)*s;
+        q.w = s * t;
+        q.z = (m.m12 - m.m21) * s;
+        q.y = (m.m31 - m.m13) * s;
+        q.x = (m.m23 - m.m32) * s;
     }
-    else if (m.m11 > m.m22 && m.m11 > m.m33)
-    {
+    else if (m.m11 > m.m22 && m.m11 > m.m33) {
         CGFloat t = m.m11 - m.m22 - m.m33 + 1;
-        CGFloat s = 0.5/sqrt(t);
+        CGFloat s = 0.5 / sqrt(t);
 
-        q.x = s*t;
-        q.y = (m.m12 + m.m21)*s;
-        q.z = (m.m31 + m.m13)*s;
-        q.w = (m.m23 - m.m32)*s;
+        q.x = s * t;
+        q.y = (m.m12 + m.m21) * s;
+        q.z = (m.m31 + m.m13) * s;
+        q.w = (m.m23 - m.m32) * s;
     }
-    else if (m.m22 > m.m33)
-    {
-        CGFloat t = -m.m11 + m.m22 - m.m33 + 1;
-        CGFloat s = 0.5/sqrt(t);
+    else if (m.m22 > m.m33) {
+        CGFloat t = - m.m11 + m.m22 - m.m33 + 1;
+        CGFloat s = 0.5 / sqrt(t);
 
-        q.y = s*t;
-        q.x = (m.m12 + m.m21)*s;
-        q.w = (m.m31 - m.m13)*s;
-        q.z = (m.m23 + m.m32)*s;
+        q.y = s * t;
+        q.x = (m.m12 + m.m21) * s;
+        q.w = (m.m31 - m.m13) * s;
+        q.z = (m.m23 + m.m32) * s;
     }
-    else
-    {
-        CGFloat t = -m.m11 - m.m22 + m.m33 + 1;
-        CGFloat s = 0.5/sqrt(t);
+    else {
+        CGFloat t = - m.m11 - m.m22 + m.m33 + 1;
+        CGFloat s = 0.5 / sqrt(t);
 
-        q.z = s*t;
-        q.w = (m.m12 - m.m21)*s;
-        q.x = (m.m31 + m.m13)*s;
-        q.y = (m.m23 + m.m32)*s;
+        q.z = s * t;
+        q.w = (m.m12 - m.m21) * s;
+        q.x = (m.m31 + m.m13) * s;
+        q.y = (m.m23 + m.m32) * s;
     }
-    
+
     return q;
 }
 
 static GSQuartzCoreQuaternion linearInterpolationQuaternion(GSQuartzCoreQuaternion a, GSQuartzCoreQuaternion b, CGFloat fraction)
 {
     // slerp
-	GSQuartzCoreQuaternion qr;
+    GSQuartzCoreQuaternion qr;
 
     /* reduction of calculations */
-    if (!memcmp(&a, &b, sizeof(a)))
-    {
+    if (! memcmp(&a, &b, sizeof(a))) {
         /* aside from making less calculations, this will also
          fix NaNs that would be returned if quaternions are equal */
         return a;
     }
-    if (fraction == 0.)
-    {
+    if (fraction == 0.) {
         return a;
     }
-    if (fraction == 1.)
-    {
+    if (fraction == 1.) {
         return b;
     }
 
     CGFloat dotproduct = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
-	CGFloat theta, st, sut, sout, coeff1, coeff2;
+    CGFloat theta, st, sut, sout, coeff1, coeff2;
 
-	theta = acos(dotproduct);
-    if (theta == 0.0)
-    {
+    theta = acos(dotproduct);
+    if (theta == 0.0) {
         /* shouldn't happen, since we already checked for equality of
          inbound quaternions */
         /* if we didn't make this check, we'd get a lot of NaNs. */
         return a;
     }
 
-	if (theta<0.0)
-        theta=-theta;
+    if (theta < 0.0) {
+        theta = - theta;
+    }
 
-	st = sin(theta);
-	sut = sin(fraction*theta);
-	sout = sin((1-fraction)*theta);
-	coeff1 = sout/st;
-	coeff2 = sut/st;
+    st = sin(theta);
+    sut = sin(fraction * theta);
+    sout = sin((1 - fraction) * theta);
+    coeff1 = sout / st;
+    coeff2 = sut / st;
 
-	qr.x = coeff1*a.x + coeff2*b.x;
-	qr.y = coeff1*a.y + coeff2*b.y;
-	qr.z = coeff1*a.z + coeff2*b.z;
-	qr.w = coeff1*a.w + coeff2*b.w;
+    qr.x = coeff1 * a.x + coeff2 * b.x;
+    qr.y = coeff1 * a.y + coeff2 * b.y;
+    qr.z = coeff1 * a.z + coeff2 * b.z;
+    qr.w = coeff1 * a.w + coeff2 * b.w;
 
     // normalize
-    CGFloat qrLen = sqrt(qr.x*qr.x + qr.y*qr.y + qr.z*qr.z + qr.w*qr.w);
+    CGFloat qrLen = sqrt(qr.x * qr.x + qr.y * qr.y + qr.z * qr.z + qr.w * qr.w);
     qr.x /= qrLen;
     qr.y /= qrLen;
     qr.z /= qrLen;
     qr.w /= qrLen;
-    
+
     return qr;
 }
 
@@ -213,7 +205,7 @@ CATransform3D interpolatedMatrixFromMatrix(CATransform3D fromTf, CATransform3D t
 
     /* translation */
     CGFloat fromTX = fromTf.m14, fromTY = fromTf.m24, fromTZ = fromTf.m34;
-    CGFloat   toTX =   toTf.m14,   toTY =   toTf.m24,   toTZ =   toTf.m34;
+    CGFloat toTX = toTf.m14, toTY = toTf.m24, toTZ = toTf.m34;
 
     CGFloat valueTX = linearInterpolation(fromTX, toTX, fraction);
     CGFloat valueTY = linearInterpolation(fromTY, toTY, fraction);
@@ -237,7 +229,7 @@ CATransform3D interpolatedMatrixFromMatrix(CATransform3D fromTf, CATransform3D t
 
 
 
-    
+
 
     /* rotation */
     CATransform3D fromRotation;
@@ -289,12 +281,12 @@ CATransform3D interpolatedMatrixFromMatrix(CATransform3D fromTf, CATransform3D t
     GSQuartzCoreQuaternion fromQuat = matrixToQuaternion(fromRotation);
     GSQuartzCoreQuaternion toQuat = matrixToQuaternion(toRotation);
 
-    CGFloat fromQuatLen = sqrt(fromQuat.x*fromQuat.x + fromQuat.y*fromQuat.y + fromQuat.z*fromQuat.z + fromQuat.w*fromQuat.w);
+    CGFloat fromQuatLen = sqrt(fromQuat.x * fromQuat.x + fromQuat.y * fromQuat.y + fromQuat.z * fromQuat.z + fromQuat.w * fromQuat.w);
     fromQuat.x /= fromQuatLen;
     fromQuat.y /= fromQuatLen;
     fromQuat.z /= fromQuatLen;
     fromQuat.w /= fromQuatLen;
-    CGFloat toQuatLen = sqrt(toQuat.x*toQuat.x + toQuat.y*toQuat.y + toQuat.z*toQuat.z + toQuat.w*toQuat.w);
+    CGFloat toQuatLen = sqrt(toQuat.x * toQuat.x + toQuat.y * toQuat.y + toQuat.z * toQuat.z + toQuat.w * toQuat.w);
     toQuat.x /= toQuatLen;
     toQuat.y /= toQuatLen;
     toQuat.z /= toQuatLen;
@@ -328,10 +320,9 @@ CATransform3D interpolatedMatrixFromMatrix(CATransform3D fromTf, CATransform3D t
     valueTf.m24 = valueTY;
     valueTf.m34 = valueTZ;
 
-    
-    
+
     valueTf = transpose(valueTf);
-    
+
     return valueTf;
 }
 

@@ -1,13 +1,16 @@
-//
-//  MTMatrixInterpolation.h
-//  MTAnimation
-//
-//  Created by Adam Kirk on 5/3/13.
-//  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
-//
-//  Extracts taken from http://svn.gna.org/svn/gnustep/libs/quartzcore/trunk/Source/CAAnimation.m
+#ifndef MT_MATRIXINTERPOLAITON_H
+#define MT_MATRIXINTERPOLAITON_H
 
-#include <QuartzCore/QuartzCore.h>
+#import <QuartzCore/QuartzCore.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 CATransform3D interpolatedMatrixFromMatrix(CATransform3D fromTf, CATransform3D toTf, CGFloat fraction);
 
+#ifdef __cplusplus
+}
+#endif
+
+#endif
