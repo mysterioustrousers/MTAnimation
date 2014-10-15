@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Mysterious Trousers. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
+@import XCTest;
 
 @interface MTAnimationTests : XCTestCase
 
