@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		875B42E519EE632B00005F77 /* MTMatrixInterpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 875B42E419EE632B00005F77 /* MTMatrixInterpolation.m */; };
+		875B42E619EE633000005F77 /* MTMatrixInterpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 875B42E419EE632B00005F77 /* MTMatrixInterpolation.m */; };
 		C21CB4EA175164C00082CB97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91451729F564001D44D5 /* Foundation.framework */; };
 		C21CB4F5175164E10082CB97 /* UIView+MTAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91831729F584001D44D5 /* UIView+MTAnimation.m */; };
 		C21CB4F6175164E60082CB97 /* MTTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MTTimingFunctions.c */; };
-		C21CB4F7175164EA0082CB97 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
 		C22CC0D4172A009700EB3CB3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
 		C241F04B1751D6BA00B9AAA5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF91431729F564001D44D5 /* UIKit.framework */; };
 		C241F04C1751D6CA00B9AAA5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */; };
@@ -35,7 +36,6 @@
 		C2AF91861729F584001D44D5 /* UIView+MTAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91831729F584001D44D5 /* UIView+MTAnimation.m */; };
 		C2AF91871729F584001D44D5 /* MTTimingFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = C2AF91851729F584001D44D5 /* MTTimingFunctions.c */; };
 		C2AF91891729F5A1001D44D5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AF91881729F5A1001D44D5 /* logo.png */; };
-		C2B71A9817341C9B00E508B8 /* MTMatrixInterpolation.c in Sources */ = {isa = PBXBuildFile; fileRef = C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */; };
 		KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +62,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		875B42E419EE632B00005F77 /* MTMatrixInterpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTMatrixInterpolation.m; sourceTree = "<group>"; };
 		C21CB4E9175164C00082CB97 /* libMTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMTAnimation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C22CC0D3172A009700EB3CB3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C27D915B1753CAC200C622DA /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
@@ -96,7 +97,6 @@
 		C2AF91841729F584001D44D5 /* MTTimingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTTimingFunctions.h; sourceTree = "<group>"; };
 		C2AF91851729F584001D44D5 /* MTTimingFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MTTimingFunctions.c; sourceTree = "<group>"; };
 		C2AF91881729F5A1001D44D5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MTMatrixInterpolation.c; sourceTree = "<group>"; };
 		C2B71A9917341CB100E508B8 /* MTMatrixInterpolation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTMatrixInterpolation.h; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -229,7 +229,7 @@
 				C2AF91841729F584001D44D5 /* MTTimingFunctions.h */,
 				C2AF91851729F584001D44D5 /* MTTimingFunctions.c */,
 				C2B71A9917341CB100E508B8 /* MTMatrixInterpolation.h */,
-				C2B71A9717341C9B00E508B8 /* MTMatrixInterpolation.c */,
+				875B42E419EE632B00005F77 /* MTMatrixInterpolation.m */,
 				C2A2AC6C1734243900085235 /* MTAnimationTypes.h */,
 			);
 			name = MTAnimation;
@@ -368,9 +368,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				875B42E619EE633000005F77 /* MTMatrixInterpolation.m in Sources */,
 				C21CB4F5175164E10082CB97 /* UIView+MTAnimation.m in Sources */,
 				C21CB4F6175164E60082CB97 /* MTTimingFunctions.c in Sources */,
-				C21CB4F7175164EA0082CB97 /* MTMatrixInterpolation.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,12 +378,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				875B42E519EE632B00005F77 /* MTMatrixInterpolation.m in Sources */,
 				C2AF91501729F564001D44D5 /* main.m in Sources */,
 				C2AF91541729F564001D44D5 /* MTAppDelegate.m in Sources */,
 				C2AF91631729F564001D44D5 /* MTViewController.m in Sources */,
 				C2AF91861729F584001D44D5 /* UIView+MTAnimation.m in Sources */,
 				C2AF91871729F584001D44D5 /* MTTimingFunctions.c in Sources */,
-				C2B71A9817341C9B00E508B8 /* MTMatrixInterpolation.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

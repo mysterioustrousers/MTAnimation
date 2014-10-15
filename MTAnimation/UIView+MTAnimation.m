@@ -195,7 +195,7 @@ static const char startUserInteractionEnabledKey;
                                                                       exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
                          delay:delay
-                        forKey:@"bounds"
+                        forKey:@"boundsMT"
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
@@ -216,7 +216,7 @@ static const char startUserInteractionEnabledKey;
                                                                        exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
                          delay:delay
-                        forKey:@"position"
+                        forKey:@"positionMT"
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
@@ -236,7 +236,7 @@ static const char startUserInteractionEnabledKey;
                                                                            exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
                          delay:delay
-                        forKey:@"transform"
+                        forKey:@"transformMT"
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
@@ -256,7 +256,7 @@ static const char startUserInteractionEnabledKey;
                                                                        exaggeration:view.mt_animationExaggeration];
             [view addAnimation:keyframeAnimation
                          delay:delay
-                        forKey:@"opacity"
+                        forKey:@"opacityMT"
                          range:range
                        options:options
                    perspective:view.mt_animationPerspective];
@@ -334,6 +334,9 @@ static const char startUserInteractionEnabledKey;
         progress += increment;
     }
 
+    // well, last value != final value, so we have to put the final value in
+    [values removeLastObject];
+    [values addObject:[NSValue mt_valueWithCGRect:toRect]];
     return values;
 }
 
@@ -361,6 +364,9 @@ static const char startUserInteractionEnabledKey;
         progress += increment;
     }
 
+    // well, last value != final value, so we have to put the final value in
+    [values removeLastObject];
+    [values addObject:[NSValue mt_valueWithCGPoint:toPoint]];
     return values;
 }
 
@@ -385,7 +391,10 @@ static const char startUserInteractionEnabledKey;
 
         progress += increment;
     }
-
+    
+    // well, last value != final value, so we have to put the final value in
+    [values removeLastObject];
+    [values addObject:[NSValue valueWithCATransform3D:toTransform]];
     return values;
 }
 
@@ -473,30 +482,30 @@ static const char startUserInteractionEnabledKey;
     void (^setFinalValueBlock)() = nil;
 
     // add the animation
-    if ([key isEqualToString:@"bounds"]) {
-        self.bounds             = self.startBounds;
+    if ([key isEqualToString:@"boundsMT"]) {
+        self.bounds = self.startBounds;
         [self.layer addAnimation:animation forKey:key];
         setFinalValueBlock = ^{
             self.layer.bounds = [[animation.values lastObject] MTRectValue];
         };
     }
-    else if ([key isEqualToString:@"position"]) {
-        self.center             = self.startCenter;
+    else if ([key isEqualToString:@"positionMT"]) {
+        self.center = self.startCenter;
         [self.layer addAnimation:animation forKey:key];
         setFinalValueBlock = ^{
             self.layer.position = [[animation.values lastObject] MTPointValue];
-            self.center         = self.layer.position;
+            self.center = self.layer.position;
         };
     }
-    else if ([key isEqualToString:@"opacity"]) {
-        self.mt_alpha           = self.startAlpha;
+    else if ([key isEqualToString:@"opacityMT"]) {
+        self.mt_alpha = self.startAlpha;
         [self.layer addAnimation:animation forKey:key];
         setFinalValueBlock = ^{
             self.layer.opacity = [[animation.values lastObject] floatValue];
         };
     }
-    else if ([key isEqualToString:@"transform"]) {
-        self.layer.transform    = self.startTransform3D;
+    else if ([key isEqualToString:@"transformMT"]) {
+        self.layer.transform = self.startTransform3D;
         [self.layer addAnimation:animation forKey:key];
         setFinalValueBlock = ^{
             self.layer.transform = [[animation.values lastObject] CATransform3DValue];
