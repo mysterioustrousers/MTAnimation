@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.source                = { :git => "https://github.com/mysterioustrousers/MTAnimation.git", :tag => "#{s.version}" }
   s.ios.deployment_target = '5.0'
   s.osx.deployment_target = '10.7'
-  s.source_files          = 'MTAnimation/UIView+MTAnimation.{h,m}', 'MTAnimation/MTTimingFunctions.{h,c}', 'MTAnimation/MTMatrixInterpolation.{h,c}', 'MTAnimation/MTAnimationTypes.h'
+  s.source_files          = 'MTAnimation/UIView+MTAnimation.{h,m}', 'MTAnimation/MTTimingFunctions.{h,c}', 'MTAnimation/MTMatrixInterpolation.{h,m}', 'MTAnimation/MTAnimationTypes.h'
   s.frameworks            = 'QuartzCore', 'Foundation'
   s.ios.frameworks        = 'UIKit', 'CoreGraphics'
   s.osx.frameworks        = 'Cocoa', 'ApplicationServices'
