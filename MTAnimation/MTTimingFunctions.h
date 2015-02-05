@@ -6,7 +6,10 @@
 //  Copyright (c) 2012 Nacho Soto. All rights reserved.
 //
 
-
+#ifdef __cplusplus
+extern "C"{
+#endif
+    
 typedef double (*MTTimingFunction)(double, double, double, double, double);
 
 double MTTimingFunctionEaseInQuad(double t, double b, double c, double d, double s);
@@ -49,8 +52,9 @@ double MTTimingFunctionEaseInBounce(double t,double b, double c, double d, doubl
 double MTTimingFunctionEaseOutBounce(double t,double b, double c, double d, double s);
 double MTTimingFunctionEaseInOutBounce(double t,double b, double c, double d, double s);
 
-
-
+#ifdef __cplusplus
+}
+#endif
 
 
 
