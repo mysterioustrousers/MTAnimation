@@ -23,6 +23,7 @@ static const char startCenterKey;
 static const char startTransformKey;
 static const char startTransform3DKey;
 static const char startAlphaKey;
+static const char animationCompletionsKey;
 //static const char startBackgroundColorKey;
 static const char startUserInteractionEnabledKey;
 
@@ -34,6 +35,7 @@ static const char startUserInteractionEnabledKey;
 @property (assign, nonatomic) CATransform3D         startTransform3D;
 @property (assign, nonatomic) CGFloat               startAlpha;
 @property (assign, nonatomic) BOOL                  startUserInteractionEnabled;
+@property (strong, nonatomic) NSMutableDictionary  *animationCompletions;
 @end
 
 
@@ -262,13 +264,12 @@ static const char startUserInteractionEnabledKey;
                    perspective:view.mt_animationPerspective];
         }
     }
+    [CATransaction commit];
+    [CATransaction unlock];
 
     for (MTView *view in changedViews) {
         [view.layer layoutIfNeeded];
     }
-
-    [CATransaction commit];
-    [CATransaction unlock];
 }
 
 - (NSArray *)mt_allSubviews
@@ -478,50 +479,52 @@ static const char startUserInteractionEnabledKey;
     CATransform3D perspectiveTransform      = CATransform3DIdentity;
     perspectiveTransform.m34                = perspective;
     self.layer.superlayer.sublayerTransform = perspectiveTransform;
+    animation.fillMode = kCAFillModeForwards;
 
     void (^setFinalValueBlock)() = nil;
 
+    __weak typeof(self) weakSelf = self;
     // add the animation
     if ([key isEqualToString:@"boundsMT"]) {
         self.bounds = self.startBounds;
-        [self.layer addAnimation:animation forKey:key];
         setFinalValueBlock = ^{
-            self.layer.bounds = [[animation.values lastObject] MTRectValue];
+            __strong typeof(self) strongSelf = weakSelf;
+            
+            strongSelf.bounds = [[animation.values lastObject] MTRectValue];
         };
     }
     else if ([key isEqualToString:@"positionMT"]) {
         self.center = self.startCenter;
-        [self.layer addAnimation:animation forKey:key];
         setFinalValueBlock = ^{
-            self.layer.position = [[animation.values lastObject] MTPointValue];
-            self.center = self.layer.position;
+            __strong typeof(self) strongSelf = weakSelf;
+            strongSelf.layer.position = [[animation.values lastObject] MTPointValue];
+            strongSelf.center = strongSelf.layer.position;
         };
     }
     else if ([key isEqualToString:@"opacityMT"]) {
         self.mt_alpha = self.startAlpha;
-        [self.layer addAnimation:animation forKey:key];
         setFinalValueBlock = ^{
-            self.layer.opacity = [[animation.values lastObject] floatValue];
+            __strong typeof(self) strongSelf = weakSelf;
+            strongSelf.layer.opacity = [[animation.values lastObject] floatValue];
         };
     }
     else if ([key isEqualToString:@"transformMT"]) {
         self.layer.transform = self.startTransform3D;
-        [self.layer addAnimation:animation forKey:key];
         setFinalValueBlock = ^{
-            self.layer.transform = [[animation.values lastObject] CATransform3DValue];
+            __strong typeof(self) strongSelf = weakSelf;
+            strongSelf.layer.transform = [[animation.values lastObject] CATransform3DValue];
         };
     }
-
+    
     if (delay > 0) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (setFinalValueBlock) setFinalValueBlock();
-        });
+        animation.delegate = self;
+        self.animationCompletions[animation.keyPath] = [setFinalValueBlock copy];
     }
     else {
-        if (setFinalValueBlock) setFinalValueBlock();
+        if (setFinalValueBlock) {setFinalValueBlock();}
     }
+    [self.layer addAnimation:animation forKey:key];
 }
-
 
 
 #pragma mark - Added Properties
@@ -547,9 +550,6 @@ static const char startUserInteractionEnabledKey;
     NSNumber *value = objc_getAssociatedObject(self, &perspectiveKey);
     return value ? [value floatValue] : 0;
 }
-
-
-
 
 #pragma mark (private)
 
@@ -619,6 +619,15 @@ static const char startUserInteractionEnabledKey;
     return value ? [value boolValue] : YES;
 }
 
+- (NSMutableDictionary *)animationCompletions
+{
+    return objc_getAssociatedObject(self, &animationCompletionsKey);
+}
+
+- (void)setAnimationCompletions:(NSMutableDictionary *)animationCompletions
+{
+    objc_setAssociatedObject(self, &animationCompletionsKey, animationCompletions, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 #if !IS_IOS
 
@@ -646,18 +655,6 @@ static const char startUserInteractionEnabledKey;
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 + (void)mt_animateWithDuration:(NSTimeInterval)duration
@@ -765,6 +762,19 @@ static const char startUserInteractionEnabledKey;
                         options:options
                      animations:animations
                      completion:completion];
+}
+
+#pragma mark - Completions
+
+#pragma mark - CAAnimation Delegate
+
+- (void)animationDidStart:(CAPropertyAnimation *)animation
+{
+    dispatch_block_t setFinalValueBlock = self.animationCompletions[animation.keyPath];
+    if (setFinalValueBlock) {
+        setFinalValueBlock();
+    }
+    [self.animationCompletions removeObjectForKey:animation.keyPath];
 }
 
 @end
