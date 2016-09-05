@@ -770,6 +770,10 @@ static const char startUserInteractionEnabledKey;
 
 - (void)animationDidStart:(CAPropertyAnimation *)animation
 {
+    if (![animation respondsToSelector:@selector(keyPath)]) {
+        return;
+    }
+    
     dispatch_block_t setFinalValueBlock = self.animationCompletions[animation.keyPath];
     if (setFinalValueBlock) {
         setFinalValueBlock();
