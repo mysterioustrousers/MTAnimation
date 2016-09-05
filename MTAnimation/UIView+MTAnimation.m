@@ -770,6 +770,12 @@ static const char startUserInteractionEnabledKey;
 
 - (void)animationDidStart:(CAPropertyAnimation *)animation
 {
+    // We are interested only in animations that we create, and those must have the `keyPath` property: see
+    // `-[mt_animateWithViews:...]`. Others are ignored.
+    if (![animation respondsToSelector:@selector(keyPath)]) {
+        return;
+    }
+    
     dispatch_block_t setFinalValueBlock = self.animationCompletions[animation.keyPath];
     if (setFinalValueBlock) {
         setFinalValueBlock();
