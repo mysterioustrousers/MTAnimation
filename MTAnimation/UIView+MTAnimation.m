@@ -481,7 +481,7 @@ static const char startUserInteractionEnabledKey;
     self.layer.superlayer.sublayerTransform = perspectiveTransform;
     animation.fillMode = kCAFillModeForwards;
 
-    void (^setFinalValueBlock)() = nil;
+    void (^setFinalValueBlock)(void) = nil;
 
     __weak typeof(self) weakSelf = self;
     // add the animation
