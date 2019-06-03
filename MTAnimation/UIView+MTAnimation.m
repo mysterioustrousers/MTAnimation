@@ -517,7 +517,7 @@ static const char startUserInteractionEnabledKey;
     }
     
     if (delay > 0) {
-        animation.delegate = self;
+        animation.delegate = (id<CAAnimationDelegate>)self;
         self.animationCompletions[animation.keyPath] = [setFinalValueBlock copy];
     }
     else {
